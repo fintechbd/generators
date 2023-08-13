@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator;
 
-use Illuminate\Support\ServiceProvider;
-use Fintech\Generator\Commands\InstallCommand;
 use Fintech\Generator\Commands\GeneratorCommand;
+use Fintech\Generator\Commands\InstallCommand;
+use Illuminate\Support\ServiceProvider;
 
 class GeneratorServiceProvider extends ServiceProvider
 {
@@ -30,7 +30,6 @@ class GeneratorServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/generators.php' => config_path('generators.php'),
         ]);
-
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
