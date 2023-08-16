@@ -2,11 +2,11 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class ComponentViewMakeCommand extends GeneratorCommand
@@ -52,7 +52,7 @@ class ComponentViewMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-        return (new Stub('/component-view.stub', ['QUOTE'=> Inspiring::quote()]))->render();
+        return (new Stub('/component-view.stub', ['QUOTE' => Inspiring::quote()]))->render();
     }
 
     /**
@@ -63,7 +63,7 @@ class ComponentViewMakeCommand extends GeneratorCommand
         $path = $this->laravel['modules']->getModulePath($this->getModuleName());
         $factoryPath = GenerateConfigReader::read('component-view');
 
-        return $path . $factoryPath->getPath() . '/' . $this->getFileName();
+        return $path.$factoryPath->getPath().'/'.$this->getFileName();
     }
 
     /**
@@ -71,6 +71,6 @@ class ComponentViewMakeCommand extends GeneratorCommand
      */
     private function getFileName()
     {
-        return Str::lower($this->argument('name')) . '.blade.php';
+        return Str::lower($this->argument('name')).'.blade.php';
     }
 }

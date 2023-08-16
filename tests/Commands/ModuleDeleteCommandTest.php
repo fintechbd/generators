@@ -14,6 +14,7 @@ class ModuleDeleteCommandTest extends BaseTestCase
      * @var \Illuminate\Filesystem\Filesystem
      */
     private $finder;
+
     /**
      * @var FileActivator
      */

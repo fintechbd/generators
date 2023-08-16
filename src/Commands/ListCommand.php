@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
 class ListCommand extends Command

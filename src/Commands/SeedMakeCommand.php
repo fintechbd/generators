@@ -2,11 +2,11 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\CanClearModulesCache;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -87,7 +87,7 @@ class SeedMakeCommand extends GeneratorCommand
 
         $seederPath = GenerateConfigReader::read('seeder');
 
-        return $path . $seederPath->getPath() . '/' . $this->getSeederName() . '.php';
+        return $path.$seederPath->getPath().'/'.$this->getSeederName().'.php';
     }
 
     /**
@@ -99,13 +99,11 @@ class SeedMakeCommand extends GeneratorCommand
     {
         $end = $this->option('master') ? 'DatabaseSeeder' : 'TableSeeder';
 
-        return Str::studly($this->argument('name')) . $end;
+        return Str::studly($this->argument('name')).$end;
     }
 
     /**
      * Get default namespace.
-     *
-     * @return string
      */
     public function getDefaultNamespace(): string
     {

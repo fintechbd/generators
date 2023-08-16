@@ -12,6 +12,8 @@ class Recipe extends Model
     use MediaRelation;
 
     protected $table = 'recipe__recipes';
+
     public $translatedAttributes = ['name', 'content'];
+
     protected $fillable = ['name', 'content'];
 }

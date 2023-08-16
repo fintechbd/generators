@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class EventMakeCommand extends GeneratorCommand
@@ -40,11 +40,11 @@ class EventMakeCommand extends GeneratorCommand
 
     public function getDestinationFilePath()
     {
-        $path       = $this->laravel['modules']->getModulePath($this->getModuleName());
+        $path = $this->laravel['modules']->getModulePath($this->getModuleName());
 
         $eventPath = GenerateConfigReader::read('event');
 
-        return $path . $eventPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$eventPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class DumpCommand extends Command
@@ -29,7 +29,7 @@ class DumpCommand extends Command
     {
         $this->components->info('Generating optimized autoload modules.');
 
-        if ($name = $this->argument('module') ) {
+        if ($name = $this->argument('module')) {
             $this->dump($name);
 
             return 0;

@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator;
 
-use Illuminate\Support\ServiceProvider;
 use Fintech\Generator\Providers\BootstrapServiceProvider;
 use Fintech\Generator\Providers\ConsoleServiceProvider;
 use Fintech\Generator\Providers\ContractsServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 abstract class ModulesServiceProvider extends ServiceProvider
 {
@@ -36,8 +36,8 @@ abstract class ModulesServiceProvider extends ServiceProvider
      */
     protected function registerNamespaces()
     {
-        $configPath = __DIR__ . '/../config/config.php';
-        $stubsPath = dirname(__DIR__) . '/src/Commands/stubs';
+        $configPath = __DIR__.'/../config/config.php';
+        $stubsPath = dirname(__DIR__).'/src/Commands/stubs';
 
         $this->publishes([
             $configPath => config_path('modules.php'),

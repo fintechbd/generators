@@ -12,6 +12,7 @@ class ListCommandTest extends BaseTestCase
      * @var Filesystem
      */
     private $finder;
+
     /**
      * @var string
      */

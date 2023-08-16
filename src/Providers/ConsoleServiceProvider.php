@@ -2,13 +2,14 @@
 
 namespace Fintech\Generator\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Fintech\Generator\Commands;
+use Illuminate\Support\ServiceProvider;
 
 class ConsoleServiceProvider extends ServiceProvider
 {
     /**
      * The available commands
+     *
      * @var array
      */
     protected $commands = [

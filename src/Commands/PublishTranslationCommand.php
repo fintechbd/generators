@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
 use Fintech\Generator\Publishing\LangPublisher;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class PublishTranslationCommand extends Command
@@ -54,7 +54,7 @@ class PublishTranslationCommand extends Command
     /**
      * Publish assets from the specified module.
      *
-     * @param string $name
+     * @param  string  $name
      */
     public function publish($name)
     {

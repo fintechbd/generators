@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Fintech\Generator\Contracts\RepositoryInterface;
 use Fintech\Generator\Laravel\LaravelFileRepository;
+use Illuminate\Support\ServiceProvider;
 
 class ContractsServiceProvider extends ServiceProvider
 {

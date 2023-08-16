@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class FactoryMakeCommand extends GeneratorCommand
@@ -69,7 +69,7 @@ class FactoryMakeCommand extends GeneratorCommand
 
         $factoryPath = GenerateConfigReader::read('factory');
 
-        return $path . $factoryPath->getPath() . '/' . $this->getFileName();
+        return $path.$factoryPath->getPath().'/'.$this->getFileName();
     }
 
     /**
@@ -77,7 +77,7 @@ class FactoryMakeCommand extends GeneratorCommand
      */
     private function getFileName()
     {
-        return Str::studly($this->argument('name')) . 'Factory.php';
+        return Str::studly($this->argument('name')).'Factory.php';
     }
 
     /**
@@ -90,8 +90,6 @@ class FactoryMakeCommand extends GeneratorCommand
 
     /**
      * Get default namespace.
-     *
-     * @return string
      */
     public function getDefaultNamespace(): string
     {
@@ -102,8 +100,6 @@ class FactoryMakeCommand extends GeneratorCommand
 
     /**
      * Get model namespace.
-     *
-     * @return string
      */
     public function getModelNamespace(): string
     {
@@ -111,6 +107,6 @@ class FactoryMakeCommand extends GeneratorCommand
 
         $path = str_replace('/', '\\', $path);
 
-        return $this->laravel['modules']->config('namespace') . '\\' . $this->laravel['modules']->findOrFail($this->getModuleName()) . '\\' . $path;
+        return $this->laravel['modules']->config('namespace').'\\'.$this->laravel['modules']->findOrFail($this->getModuleName()).'\\'.$path;
     }
 }

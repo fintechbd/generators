@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class MiddlewareMakeCommand extends GeneratorCommand
@@ -62,7 +62,7 @@ class MiddlewareMakeCommand extends GeneratorCommand
 
         return (new Stub('/middleware.stub', [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -75,7 +75,7 @@ class MiddlewareMakeCommand extends GeneratorCommand
 
         $middlewarePath = GenerateConfigReader::read('filter');
 
-        return $path . $middlewarePath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$middlewarePath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

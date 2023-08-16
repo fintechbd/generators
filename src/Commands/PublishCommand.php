@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
 use Fintech\Generator\Publishing\AssetPublisher;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class PublishCommand extends Command
@@ -54,7 +54,7 @@ class PublishCommand extends Command
     /**
      * Publish assets from the specified module.
      *
-     * @param string $name
+     * @param  string  $name
      */
     public function publish($name)
     {
@@ -69,7 +69,7 @@ class PublishCommand extends Command
             ->setConsole($this)
             ->publish();
 
-        $this->components->task($module->getStudlyName(), fn()=>true);
+        $this->components->task($module->getStudlyName(), fn () => true);
     }
 
     /**

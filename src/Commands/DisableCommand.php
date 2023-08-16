@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class DisableCommand extends Command
@@ -29,7 +29,7 @@ class DisableCommand extends Command
     {
         $this->components->info('Disabling module ...');
 
-        if ($name = $this->argument('module') ) {
+        if ($name = $this->argument('module')) {
             $this->disable($name);
 
             return 0;
@@ -58,14 +58,14 @@ class DisableCommand extends Command
     /**
      * disable
      *
-     * @param string $name
+     * @param  string  $name
      * @return void
      */
     public function disable($name)
     {
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = $this->laravel['modules']->findOrFail($name);
         }
 

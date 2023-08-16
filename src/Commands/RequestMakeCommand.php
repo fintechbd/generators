@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class RequestMakeCommand extends GeneratorCommand
@@ -62,7 +62,7 @@ class RequestMakeCommand extends GeneratorCommand
 
         return (new Stub('/request.stub', [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -75,7 +75,7 @@ class RequestMakeCommand extends GeneratorCommand
 
         $requestPath = GenerateConfigReader::read('request');
 
-        return $path . $requestPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$requestPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

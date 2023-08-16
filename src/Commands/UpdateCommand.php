@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class UpdateCommand extends Command
@@ -43,7 +43,6 @@ class UpdateCommand extends Command
         return 0;
     }
 
-
     protected function updateAllModule()
     {
         /** @var \Fintech\Generator\Module $module */
@@ -60,7 +59,7 @@ class UpdateCommand extends Command
 
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = $this->laravel['modules']->findOrFail($name);
         }
 

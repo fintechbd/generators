@@ -46,7 +46,7 @@ class DisableCommandTest extends BaseTestCase
         $taxonomyModule = $this->app[RepositoryInterface::class]->find('Taxonomy');
         $taxonomyModule->enable();
 
-        $code = $this->artisan('module:disable',['module' => ['Blog','Taxonomy']]);
+        $code = $this->artisan('module:disable', ['module' => ['Blog', 'Taxonomy']]);
 
         $this->assertTrue($blogModule->isDisabled() && $taxonomyModule->isDisabled());
         $this->assertSame(0, $code);

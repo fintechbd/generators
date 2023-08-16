@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Lumen;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Module as BaseModule;
+use Illuminate\Support\Str;
 
 class Module extends BaseModule
 {
@@ -12,7 +12,7 @@ class Module extends BaseModule
      */
     public function getCachedServicesPath(): string
     {
-        return Str::replaceLast('services.php', $this->getSnakeName() . '_module.php', $this->app->basePath('storage/app/') . 'services.php');
+        return Str::replaceLast('services.php', $this->getSnakeName().'_module.php', $this->app->basePath('storage/app/').'services.php');
     }
 
     /**

@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Fintech\Generator\Contracts\RepositoryInterface;
+use Illuminate\Support\ServiceProvider;
 
 class BootstrapServiceProvider extends ServiceProvider
 {

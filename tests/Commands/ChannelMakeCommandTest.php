@@ -9,10 +9,12 @@ use Spatie\Snapshots\MatchesSnapshots;
 class ChannelMakeCommandTest extends BaseTestCase
 {
     use MatchesSnapshots;
+
     /**
      * @var \Illuminate\Filesystem\Filesystem
      */
     private $finder;
+
     /**
      * @var string
      */
@@ -37,7 +39,7 @@ class ChannelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-channel', ['name' => 'WelcomeChannel', 'module' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Broadcasting/WelcomeChannel.php'));
+        $this->assertTrue(is_file($this->modulePath.'/Broadcasting/WelcomeChannel.php'));
         $this->assertSame(0, $code);
     }
 
@@ -46,7 +48,7 @@ class ChannelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-channel', ['name' => 'WelcomeChannel', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Broadcasting/WelcomeChannel.php');
+        $file = $this->finder->get($this->modulePath.'/Broadcasting/WelcomeChannel.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -59,7 +61,7 @@ class ChannelMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-channel', ['name' => 'WelcomeChannel', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/SuperChannel/WelcomeChannel.php');
+        $file = $this->finder->get($this->modulePath.'/SuperChannel/WelcomeChannel.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -72,7 +74,7 @@ class ChannelMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-channel', ['name' => 'WelcomeChannel', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Broadcasting/WelcomeChannel.php');
+        $file = $this->finder->get($this->modulePath.'/Broadcasting/WelcomeChannel.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);

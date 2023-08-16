@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Contracts\RepositoryInterface;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 
 class LaravelModulesV6Migrator extends Command
 {
     protected $name = 'module:v6:migrate';
+
     protected $description = 'Migrate laravel-modules v5 modules statuses to v6.';
 
     public function handle(): int

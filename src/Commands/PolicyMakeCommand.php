@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 class PolicyMakeCommand extends GeneratorCommand
@@ -62,7 +62,7 @@ class PolicyMakeCommand extends GeneratorCommand
 
         return (new Stub('/policy.plain.stub', [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -75,7 +75,7 @@ class PolicyMakeCommand extends GeneratorCommand
 
         $policyPath = GenerateConfigReader::read('policies');
 
-        return $path . $policyPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$policyPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

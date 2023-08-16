@@ -10,10 +10,12 @@ use Spatie\Snapshots\MatchesSnapshots;
 class ModelMakeCommandTest extends BaseTestCase
 {
     use MatchesSnapshots;
+
     /**
      * @var \Illuminate\Filesystem\Filesystem
      */
     private $finder;
+
     /**
      * @var string
      */
@@ -38,7 +40,7 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Entities/Post.php'));
+        $this->assertTrue(is_file($this->modulePath.'/Entities/Post.php'));
         $this->assertSame(0, $code);
     }
 
@@ -47,7 +49,7 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Entities/Post.php');
+        $file = $this->finder->get($this->modulePath.'/Entities/Post.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -58,7 +60,7 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '--fillable' => 'title,slug']);
 
-        $file = $this->finder->get($this->modulePath . '/Entities/Post.php');
+        $file = $this->finder->get($this->modulePath.'/Entities/Post.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -69,9 +71,9 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '--migration' => true]);
 
-        $migrations = $this->finder->allFiles($this->modulePath . '/Database/Migrations');
+        $migrations = $this->finder->allFiles($this->modulePath.'/Database/Migrations');
         $migrationFile = $migrations[0];
-        $migrationContent = $this->finder->get($this->modulePath . '/Database/Migrations/' . $migrationFile->getFilename());
+        $migrationContent = $this->finder->get($this->modulePath.'/Database/Migrations/'.$migrationFile->getFilename());
         $this->assertCount(1, $migrations);
         $this->assertMatchesSnapshot($migrationContent);
         $this->assertSame(0, $code);
@@ -82,9 +84,9 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '-m' => true]);
 
-        $migrations = $this->finder->allFiles($this->modulePath . '/Database/Migrations');
+        $migrations = $this->finder->allFiles($this->modulePath.'/Database/Migrations');
         $migrationFile = $migrations[0];
-        $migrationContent = $this->finder->get($this->modulePath . '/Database/Migrations/' . $migrationFile->getFilename());
+        $migrationContent = $this->finder->get($this->modulePath.'/Database/Migrations/'.$migrationFile->getFilename());
         $this->assertCount(1, $migrations);
         $this->assertMatchesSnapshot($migrationContent);
         $this->assertSame(0, $code);
@@ -94,9 +96,9 @@ class ModelMakeCommandTest extends BaseTestCase
     public function it_generates_controller_file_with_model()
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '--controller' => true]);
-        $controllers = $this->finder->allFiles($this->modulePath . '/Http/Controllers');
+        $controllers = $this->finder->allFiles($this->modulePath.'/Http/Controllers');
         $controllerFile = $controllers[1];
-        $controllerContent = $this->finder->get($this->modulePath . '/Http/Controllers/' . $controllerFile->getFilename());
+        $controllerContent = $this->finder->get($this->modulePath.'/Http/Controllers/'.$controllerFile->getFilename());
         $this->assertCount(2, $controllers);
         $this->assertMatchesSnapshot($controllerContent);
         $this->assertSame(0, $code);
@@ -107,9 +109,9 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '-c' => true]);
 
-        $controllers = $this->finder->allFiles($this->modulePath . '/Http/Controllers');
+        $controllers = $this->finder->allFiles($this->modulePath.'/Http/Controllers');
         $controllerFile = $controllers[1];
-        $controllerContent = $this->finder->get($this->modulePath . '/Http/Controllers/' . $controllerFile->getFilename());
+        $controllerContent = $this->finder->get($this->modulePath.'/Http/Controllers/'.$controllerFile->getFilename());
         $this->assertCount(2, $controllers);
         $this->assertMatchesSnapshot($controllerContent);
         $this->assertSame(0, $code);
@@ -120,15 +122,15 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog', '-c' => true, '-m' => true]);
 
-        $controllers = $this->finder->allFiles($this->modulePath . '/Http/Controllers');
+        $controllers = $this->finder->allFiles($this->modulePath.'/Http/Controllers');
         $controllerFile = $controllers[1];
-        $controllerContent = $this->finder->get($this->modulePath . '/Http/Controllers/' . $controllerFile->getFilename());
+        $controllerContent = $this->finder->get($this->modulePath.'/Http/Controllers/'.$controllerFile->getFilename());
         $this->assertCount(2, $controllers);
         $this->assertMatchesSnapshot($controllerContent);
 
-        $migrations = $this->finder->allFiles($this->modulePath . '/Database/Migrations');
+        $migrations = $this->finder->allFiles($this->modulePath.'/Database/Migrations');
         $migrationFile = $migrations[0];
-        $migrationContent = $this->finder->get($this->modulePath . '/Database/Migrations/' . $migrationFile->getFilename());
+        $migrationContent = $this->finder->get($this->modulePath.'/Database/Migrations/'.$migrationFile->getFilename());
         $this->assertCount(1, $migrations);
         $this->assertMatchesSnapshot($migrationContent);
 
@@ -140,9 +142,9 @@ class ModelMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-model', ['model' => 'ProductDetail', 'module' => 'Blog', '-m' => true]);
 
-        $migrations = $this->finder->allFiles($this->modulePath . '/Database/Migrations');
+        $migrations = $this->finder->allFiles($this->modulePath.'/Database/Migrations');
         $migrationFile = $migrations[0];
-        $migrationContent = $this->finder->get($this->modulePath . '/Database/Migrations/' . $migrationFile->getFilename());
+        $migrationContent = $this->finder->get($this->modulePath.'/Database/Migrations/'.$migrationFile->getFilename());
 
         $this->assertStringContainsString('create_product_details_table', $migrationFile->getFilename());
         $this->assertMatchesSnapshot($migrationContent);
@@ -166,7 +168,7 @@ class ModelMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Models/Post.php');
+        $file = $this->finder->get($this->modulePath.'/Models/Post.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -179,7 +181,7 @@ class ModelMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-model', ['model' => 'Post', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Entities/Post.php');
+        $file = $this->finder->get($this->modulePath.'/Entities/Post.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);

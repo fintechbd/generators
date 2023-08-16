@@ -9,10 +9,12 @@ use Spatie\Snapshots\MatchesSnapshots;
 class RequestMakeCommandTest extends BaseTestCase
 {
     use MatchesSnapshots;
+
     /**
      * @var \Illuminate\Filesystem\Filesystem
      */
     private $finder;
+
     /**
      * @var string
      */
@@ -37,7 +39,7 @@ class RequestMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
 
-        $this->assertTrue(is_file($this->modulePath . '/Http/Requests/CreateBlogPostRequest.php'));
+        $this->assertTrue(is_file($this->modulePath.'/Http/Requests/CreateBlogPostRequest.php'));
         $this->assertSame(0, $code);
     }
 
@@ -46,7 +48,7 @@ class RequestMakeCommandTest extends BaseTestCase
     {
         $code = $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Requests/CreateBlogPostRequest.php');
+        $file = $this->finder->get($this->modulePath.'/Http/Requests/CreateBlogPostRequest.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -59,7 +61,7 @@ class RequestMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/SuperRequests/CreateBlogPostRequest.php');
+        $file = $this->finder->get($this->modulePath.'/SuperRequests/CreateBlogPostRequest.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);
@@ -72,7 +74,7 @@ class RequestMakeCommandTest extends BaseTestCase
 
         $code = $this->artisan('module:make-request', ['name' => 'CreateBlogPostRequest', 'module' => 'Blog']);
 
-        $file = $this->finder->get($this->modulePath . '/Http/Requests/CreateBlogPostRequest.php');
+        $file = $this->finder->get($this->modulePath.'/Http/Requests/CreateBlogPostRequest.php');
 
         $this->assertMatchesSnapshot($file);
         $this->assertSame(0, $code);

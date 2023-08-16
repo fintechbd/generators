@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Migrations\Migrator;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -49,7 +49,7 @@ class MigrateCommand extends Command
         }
 
         foreach ($this->module->getOrdered($this->option('direction')) as $module) {
-            $this->line('Running for module: <info>' . $module->getName() . '</info>');
+            $this->line('Running for module: <info>'.$module->getName().'</info>');
 
             $this->migrate($module);
         }
@@ -59,15 +59,13 @@ class MigrateCommand extends Command
 
     /**
      * Run the migration from the specified module.
-     *
-     * @param Module $module
      */
     protected function migrate(Module $module)
     {
         $path = str_replace(base_path(), '', (new Migrator($module, $this->getLaravel()))->getPath());
 
         if ($this->option('subpath')) {
-            $path = $path . "/" . $this->option("subpath");
+            $path = $path.'/'.$this->option('subpath');
         }
 
         $this->call('migrate', [

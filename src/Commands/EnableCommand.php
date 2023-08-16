@@ -2,8 +2,8 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Console\Command;
 use Fintech\Generator\Module;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 
 class EnableCommand extends Command
@@ -30,7 +30,7 @@ class EnableCommand extends Command
 
         $this->components->info('Enabling module ...');
 
-        if ($name = $this->argument('module') ) {
+        if ($name = $this->argument('module')) {
             $this->enable($name);
 
             return 0;
@@ -59,14 +59,14 @@ class EnableCommand extends Command
     /**
      * enable
      *
-     * @param string $name
+     * @param  string  $name
      * @return void
      */
     public function enable($name)
     {
         if ($name instanceof Module) {
             $module = $name;
-        }else {
+        } else {
             $module = $this->laravel['modules']->findOrFail($name);
         }
 
@@ -74,7 +74,7 @@ class EnableCommand extends Command
             $module->enable();
 
             $this->components->info("Module [{$module}] enabled successful.");
-        }else {
+        } else {
             $this->components->warn("Module [{$module}] has already enabled.");
         }
 

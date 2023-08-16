@@ -2,10 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
-use Illuminate\Support\Str;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -72,7 +72,7 @@ class JobMakeCommand extends GeneratorCommand
 
         return (new Stub($this->getStubName(), [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -87,7 +87,7 @@ class JobMakeCommand extends GeneratorCommand
 
         $jobPath = GenerateConfigReader::read('jobs');
 
-        return $path . $jobPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$jobPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
@@ -98,9 +98,6 @@ class JobMakeCommand extends GeneratorCommand
         return Str::studly($this->argument('name'));
     }
 
-    /**
-     * @return string
-     */
     protected function getStubName(): string
     {
         if ($this->option('sync')) {
