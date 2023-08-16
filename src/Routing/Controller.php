@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Routing;
+namespace Fintech\Generator\Routing;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

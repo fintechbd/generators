@@ -1,10 +1,10 @@
 <?php
 
-namespace Nwidart\Modules\Commands;
+namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Migrations\Migrator;
-use Nwidart\Modules\Publishing\MigrationPublisher;
+use Fintech\Generator\Migrations\Migrator;
+use Fintech\Generator\Publishing\MigrationPublisher;
 use Symfony\Component\Console\Input\InputArgument;
 
 class PublishMigrationCommand extends Command
@@ -48,7 +48,7 @@ class PublishMigrationCommand extends Command
     /**
      * Publish migration for the specified module.
      *
-     * @param \Nwidart\Modules\Module $module
+     * @param \Fintech\Generator\Module $module
      */
     public function publish($module)
     {

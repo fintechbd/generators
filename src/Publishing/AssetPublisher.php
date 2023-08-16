@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Publishing;
+namespace Fintech\Generator\Publishing;
 
-use Nwidart\Modules\Support\Config\GenerateConfigReader;
+use Fintech\Generator\Support\Config\GenerateConfigReader;
 
 class AssetPublisher extends Publisher
 {

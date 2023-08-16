@@ -1,10 +1,10 @@
 <?php
 
-namespace Nwidart\Modules\Commands;
+namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Module;
-use Nwidart\Modules\Traits\ModuleCommandTrait;
+use Fintech\Generator\Module;
+use Fintech\Generator\Traits\ModuleCommandTrait;
 use Symfony\Component\Console\Input\InputArgument;
 
 class UpdateCommand extends Command
@@ -46,7 +46,7 @@ class UpdateCommand extends Command
 
     protected function updateAllModule()
     {
-        /** @var \Nwidart\Modules\Module $module */
+        /** @var \Fintech\Generator\Module $module */
         $modules = $this->laravel['modules']->getOrdered();
 
         foreach ($modules as $module) {

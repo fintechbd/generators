@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Contracts;
+namespace Fintech\Generator\Contracts;
 
 interface PublisherInterface
 {

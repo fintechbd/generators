@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Facades;
+namespace Fintech\Generator\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules;
+namespace Fintech\Generator;
 
 use Illuminate\Filesystem\Filesystem;
-use Nwidart\Modules\Exceptions\InvalidJsonException;
+use Fintech\Generator\Exceptions\InvalidJsonException;
 
 class Json
 {

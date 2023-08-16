@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Publishing;
+namespace Fintech\Generator\Publishing;
 
-use Nwidart\Modules\Migrations\Migrator;
+use Fintech\Generator\Migrations\Migrator;
 
 class MigrationPublisher extends AssetPublisher
 {

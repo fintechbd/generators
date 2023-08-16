@@ -1,10 +1,10 @@
 <?php
 
-namespace Nwidart\Modules\Providers;
+namespace Fintech\Generator\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Nwidart\Modules\Contracts\RepositoryInterface;
-use Nwidart\Modules\Laravel\LaravelFileRepository;
+use Fintech\Generator\Contracts\RepositoryInterface;
+use Fintech\Generator\Laravel\LaravelFileRepository;
 
 class ContractsServiceProvider extends ServiceProvider
 {

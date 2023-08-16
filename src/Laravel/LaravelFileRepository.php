@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Laravel;
+namespace Fintech\Generator\Laravel;
 
-use Nwidart\Modules\FileRepository;
+use Fintech\Generator\FileRepository;
 
 class LaravelFileRepository extends FileRepository
 {

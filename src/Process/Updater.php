@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Process;
+namespace Fintech\Generator\Process;
 
-use Nwidart\Modules\Module;
+use Fintech\Generator\Module;
 
 class Updater extends Runner
 {

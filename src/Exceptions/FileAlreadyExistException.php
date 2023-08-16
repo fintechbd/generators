@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Exceptions;
+namespace Fintech\Generator\Exceptions;
 
 class FileAlreadyExistException extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Support\Config;
+namespace Fintech\Generator\Support\Config;
 
 class GenerateConfigReader
 {

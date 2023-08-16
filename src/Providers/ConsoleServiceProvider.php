@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Providers;
+namespace Fintech\Generator\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Nwidart\Modules\Commands;
+use Fintech\Generator\Commands;
 
 class ConsoleServiceProvider extends ServiceProvider
 {

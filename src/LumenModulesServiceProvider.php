@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules;
+namespace Fintech\Generator;
 
-use Nwidart\Modules\Support\Stub;
+use Fintech\Generator\Support\Stub;
 
 class LumenModulesServiceProvider extends ModulesServiceProvider
 {

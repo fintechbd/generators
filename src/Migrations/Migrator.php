@@ -1,12 +1,12 @@
 <?php
 
-namespace Nwidart\Modules\Migrations;
+namespace Fintech\Generator\Migrations;
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Nwidart\Modules\Module;
-use Nwidart\Modules\Support\Config\GenerateConfigReader;
+use Fintech\Generator\Module;
+use Fintech\Generator\Support\Config\GenerateConfigReader;
 
 class Migrator
 {

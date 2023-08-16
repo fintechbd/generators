@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Generators;
+namespace Fintech\Generator\Generators;
 
 use Illuminate\Filesystem\Filesystem;
-use Nwidart\Modules\Exceptions\FileAlreadyExistException;
+use Fintech\Generator\Exceptions\FileAlreadyExistException;
 
 class FileGenerator extends Generator
 {

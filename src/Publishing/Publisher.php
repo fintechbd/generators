@@ -1,11 +1,11 @@
 <?php
 
-namespace Nwidart\Modules\Publishing;
+namespace Fintech\Generator\Publishing;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Contracts\PublisherInterface;
-use Nwidart\Modules\Contracts\RepositoryInterface;
-use Nwidart\Modules\Module;
+use Fintech\Generator\Contracts\PublisherInterface;
+use Fintech\Generator\Contracts\RepositoryInterface;
+use Fintech\Generator\Module;
 
 abstract class Publisher implements PublisherInterface
 {
@@ -87,7 +87,7 @@ abstract class Publisher implements PublisherInterface
     /**
      * Get module instance.
      *
-     * @return \Nwidart\Modules\Module
+     * @return \Fintech\Generator\Module
      */
     public function getModule()
     {

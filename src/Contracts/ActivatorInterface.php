@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Contracts;
+namespace Fintech\Generator\Contracts;
 
-use Nwidart\Modules\Module;
+use Fintech\Generator\Module;
 
 interface ActivatorInterface
 {

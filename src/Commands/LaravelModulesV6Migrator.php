@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Nwidart\Modules\Commands;
+namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Contracts\RepositoryInterface;
-use Nwidart\Modules\Module;
+use Fintech\Generator\Contracts\RepositoryInterface;
+use Fintech\Generator\Module;
 
 class LaravelModulesV6Migrator extends Command
 {

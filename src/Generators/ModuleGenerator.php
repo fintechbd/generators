@@ -1,15 +1,15 @@
 <?php
 
-namespace Nwidart\Modules\Generators;
+namespace Fintech\Generator\Generators;
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command as Console;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Nwidart\Modules\Contracts\ActivatorInterface;
-use Nwidart\Modules\FileRepository;
-use Nwidart\Modules\Support\Config\GenerateConfigReader;
-use Nwidart\Modules\Support\Stub;
+use Fintech\Generator\Contracts\ActivatorInterface;
+use Fintech\Generator\FileRepository;
+use Fintech\Generator\Support\Config\GenerateConfigReader;
+use Fintech\Generator\Support\Stub;
 
 class ModuleGenerator extends Generator
 {
@@ -59,7 +59,7 @@ class ModuleGenerator extends Generator
     /**
      * The module instance.
      *
-     * @var \Nwidart\Modules\Module
+     * @var \Fintech\Generator\Module
      */
     protected $module;
 
@@ -252,7 +252,7 @@ class ModuleGenerator extends Generator
     /**
      * Get the module instance.
      *
-     * @return \Nwidart\Modules\Module
+     * @return \Fintech\Generator\Module
      */
     public function getModule()
     {

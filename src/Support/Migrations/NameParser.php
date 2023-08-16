@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Support\Migrations;
+namespace Fintech\Generator\Support\Migrations;
 
 class NameParser
 {

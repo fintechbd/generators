@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Process;
+namespace Fintech\Generator\Process;
 
-use Nwidart\Modules\Contracts\RepositoryInterface;
-use Nwidart\Modules\Contracts\RunableInterface;
+use Fintech\Generator\Contracts\RepositoryInterface;
+use Fintech\Generator\Contracts\RunableInterface;
 
 class Runner implements RunableInterface
 {

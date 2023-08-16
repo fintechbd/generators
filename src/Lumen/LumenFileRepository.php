@@ -1,8 +1,8 @@
 <?php
 
-namespace Nwidart\Modules\Lumen;
+namespace Fintech\Generator\Lumen;
 
-use Nwidart\Modules\FileRepository;
+use Fintech\Generator\FileRepository;
 
 class LumenFileRepository extends FileRepository
 {

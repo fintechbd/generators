@@ -1,10 +1,10 @@
 <?php
 
-namespace Nwidart\Modules;
+namespace Fintech\Generator;
 
-use Nwidart\Modules\Contracts\RepositoryInterface;
-use Nwidart\Modules\Exceptions\InvalidActivatorClass;
-use Nwidart\Modules\Support\Stub;
+use Fintech\Generator\Contracts\RepositoryInterface;
+use Fintech\Generator\Exceptions\InvalidActivatorClass;
+use Fintech\Generator\Support\Stub;
 
 class LaravelModulesServiceProvider extends ModulesServiceProvider
 {

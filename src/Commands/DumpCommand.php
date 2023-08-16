@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Commands;
+namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Module;
+use Fintech\Generator\Module;
 use Symfony\Component\Console\Input\InputArgument;
 
 class DumpCommand extends Command

@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Providers;
+namespace Fintech\Generator\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Nwidart\Modules\Contracts\RepositoryInterface;
+use Fintech\Generator\Contracts\RepositoryInterface;
 
 class BootstrapServiceProvider extends ServiceProvider
 {

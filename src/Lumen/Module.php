@@ -1,9 +1,9 @@
 <?php
 
-namespace Nwidart\Modules\Lumen;
+namespace Fintech\Generator\Lumen;
 
 use Illuminate\Support\Str;
-use Nwidart\Modules\Module as BaseModule;
+use Fintech\Generator\Module as BaseModule;
 
 class Module extends BaseModule
 {

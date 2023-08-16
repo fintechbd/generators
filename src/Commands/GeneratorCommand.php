@@ -1,10 +1,10 @@
 <?php
 
-namespace Nwidart\Modules\Commands;
+namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Nwidart\Modules\Exceptions\FileAlreadyExistException;
-use Nwidart\Modules\Generators\FileGenerator;
+use Fintech\Generator\Exceptions\FileAlreadyExistException;
+use Fintech\Generator\Generators\FileGenerator;
 
 abstract class GeneratorCommand extends Command
 {
@@ -80,7 +80,7 @@ abstract class GeneratorCommand extends Command
     /**
      * Get class namespace.
      *
-     * @param \Nwidart\Modules\Module $module
+     * @param \Fintech\Generator\Module $module
      *
      * @return string
      */

@@ -1,14 +1,14 @@
 <?php
 
-namespace Nwidart\Modules\Activators;
+namespace Fintech\Generator\Activators;
 
 use Illuminate\Cache\CacheManager;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
-use Nwidart\Modules\Contracts\ActivatorInterface;
-use Nwidart\Modules\Module;
+use Fintech\Generator\Contracts\ActivatorInterface;
+use Fintech\Generator\Module;
 
 class FileActivator implements ActivatorInterface
 {

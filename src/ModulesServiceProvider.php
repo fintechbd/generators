@@ -1,11 +1,11 @@
 <?php
 
-namespace Nwidart\Modules;
+namespace Fintech\Generator;
 
 use Illuminate\Support\ServiceProvider;
-use Nwidart\Modules\Providers\BootstrapServiceProvider;
-use Nwidart\Modules\Providers\ConsoleServiceProvider;
-use Nwidart\Modules\Providers\ContractsServiceProvider;
+use Fintech\Generator\Providers\BootstrapServiceProvider;
+use Fintech\Generator\Providers\ConsoleServiceProvider;
+use Fintech\Generator\Providers\ContractsServiceProvider;
 
 abstract class ModulesServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Support;
+namespace Fintech\Generator\Support;
 
 class Stub
 {

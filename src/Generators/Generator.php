@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Generators;
+namespace Fintech\Generator\Generators;
 
 abstract class Generator
 {

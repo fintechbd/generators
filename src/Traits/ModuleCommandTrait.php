@@ -1,6 +1,6 @@
 <?php
 
-namespace Nwidart\Modules\Traits;
+namespace Fintech\Generator\Traits;
 
 trait ModuleCommandTrait
 {
