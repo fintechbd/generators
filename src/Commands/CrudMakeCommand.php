@@ -2,8 +2,10 @@
 
 namespace Fintech\Generator\Commands;
 
+use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
@@ -12,29 +14,21 @@ use Symfony\Component\Console\Input\InputArgument;
  */
 class CrudMakeCommand extends Command
 {
+    use ModuleCommandTrait;
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'package:make-crud';
+    protected $name = 'package:make-crud';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description.';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Create a new API Restful CRUD stub files';
 
     /**
      * Execute the console command.
@@ -43,7 +37,17 @@ class CrudMakeCommand extends Command
      */
     public function handle()
     {
-        //
+//        $this->createRequests();
+//
+//        $this->createResources();
+
+        $this->createStubFiles();
+
+    }
+
+    protected function getResourceName()
+    {
+        return Str::studly($this->argument('name'));
     }
 
     /**
@@ -54,19 +58,74 @@ class CrudMakeCommand extends Command
     protected function getArguments()
     {
         return [
-            ['example', InputArgument::REQUIRED, 'An example argument.'],
+            ['name', InputArgument::REQUIRED, 'The name of the resource.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
         ];
     }
 
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
+    //Create Request
+    private function createRequests()
     {
-        return [
-            ['example', null, InputOption::VALUE_OPTIONAL, 'An example option.', null],
-        ];
+        foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
+            $options = [
+                'name' => $prefix . $this->getResourceName() . 'Request',
+                'module' => $this->getModuleName(),
+            ];
+
+            if ($prefix == 'Index') {
+                $options['--index'] = true;
+            }
+
+            if (in_array($prefix, ['Store', 'Update'])) {
+                $options['--crud'] = true;
+            }
+
+            Artisan::call('package:make-request', $options);
+        }
+    }
+
+    //Create Resource
+    private function createResources()
+    {
+        Artisan::call('package:make-resource', [
+            'name' => $this->getResourceName() . 'Resource'
+        ]);
+        Artisan::call('package:make-resource', [
+            'name' => $this->getResourceName() . 'Collection',
+            '--collection'
+        ]);
+    }
+
+    //Create Controller,Model,Service and Interface etc.
+    private function createStubFiles()
+    {
+        Artisan::call('package:make-model', [
+            'name' => $this->getResourceName()
+        ]);
+
+        Artisan::call('package:make-controller', [
+            'name' => $this->getResourceName(),
+            '--crud'
+        ]);
+
+        Artisan::call('package:make-service', [
+            'name' => $this->getResourceName() . 'Service'
+        ]);
+
+        Artisan::call('package:make-interface', [
+            'name' => $this->getResourceName() . 'Repository',
+            '--crud'
+        ]);
+    }
+
+    private function createRepositories()
+    {
+        Artisan::call('package:make-repository', [
+            'name' => 'Eloquent/' . $this->getResourceName() . 'Repository'
+        ]);
+
+        Artisan::call('package:make-repository', [
+            'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
+        ]);
     }
 }

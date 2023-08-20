@@ -3,15 +3,18 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class RequestMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
+
     /**
      * The stub file type
      *
@@ -54,20 +57,69 @@ class RequestMakeCommand extends GeneratorCommand
     }
 
     /**
-     * @return mixed
+     * Get the console command options.
+     *
+     * @return array
      */
-    protected function getTemplateContents()
+    protected function getOptions()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
-
-        return (new Stub('/request.stub', [
-            'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
-        ]))->render();
+        return [
+            ['index', null, InputOption::VALUE_NONE, 'The terminal command that should be assigned.', null],
+            ['crud', null, InputOption::VALUE_NONE, 'The terminal command that should be assigned.', null],
+        ];
     }
 
     /**
      * @return mixed
+     * @throws GeneratorException
+     */
+    protected function getTemplateContents()
+    {
+        return (new Stub('/request.stub', [
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'CLASS' => $this->getClass(),
+            'RULES' => $this->getRules(),
+            'PAGINATE_TRAIT' => $this->getPaginateTrait(),
+        ]))->render();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRules()
+    {
+        dump($this->options());
+
+        if ($this->option('index')) {
+            return <<<HTML
+'search' => ['string', 'nullable', 'max:255'],
+            'per_page' => ['integer', 'nullable', 'min:1', 'max:255'],
+            'paginate' => ['boolean'],
+            'sort' => ['string', 'nullable', 'min:2', 'max:255'],
+            'dir' => ['string', 'min:3', 'max:4'],
+HTML;
+        } elseif ($this->option('crud')) {
+            return '//';
+        } else {
+            return '//';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getPaginateTrait()
+    {
+        if ($this->option('index')) {
+            return 'use Fintech\Core\Traits\HasPaginateQuery;' . PHP_EOL;
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * @return mixed
+     * @throws GeneratorException
      */
     protected function getDestinationFilePath()
     {

@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -18,7 +19,7 @@ class ResourceMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'policy';
+    protected $type = 'resource';
 
     /**
      * The name of argument name.
@@ -61,19 +62,19 @@ class ResourceMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
-
         return (new Stub($this->getStubName(), [
-            'NAMESPACE' => $this->getClassNamespace($module),
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS'     => $this->getClass(),
         ]))->render();
     }
 
     /**
      * @return mixed
+     * @throws GeneratorException
      */
     protected function getDestinationFilePath()
     {

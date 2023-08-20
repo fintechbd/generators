@@ -17,7 +17,7 @@ class $CLASS$ extends Command
      *
      * @var string
      */
-    protected $signature = '$PACKAGE$:$COMMAND_NAME$';
+    protected $name = '$PACKAGE$:$COMMAND_NAME$';
 
     /**
      * The console command description.

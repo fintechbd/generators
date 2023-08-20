@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -46,6 +47,7 @@ class ControllerMakeCommand extends GeneratorCommand
      * Get controller name.
      *
      * @return string
+     * @throws GeneratorException
      */
     public function getDestinationFilePath()
     {
@@ -58,23 +60,25 @@ class ControllerMakeCommand extends GeneratorCommand
 
     /**
      * @return string
+     * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub($this->getStubName(), [
-            'MODULENAME'        => $module->getStudlyName(),
-            'CONTROLLERNAME'    => $this->getControllerName(),
-            'NAMESPACE'         => $module->getStudlyName(),
-            'CLASS_NAMESPACE'   => $this->getClassNamespace($module),
-            'CLASS'             => $this->getControllerNameWithoutNamespace(),
-            'LOWER_NAME'        => $module->getLowerName(),
-            'MODULE'            => $this->getModuleName(),
-            'NAME'              => $this->getModuleName(),
-            'STUDLY_NAME'       => $module->getStudlyName(),
-            'MODULE_NAMESPACE'  => $this->laravel['modules']->config('namespace'),
-        ]))->render();
+            'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'CLASS' => $this->getControllerNameWithoutNamespace(),
+            'MODULE' => $this->getModuleName(),
+            'LOWER_NAME' => Str::lower($this->getModuleName()),
+            'MODULE_NAMESPACE' => config('generators.namespace'),
+            //CRUD Options
+            'RESOURCE' => $this->getResourceName(),
+            'RESOURCE_VARIABLE' => $this->getResourceVariableName(),
+            'IMPORT_REQUEST' => $this->getRequestClass('Import'),
+            'STORE_REQUEST' => $this->getRequestClass('Store'),
+            'UPDATE_REQUEST' => $this->getRequestClass('Update'),
+            'INDEX_REQUEST' => $this->getRequestClass('Index'),
+            ]))->render();
     }
 
     /**
@@ -85,7 +89,7 @@ class ControllerMakeCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['controller', InputArgument::REQUIRED, 'The name of the controller class.'],
+            ['controller', InputArgument::REQUIRED, 'The name of the controller class. Exclude `Controller` suffix.'],
             ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
         ];
     }
@@ -98,7 +102,24 @@ class ControllerMakeCommand extends GeneratorCommand
         return [
             ['plain', 'p', InputOption::VALUE_NONE, 'Generate a plain controller', null],
             ['api', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods from the controller.'],
+            ['crud', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods and add crud code to controller.'],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourceName()
+    {
+        return Str::studly($this->argument('controller'));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourceVariableName()
+    {
+        return Str::camel($this->getResourceName());
     }
 
     /**
@@ -123,7 +144,6 @@ class ControllerMakeCommand extends GeneratorCommand
         return class_basename($this->getControllerName());
     }
 
-
     /**
      * Get the stub file name based on the options
      * @return string
@@ -134,10 +154,17 @@ class ControllerMakeCommand extends GeneratorCommand
             $stub = '/controller-plain.stub';
         } elseif ($this->option('api') === true) {
             $stub = '/controller-api.stub';
+        } elseif ($this->option('crud') === true) {
+            $stub = '/controller-crud.stub';
         } else {
             $stub = '/controller.stub';
         }
 
         return $stub;
+    }
+
+    protected function getRequestClass(string $prefix)
+    {
+        return $prefix . $this->getResourceName() . 'Request';
     }
 }

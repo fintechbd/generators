@@ -50,13 +50,16 @@ abstract class GeneratorCommand extends Command
                 (new FileGenerator($path, $contents))->withFileOverwrite($overwriteFile)->generate();
             });
 
-        } catch (FileAlreadyExistException $e) {
+            return self::SUCCESS;
+
+        }
+        catch (FileAlreadyExistException $e) {
             $this->components->error("File : {$path} already exists.");
 
-            return E_ERROR;
+            return self::FAILURE;
         }
 
-        return 0;
+        return self::FAILURE;
     }
 
     /**

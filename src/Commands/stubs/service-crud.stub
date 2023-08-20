@@ -1,0 +1,95 @@
+<?php
+
+namespace $CLASS_NAMESPACE$;
+
+
+use App\Exceptions\CountryRepositoryException;
+use App\Interfaces\CountryRepository;
+
+/**
+ * Class $CLASS$
+ * @package $CLASS_NAMESPACE$
+ *
+ * @property-read CountryRepository $countryRepository
+ */
+class $CLASS$
+{
+    /**
+     * @var CountryRepository
+     */
+    private CountryRepository $countryRepository;
+
+    /**
+     * $CLASS$ constructor.
+     * @param CountryRepository $countryRepository
+     */
+    public function __construct(private CountryRepository $countryRepository) { }
+
+    /**
+     * @param array $filters
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        try {
+
+            $countryList = $this->countryRepository->list($filters);
+
+            //Do Business Stuff
+
+            return $countryList;
+
+        } catch (CountryRepositoryException $exception) {
+
+        }
+
+        return null;
+    }
+
+    public function create(array $inputs = [])
+    {
+        try {
+
+            $country = $this->countryRepository->create($inputs);
+
+            return $country;
+
+        } catch (CountryRepositoryException $exception) {
+
+        }
+
+        return null;
+    }
+
+    public function read($id)
+    {
+        try {
+            return $this->countryRepository->read($id);
+        } catch (CountryRepositoryException $exception) {
+        }
+    }
+
+    public function update($id, array $inputs = [])
+    {
+        try {
+            return $this->countryRepository->update($id, $inputs);
+        } catch (CountryRepositoryException $exception) {
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            return $this->countryRepository->delete($id);
+        } catch (CountryRepositoryException $exception) {
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            return $this->countryRepository->restore($id);
+        } catch (CountryRepositoryException $exception) {
+        }
+    }
+}
