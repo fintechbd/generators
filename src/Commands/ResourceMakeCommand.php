@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 class ResourceMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
+
     /**
      * The stub file type
      *
@@ -27,12 +28,14 @@ class ResourceMakeCommand extends GeneratorCommand
      * @var string
      */
     protected $argumentName = 'name';
+
     /**
      * The console command name.
      *
      * @var string
      */
     protected $name = 'package:make-resource';
+
     /**
      * The console command description.
      *
@@ -62,18 +65,20 @@ class ResourceMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
         return (new Stub($this->getStubName(), [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getDestinationFilePath()
@@ -82,7 +87,7 @@ class ResourceMakeCommand extends GeneratorCommand
 
         $resourcePath = GenerateConfigReader::read('resource');
 
-        return $path . $resourcePath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$resourcePath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
@@ -95,8 +100,6 @@ class ResourceMakeCommand extends GeneratorCommand
 
     /**
      * Determine if the command is generating a resource collection.
-     *
-     * @return bool
      */
     protected function collection(): bool
     {
@@ -104,9 +107,6 @@ class ResourceMakeCommand extends GeneratorCommand
             Str::endsWith($this->argument('name'), 'Collection');
     }
 
-    /**
-     * @return string
-     */
     protected function getStubName(): string
     {
         if ($this->collection()) {

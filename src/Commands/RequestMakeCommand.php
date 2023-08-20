@@ -71,6 +71,7 @@ class RequestMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getTemplateContents()
@@ -91,7 +92,7 @@ class RequestMakeCommand extends GeneratorCommand
         dump($this->options());
 
         if ($this->option('index')) {
-            return <<<HTML
+            return <<<'HTML'
 'search' => ['string', 'nullable', 'max:255'],
             'per_page' => ['integer', 'nullable', 'min:1', 'max:255'],
             'paginate' => ['boolean'],
@@ -111,7 +112,7 @@ HTML;
     protected function getPaginateTrait()
     {
         if ($this->option('index')) {
-            return 'use Fintech\Core\Traits\HasPaginateQuery;' . PHP_EOL;
+            return 'use Fintech\Core\Traits\HasPaginateQuery;'.PHP_EOL;
         } else {
             return '';
         }
@@ -119,6 +120,7 @@ HTML;
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getDestinationFilePath()
@@ -127,7 +129,7 @@ HTML;
 
         $requestPath = GenerateConfigReader::read('request');
 
-        return $path . $requestPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$requestPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

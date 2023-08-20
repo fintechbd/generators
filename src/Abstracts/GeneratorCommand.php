@@ -52,8 +52,7 @@ abstract class GeneratorCommand extends Command
 
             return self::SUCCESS;
 
-        }
-        catch (FileAlreadyExistException $e) {
+        } catch (FileAlreadyExistException $e) {
             $this->components->error("File : {$path} already exists.");
 
             return self::FAILURE;

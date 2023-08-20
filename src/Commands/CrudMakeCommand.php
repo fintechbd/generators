@@ -10,7 +10,6 @@ use Symfony\Component\Console\Input\InputArgument;
 
 /**
  * Class CrudMakeCommand
- * @package Fintech\Generator\Commands
  */
 class CrudMakeCommand extends Command
 {
@@ -37,9 +36,9 @@ class CrudMakeCommand extends Command
      */
     public function handle()
     {
-//        $this->createRequests();
-//
-//        $this->createResources();
+        //        $this->createRequests();
+        //
+        //        $this->createResources();
 
         $this->createStubFiles();
 
@@ -68,7 +67,7 @@ class CrudMakeCommand extends Command
     {
         foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
             $options = [
-                'name' => $prefix . $this->getResourceName() . 'Request',
+                'name' => $prefix.$this->getResourceName().'Request',
                 'module' => $this->getModuleName(),
             ];
 
@@ -88,11 +87,11 @@ class CrudMakeCommand extends Command
     private function createResources()
     {
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName() . 'Resource'
+            'name' => $this->getResourceName().'Resource',
         ]);
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName() . 'Collection',
-            '--collection'
+            'name' => $this->getResourceName().'Collection',
+            '--collection',
         ]);
     }
 
@@ -100,32 +99,32 @@ class CrudMakeCommand extends Command
     private function createStubFiles()
     {
         Artisan::call('package:make-model', [
-            'name' => $this->getResourceName()
+            'name' => $this->getResourceName(),
         ]);
 
         Artisan::call('package:make-controller', [
             'name' => $this->getResourceName(),
-            '--crud'
+            '--crud',
         ]);
 
         Artisan::call('package:make-service', [
-            'name' => $this->getResourceName() . 'Service'
+            'name' => $this->getResourceName().'Service',
         ]);
 
         Artisan::call('package:make-interface', [
-            'name' => $this->getResourceName() . 'Repository',
-            '--crud'
+            'name' => $this->getResourceName().'Repository',
+            '--crud',
         ]);
     }
 
     private function createRepositories()
     {
         Artisan::call('package:make-repository', [
-            'name' => 'Eloquent/' . $this->getResourceName() . 'Repository'
+            'name' => 'Eloquent/'.$this->getResourceName().'Repository',
         ]);
 
         Artisan::call('package:make-repository', [
-            'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
+            'name' => 'Mongodb/'.$this->getResourceName().'Repository',
         ]);
     }
 }

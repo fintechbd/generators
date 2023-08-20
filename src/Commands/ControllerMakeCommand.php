@@ -47,6 +47,7 @@ class ControllerMakeCommand extends GeneratorCommand
      * Get controller name.
      *
      * @return string
+     *
      * @throws GeneratorException
      */
     public function getDestinationFilePath()
@@ -60,6 +61,7 @@ class ControllerMakeCommand extends GeneratorCommand
 
     /**
      * @return string
+     *
      * @throws GeneratorException
      */
     protected function getTemplateContents()
@@ -78,7 +80,7 @@ class ControllerMakeCommand extends GeneratorCommand
             'STORE_REQUEST' => $this->getRequestClass('Store'),
             'UPDATE_REQUEST' => $this->getRequestClass('Update'),
             'INDEX_REQUEST' => $this->getRequestClass('Index'),
-            ]))->render();
+        ]))->render();
     }
 
     /**
@@ -166,6 +168,6 @@ class ControllerMakeCommand extends GeneratorCommand
 
     protected function getRequestClass(string $prefix)
     {
-        return $prefix . $this->getResourceName() . 'Request';
+        return $prefix.$this->getResourceName().'Request';
     }
 }
