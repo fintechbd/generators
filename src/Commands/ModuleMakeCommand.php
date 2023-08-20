@@ -49,7 +49,7 @@ class ModuleMakeCommand extends Command
                 ->setComponent($this->components)
                 ->setForce($this->option('force'))
                 ->setType($this->getModuleType())
-                ->setActive(!$this->option('disabled'))
+                ->setActive(! $this->option('disabled'))
                 ->generate();
 
             if ($code === E_ERROR) {
@@ -84,10 +84,10 @@ class ModuleMakeCommand extends Command
     }
 
     /**
-    * Get module type .
-    *
-    * @return string
-    */
+     * Get module type .
+     *
+     * @return string
+     */
     private function getModuleType()
     {
         $isPlain = $this->option('plain');

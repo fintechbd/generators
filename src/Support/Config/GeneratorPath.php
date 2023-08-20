@@ -5,7 +5,9 @@ namespace Fintech\Generator\Support\Config;
 class GeneratorPath
 {
     private $path;
+
     private $generate;
+
     private $namespace;
 
     public function __construct($config)

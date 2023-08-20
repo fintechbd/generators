@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 class TestMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
+
     /**
      * The stub file type
      *
@@ -65,7 +66,7 @@ class TestMakeCommand extends GeneratorCommand
 
         return (new Stub($stub, [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -82,7 +83,7 @@ class TestMakeCommand extends GeneratorCommand
             $testPath = GenerateConfigReader::read('test');
         }
 
-        return $path . $testPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$testPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

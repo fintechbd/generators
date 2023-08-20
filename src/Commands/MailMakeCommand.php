@@ -41,7 +41,6 @@ class MailMakeCommand extends GeneratorCommand
      */
     protected $description = 'Create a new email class for the specified module';
 
-
     /**
      * Get the console command arguments.
      *
@@ -81,7 +80,7 @@ class MailMakeCommand extends GeneratorCommand
 
         $mailPath = GenerateConfigReader::read('emails');
 
-        return $path . $mailPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$mailPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

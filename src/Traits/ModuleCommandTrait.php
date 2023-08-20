@@ -10,6 +10,7 @@ trait ModuleCommandTrait
      * Get the module name.
      *
      * @return string
+     *
      * @throws GeneratorException
      */
     public function getModuleName()
@@ -18,7 +19,7 @@ trait ModuleCommandTrait
 
         $module = $this->argument('module');
 
-        if (!$module && file_exists($fallbackPath)) {
+        if (! $module && file_exists($fallbackPath)) {
 
             $fallback = json_decode(file_get_contents($fallbackPath), true);
 
@@ -28,18 +29,17 @@ trait ModuleCommandTrait
             }
         }
 
-        if (!$module) {
+        if (! $module) {
             throw new GeneratorException('Invalid or Missing module name on argument.');
         }
 
         return $module;
     }
 
-
     public function getModulePath(string $module)
     {
         $rootPath = config('generators.paths.modules');
 
-        return $rootPath . '/' . $module . '/';
+        return $rootPath.'/'.$module.'/';
     }
 }

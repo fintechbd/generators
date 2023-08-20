@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class PolicyMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
+
     /**
      * The stub file type
      *
@@ -62,7 +63,7 @@ class PolicyMakeCommand extends GeneratorCommand
 
         return (new Stub('/policy.plain.stub', [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -75,7 +76,7 @@ class PolicyMakeCommand extends GeneratorCommand
 
         $policyPath = GenerateConfigReader::read('policies');
 
-        return $path . $policyPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$policyPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
