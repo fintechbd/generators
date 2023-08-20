@@ -3,8 +3,6 @@
 namespace Fintech\Generator;
 
 use Illuminate\Support\ServiceProvider;
-use Fintech\Generator\Commands\InstallCommand;
-use Fintech\Generator\Commands\GeneratorCommand;
 
 class GeneratorServiceProvider extends ServiceProvider
 {
@@ -43,8 +41,32 @@ class GeneratorServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                InstallCommand::class,
-                GeneratorCommand::class,
+                \Fintech\Generator\Commands\CommandMakeCommand::class,
+                \Fintech\Generator\Commands\ComponentClassMakeCommand::class,
+                \Fintech\Generator\Commands\ComponentViewMakeCommand::class,
+                \Fintech\Generator\Commands\CrudMakeCommand::class,
+                \Fintech\Generator\Commands\ControllerMakeCommand::class,
+                \Fintech\Generator\Commands\EventMakeCommand::class,
+                \Fintech\Generator\Commands\JobMakeCommand::class,
+                \Fintech\Generator\Commands\ListenerMakeCommand::class,
+                \Fintech\Generator\Commands\MailMakeCommand::class,
+                \Fintech\Generator\Commands\MiddlewareMakeCommand::class,
+                \Fintech\Generator\Commands\NotificationMakeCommand::class,
+                \Fintech\Generator\Commands\ProviderMakeCommand::class,
+                \Fintech\Generator\Commands\RouteProviderMakeCommand::class,
+                \Fintech\Generator\Commands\InstallCommand::class,
+                \Fintech\Generator\Commands\ModuleMakeCommand::class,
+                \Fintech\Generator\Commands\FactoryMakeCommand::class,
+                \Fintech\Generator\Commands\PolicyMakeCommand::class,
+                \Fintech\Generator\Commands\RequestMakeCommand::class,
+                \Fintech\Generator\Commands\RuleMakeCommand::class,
+                \Fintech\Generator\Commands\MigrationMakeCommand::class,
+                \Fintech\Generator\Commands\ModelMakeCommand::class,
+                \Fintech\Generator\Commands\SeedMakeCommand::class,
+                \Fintech\Generator\Commands\UnUseCommand::class,
+                \Fintech\Generator\Commands\UseCommand::class,
+                \Fintech\Generator\Commands\ResourceMakeCommand::class,
+                \Fintech\Generator\Commands\TestMakeCommand::class,
             ]);
         }
     }
