@@ -2,9 +2,9 @@
 
 namespace Fintech\Generator\Tests;
 
+use Fintech\Generator\GeneratorServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Fintech\Generator\GeneratorServiceProvider;
 
 class TestCase extends Orchestra
 {

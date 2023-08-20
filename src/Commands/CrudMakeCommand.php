@@ -3,12 +3,11 @@
 namespace Fintech\Generator\Commands;
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class CrudMakeCommand
- * @package Fintech\Generator\Commands
  */
 class CrudMakeCommand extends Command
 {

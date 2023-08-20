@@ -32,11 +32,11 @@ return [
             'views/index' => 'resources/views/index.blade.php',
             'views/master' => 'resources/views/layouts/master.blade.php',
             'scaffold/config' => 'config/config.php',
-//            'composer' => 'composer.json',
-//            'assets/js/app' => 'Resources/assets/js/app.js',
-//            'assets/sass/app' => 'Resources/assets/sass/app.scss',
-//            'vite' => 'vite.config.js',
-//            'package' => 'package.json',
+            //            'composer' => 'composer.json',
+            //            'assets/js/app' => 'Resources/assets/js/app.js',
+            //            'assets/sass/app' => 'Resources/assets/sass/app.scss',
+            //            'vite' => 'vite.config.js',
+            //            'package' => 'package.json',
         ],
         'replacements' => [
             'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
@@ -44,17 +44,17 @@ return [
             'views/index' => ['LOWER_NAME'],
             'views/master' => ['LOWER_NAME', 'STUDLY_NAME'],
             'scaffold/config' => ['STUDLY_NAME'],
-//            'composer' => [
-//                'LOWER_NAME',
-//                'STUDLY_NAME',
-//                'VENDOR',
-//                'AUTHOR_NAME',
-//                'AUTHOR_EMAIL',
-//                'MODULE_NAMESPACE',
-//                'PROVIDER_NAMESPACE',
-//            ],
-//            'vite' => ['LOWER_NAME'],
-//            'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
+            //            'composer' => [
+            //                'LOWER_NAME',
+            //                'STUDLY_NAME',
+            //                'VENDOR',
+            //                'AUTHOR_NAME',
+            //                'AUTHOR_EMAIL',
+            //                'MODULE_NAMESPACE',
+            //                'PROVIDER_NAMESPACE',
+            //            ],
+            //            'vite' => ['LOWER_NAME'],
+            //            'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
         ],
         'gitkeep' => true,
     ],
@@ -82,147 +82,147 @@ return [
             'config' => [
                 'path' => 'config',
                 'generate' => true,
-                'namespace' => null
+                'namespace' => null,
             ],
             'migration' => [
                 'path' => 'database/migrations',
                 'generate' => false,
-                'namespace' => null
+                'namespace' => null,
             ],
             'lang' => [
                 'path' => 'lang',
                 'generate' => true,
-                'namespace' => ''
+                'namespace' => '',
             ],
             'routes' => [
                 'path' => 'routes',
                 'generate' => false,
-                'namespace' => null
+                'namespace' => null,
             ],
             'assets' => [
                 'path' => 'resources/assets',
                 'generate' => false,
-                'namespace' => null
+                'namespace' => null,
             ],
             'views' => [
                 'path' => 'resources/views',
                 'generate' => true,
-                'namespace' => null
+                'namespace' => null,
             ],
             'component-view' => [
                 'path' => 'resources/views/components',
                 'generate' => false,
-                'namespace' => null
+                'namespace' => null,
             ],
             'command' => [
                 'path' => 'src/Commands',
                 'generate' => true,
-                'namespace' => 'Commands'
+                'namespace' => 'Commands',
             ],
             'seeder' => [
                 'path' => 'src/Database/Seeders',
                 'generate' => true,
-                'namespace' => 'Database/Seeders'
+                'namespace' => 'Database/Seeders',
             ],
             'factory' => [
                 'path' => 'src/Database/Factories',
                 'generate' => false,
-                'namespace' => 'Database/Factories'
+                'namespace' => 'Database/Factories',
             ],
             'model' => [
                 'path' => 'src/Models',
                 'generate' => true,
-                'namespace' => 'Models'
+                'namespace' => 'Models',
             ],
             'controller' => [
                 'path' => 'src/Http/Controllers',
                 'generate' => true,
-                'namespace' => 'Http/Controllers'
+                'namespace' => 'Http/Controllers',
             ],
             'filter' => [
                 'path' => 'src/Http/Middleware',
                 'generate' => false,
-                'namespace' => 'Http/Middleware'
+                'namespace' => 'Http/Middleware',
             ],
             'request' => [
                 'path' => 'src/Http/Requests',
                 'generate' => true,
-                'namespace' => 'Http/Requests'
+                'namespace' => 'Http/Requests',
             ],
             'resource' => [
                 'path' => 'src/Http/Resources',
                 'generate' => true,
-                'namespace' => 'Http/Resources'
+                'namespace' => 'Http/Resources',
             ],
             'provider' => [
                 'path' => 'src/Providers',
                 'generate' => true,
-                'namespace' => 'Providers'
+                'namespace' => 'Providers',
             ],
             'repository' => [
                 'path' => 'src/Repositories',
                 'generate' => true,
-                'namespace' => 'Repositories'
+                'namespace' => 'Repositories',
             ],
             'event' => [
                 'path' => 'src/Events',
                 'generate' => false,
-                'namespace' => 'Events'
+                'namespace' => 'Events',
             ],
             'listener' => [
                 'path' => 'src/Listeners',
                 'generate' => false,
-                'namespace' => ''
+                'namespace' => '',
             ],
             'policies' => [
                 'path' => 'src/Policies',
                 'generate' => false,
-                'namespace' => 'Listeners'
+                'namespace' => 'Listeners',
             ],
             'rules' => [
                 'path' => 'src/Rules',
                 'generate' => false,
-                'namespace' => 'Rules'
+                'namespace' => 'Rules',
             ],
             'jobs' => [
                 'path' => 'src/Jobs',
                 'generate' => false,
-                'namespace' => 'Jobs'
+                'namespace' => 'Jobs',
             ],
             'mail' => [
                 'path' => 'src/Mails',
                 'generate' => false,
-                'namespace' => 'Mails'
+                'namespace' => 'Mails',
             ],
             'notification' => [
                 'path' => 'src/Notifications',
                 'generate' => false,
-                'namespace' => 'Notifications'
+                'namespace' => 'Notifications',
             ],
             'service' => [
                 'path' => 'src/Services',
                 'generate' => false,
-                'namespace' => 'Services'
+                'namespace' => 'Services',
             ],
             'interface' => [
                 'path' => 'src/Interfaces',
                 'generate' => false,
-                'namespace' => 'Interfaces'
+                'namespace' => 'Interfaces',
             ],
             'component-class' => [
                 'path' => 'src/View/Components',
                 'generate' => false,
-                'namespace' => 'View/Components'
+                'namespace' => 'View/Components',
             ],
             'test' => [
                 'path' => 'tests/Unit',
                 'generate' => true,
-                'namespace' => 'Tests/Unit'
+                'namespace' => 'Tests/Unit',
             ],
             'test-feature' => [
                 'path' => 'tests/Feature',
                 'generate' => true,
-                'namespace' => 'Tests/Feature'
+                'namespace' => 'Tests/Feature',
             ],
         ],
     ],

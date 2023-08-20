@@ -70,15 +70,16 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
         return (new Stub('/command.stub', [
             'COMMAND_NAME' => $this->getCommandName(),
-            'NAMESPACE'    => $this->getClassNamespace($this->getModuleName()),
-            'CLASS'        => $this->getClass(),
-            'PACKAGE'      => Str::kebab($this->getModuleName())
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'CLASS' => $this->getClass(),
+            'PACKAGE' => Str::kebab($this->getModuleName()),
         ]))->render();
     }
 
@@ -92,6 +93,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws GeneratorException
      */
     protected function getDestinationFilePath()
@@ -100,7 +102,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read('command');
 
-        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

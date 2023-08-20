@@ -53,11 +53,11 @@ class EventMakeCommand extends GeneratorCommand
 
     public function getDestinationFilePath()
     {
-        $path       = $this->getModulePath($this->getModuleName());
+        $path = $this->getModulePath($this->getModuleName());
 
         $eventPath = GenerateConfigReader::read('event');
 
-        return $path . $eventPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$eventPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
@@ -67,7 +67,6 @@ class EventMakeCommand extends GeneratorCommand
     {
         return Str::studly($this->argument('name'));
     }
-
 
     /**
      * Get the console command arguments.

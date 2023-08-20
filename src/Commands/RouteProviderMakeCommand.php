@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 class RouteProviderMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
+
     /**
      * The stub file type
      *
@@ -63,6 +64,7 @@ class RouteProviderMakeCommand extends GeneratorCommand
      * Get template contents.
      *
      * @return string
+     *
      * @throws \Fintech\Generator\Exceptions\GeneratorException
      */
     protected function getTemplateContents()
@@ -70,14 +72,14 @@ class RouteProviderMakeCommand extends GeneratorCommand
         $module = $this->laravel['modules']->findOrFail($this->getModuleName());
 
         return (new Stub('/route-provider.stub', [
-            'NAMESPACE'            => $this->getClassNamespace($module),
-            'CLASS'                => $this->getFileName(),
-            'MODULE_NAMESPACE'     => $this->laravel['modules']->config('namespace'),
-            'MODULE'               => $this->getModuleName(),
+            'NAMESPACE' => $this->getClassNamespace($module),
+            'CLASS' => $this->getFileName(),
+            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
+            'MODULE' => $this->getModuleName(),
             'CONTROLLER_NAMESPACE' => $this->getControllerNameSpace(),
-            'WEB_ROUTES_PATH'      => $this->getWebRoutesPath(),
-            'API_ROUTES_PATH'      => $this->getApiRoutesPath(),
-            'LOWER_NAME'           => $module->getLowerName(),
+            'WEB_ROUTES_PATH' => $this->getWebRoutesPath(),
+            'API_ROUTES_PATH' => $this->getApiRoutesPath(),
+            'LOWER_NAME' => $module->getLowerName(),
         ]))->render();
     }
 
@@ -100,7 +102,7 @@ class RouteProviderMakeCommand extends GeneratorCommand
 
         $generatorPath = GenerateConfigReader::read('provider');
 
-        return $path . $generatorPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$generatorPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
@@ -108,7 +110,7 @@ class RouteProviderMakeCommand extends GeneratorCommand
      */
     protected function getWebRoutesPath()
     {
-        return '/' . $this->laravel['modules']->config('stubs.files.routes/web', 'Routes/web.php');
+        return '/'.$this->laravel['modules']->config('stubs.files.routes/web', 'Routes/web.php');
     }
 
     /**
@@ -116,12 +118,9 @@ class RouteProviderMakeCommand extends GeneratorCommand
      */
     protected function getApiRoutesPath()
     {
-        return '/' . $this->laravel['modules']->config('stubs.files.routes/api', 'Routes/api.php');
+        return '/'.$this->laravel['modules']->config('stubs.files.routes/api', 'Routes/api.php');
     }
 
-    /**
-     * @return string
-     */
     private function getControllerNameSpace(): string
     {
         $module = $this->laravel['modules'];

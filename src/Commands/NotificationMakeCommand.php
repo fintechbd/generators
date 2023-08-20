@@ -29,7 +29,6 @@ class NotificationMakeCommand extends GeneratorCommand
      */
     protected $name = 'package:make-notification';
 
-
     /**
      * The console command description.
      *
@@ -48,7 +47,7 @@ class NotificationMakeCommand extends GeneratorCommand
 
         return (new Stub('/notification.stub', [
             'NAMESPACE' => $this->getClassNamespace($module),
-            'CLASS'     => $this->getClass(),
+            'CLASS' => $this->getClass(),
         ]))->render();
     }
 
@@ -63,7 +62,7 @@ class NotificationMakeCommand extends GeneratorCommand
 
         $notificationPath = GenerateConfigReader::read('notifications');
 
-        return $path . $notificationPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$notificationPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

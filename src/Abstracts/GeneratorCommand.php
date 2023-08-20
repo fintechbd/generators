@@ -38,7 +38,7 @@ abstract class GeneratorCommand extends Command
     {
         $path = str_replace('\\', '/', $this->getDestinationFilePath());
 
-        if (!$this->laravel['files']->isDirectory($dir = dirname($path))) {
+        if (! $this->laravel['files']->isDirectory($dir = dirname($path))) {
             $this->laravel['files']->makeDirectory($dir, 0777, true);
         }
 
@@ -72,23 +72,23 @@ abstract class GeneratorCommand extends Command
     /**
      * Get default namespace.
      *
-     * @param null $type
-     * @return string
+     * @param  null  $type
+     *
      * @throws GeneratorException
      */
     public function getDefaultNamespace($type = null): string
     {
-        if (!$type) {
+        if (! $type) {
             if (property_exists($this, 'type')) {
                 $type = $this->type;
             }
         }
 
-        if (!$type) {
+        if (! $type) {
             throw new GeneratorException('Stub type argument or property is not configured.');
         }
 
-        if (!config("generators.paths.generator.{$type}")) {
+        if (! config("generators.paths.generator.{$type}")) {
             throw new InvalidArgumentException("Generator is missing [{$type}] config, check generators.php file.");
         }
 
@@ -101,9 +101,9 @@ abstract class GeneratorCommand extends Command
     /**
      * Get class namespace.
      *
-     * @param string $module
-     *
+     * @param  string  $module
      * @return string
+     *
      * @throws GeneratorException
      */
     public function getClassNamespace($module)
@@ -114,11 +114,11 @@ abstract class GeneratorCommand extends Command
 
         $namespace = config('generators.namespace');
 
-        $namespace .= '\\' . $module;
+        $namespace .= '\\'.$module;
 
-        $namespace .= '\\' . $this->getDefaultNamespace();
+        $namespace .= '\\'.$this->getDefaultNamespace();
 
-        $namespace .= '\\' . $extra;
+        $namespace .= '\\'.$extra;
 
         $namespace = str_replace('/', '\\', $namespace);
 
