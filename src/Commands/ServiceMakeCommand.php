@@ -82,9 +82,9 @@ class ServiceMakeCommand extends GeneratorCommand
             'REPO_VARIABLE' => Str::camel($this->getRepoName()),
             'REPO' => $this->getRepoName(),
             'REPO_NAMESPACE' => config('generators.namespace')
-                . '\\' . $this->getModuleName()
-                . '\\' . 'Interfaces'
-                . '\\' . $this->getRepoName(),
+                .'\\'.$this->getModuleName()
+                .'\\'.'Interfaces'
+                .'\\'.$this->getRepoName(),
         ]))->render();
     }
 
@@ -92,10 +92,10 @@ class ServiceMakeCommand extends GeneratorCommand
     {
         $repository = $this->option('repository');
 
-        if (!$repository) {
+        if (! $repository) {
             $repository = Str::replace('Service', 'Repository', $this->getClass());
 
-            if (!Str::contains($repository, 'Repository')) {
+            if (! Str::contains($repository, 'Repository')) {
                 $repository .= 'Repository';
             }
         }
@@ -121,7 +121,7 @@ class ServiceMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

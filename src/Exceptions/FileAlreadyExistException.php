@@ -2,10 +2,8 @@
 
 namespace Fintech\Generator\Exceptions;
 
-
 /**
  * Class FileAlreadyExistException
- * @package Fintech\Generator\Exceptions
  */
 class FileAlreadyExistException extends \Exception
 {

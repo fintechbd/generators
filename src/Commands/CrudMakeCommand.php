@@ -44,7 +44,7 @@ class CrudMakeCommand extends Command
             $this->createStubFiles();
 
             $this->createRepositories();
-        }catch (\Throwable $exception) {
+        } catch (\Throwable $exception) {
             $this->error($exception);
         }
 
@@ -73,7 +73,7 @@ class CrudMakeCommand extends Command
     {
         foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
             $options = [
-                'name' => $prefix . $this->getResourceName() . 'Request',
+                'name' => $prefix.$this->getResourceName().'Request',
                 'module' => $this->getModuleName(),
             ];
 
@@ -93,12 +93,12 @@ class CrudMakeCommand extends Command
     private function createResources()
     {
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName() . 'Resource',
+            'name' => $this->getResourceName().'Resource',
             'module' => $this->getModuleName(),
         ]);
 
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName() . 'Collection',
+            'name' => $this->getResourceName().'Collection',
             'module' => $this->getModuleName(),
             '--collection',
         ]);
@@ -119,10 +119,10 @@ class CrudMakeCommand extends Command
         ]);
 
         Artisan::call('package:make-service', [
-            'name' => $this->getResourceName() . 'Service',
+            'name' => $this->getResourceName().'Service',
             'module' => $this->getModuleName(),
             '--crud' => true,
-            '--repository' => $this->getResourceName() . 'Repository',
+            '--repository' => $this->getResourceName().'Repository',
         ]);
 
     }
@@ -130,21 +130,21 @@ class CrudMakeCommand extends Command
     private function createRepositories()
     {
         $options = [
-            'name' => $this->getResourceName() . 'Repository',
+            'name' => $this->getResourceName().'Repository',
             'module' => $this->getModuleName(),
-            '--repository' => $this->getResourceName() . 'RepositoryException',
+            '--repository' => $this->getResourceName().'RepositoryException',
             '--crud' => true,
         ];
 
         Artisan::call('package:make-exception', [
-            'name' => $this->getResourceName() . 'RepositoryException',
+            'name' => $this->getResourceName().'RepositoryException',
             'module' => $this->getModuleName(),
         ]);
 
         Artisan::call('package:make-interface', $options);
 
-//        Artisan::call('package:make-repository', $options);
-//
-//        Artisan::call('package:make-repository', $options);
+        //        Artisan::call('package:make-repository', $options);
+        //
+        //        Artisan::call('package:make-repository', $options);
     }
 }

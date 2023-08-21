@@ -14,7 +14,7 @@ class GeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/generators.php', 'generators'
+            __DIR__.'/../config/generators.php', 'generators'
         );
     }
 
@@ -24,19 +24,19 @@ class GeneratorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/generators.php' => config_path('generators.php'),
+            __DIR__.'/../config/generators.php' => config_path('generators.php'),
         ]);
 
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'generators');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'generators');
 
         $this->publishes([
-            __DIR__ . '/../lang' => $this->app->langPath('vendor/generators'),
+            __DIR__.'/../lang' => $this->app->langPath('vendor/generators'),
         ]);
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'generators');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'generators');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/generators'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/generators'),
         ]);
 
         if ($this->app->runningInConsole()) {

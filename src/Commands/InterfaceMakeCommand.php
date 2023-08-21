@@ -87,9 +87,9 @@ class InterfaceMakeCommand extends GeneratorCommand
     private function getExceptNamespace($class)
     {
         return config('generators.namespace')
-            . '\\' . $this->getModuleName()
-            . '\\' . config('generators.paths.generator.exception.namespace')
-            . '\\' . $class;
+            .'\\'.$this->getModuleName()
+            .'\\'.config('generators.paths.generator.exception.namespace')
+            .'\\'.$class;
     }
 
     private function getExceptionClassName()
@@ -98,13 +98,13 @@ class InterfaceMakeCommand extends GeneratorCommand
 
             $repository = $this->option('repository');
 
-            if (!$repository) {
+            if (! $repository) {
                 $repository = (Str::contains($this->getClass(), 'Repository', true))
                     ? $this->getClass()
-                    : $this->getClass() . 'Repository';
+                    : $this->getClass().'Repository';
             }
 
-            if (!Str::contains($repository, 'Exception')) {
+            if (! Str::contains($repository, 'Exception')) {
                 $repository .= 'Exception';
             }
 
@@ -132,7 +132,7 @@ class InterfaceMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**

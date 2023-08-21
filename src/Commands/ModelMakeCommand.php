@@ -170,6 +170,7 @@ class ModelMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws \Fintech\Generator\Exceptions\GeneratorException
      */
     protected function getTemplateContents()
@@ -188,6 +189,7 @@ class ModelMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     *
      * @throws \Fintech\Generator\Exceptions\GeneratorException
      */
     protected function getDestinationFilePath()
