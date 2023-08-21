@@ -3,9 +3,10 @@
 namespace $NAMESPACE$;
 
 /**
- * Class $CLASS$
+ * Interface $INTERFACE$
  * @package $NAMESPACE$
  */
-class $CLASS$
+interface $INTERFACE$
 {
+
 }

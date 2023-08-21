@@ -36,11 +36,17 @@ class CrudMakeCommand extends Command
      */
     public function handle()
     {
-        //        $this->createRequests();
-        //
-        //        $this->createResources();
+        try {
+            $this->createRequests();
 
-        $this->createStubFiles();
+            $this->createResources();
+
+            $this->createStubFiles();
+
+            $this->createRepositories();
+        }catch (\Throwable $exception) {
+            $this->error($exception);
+        }
 
     }
 
@@ -67,7 +73,7 @@ class CrudMakeCommand extends Command
     {
         foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
             $options = [
-                'name' => $prefix.$this->getResourceName().'Request',
+                'name' => $prefix . $this->getResourceName() . 'Request',
                 'module' => $this->getModuleName(),
             ];
 
@@ -87,10 +93,13 @@ class CrudMakeCommand extends Command
     private function createResources()
     {
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName().'Resource',
+            'name' => $this->getResourceName() . 'Resource',
+            'module' => $this->getModuleName(),
         ]);
+
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName().'Collection',
+            'name' => $this->getResourceName() . 'Collection',
+            'module' => $this->getModuleName(),
             '--collection',
         ]);
     }
@@ -98,33 +107,44 @@ class CrudMakeCommand extends Command
     //Create Controller,Model,Service and Interface etc.
     private function createStubFiles()
     {
-        Artisan::call('package:make-model', [
-            'name' => $this->getResourceName(),
+        Artisan::call('package:make-controller', [
+            'controller' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+            '--crud' => true,
         ]);
 
-        Artisan::call('package:make-controller', [
-            'name' => $this->getResourceName(),
-            '--crud',
+        Artisan::call('package:make-model', [
+            'model' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
         ]);
 
         Artisan::call('package:make-service', [
-            'name' => $this->getResourceName().'Service',
+            'name' => $this->getResourceName() . 'Service',
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+            '--repository' => $this->getResourceName() . 'Repository',
         ]);
 
-        Artisan::call('package:make-interface', [
-            'name' => $this->getResourceName().'Repository',
-            '--crud',
-        ]);
     }
 
     private function createRepositories()
     {
-        Artisan::call('package:make-repository', [
-            'name' => 'Eloquent/'.$this->getResourceName().'Repository',
+        $options = [
+            'name' => $this->getResourceName() . 'Repository',
+            'module' => $this->getModuleName(),
+            '--repository' => $this->getResourceName() . 'RepositoryException',
+            '--crud' => true,
+        ];
+
+        Artisan::call('package:make-exception', [
+            'name' => $this->getResourceName() . 'RepositoryException',
+            'module' => $this->getModuleName(),
         ]);
 
-        Artisan::call('package:make-repository', [
-            'name' => 'Mongodb/'.$this->getResourceName().'Repository',
-        ]);
+        Artisan::call('package:make-interface', $options);
+
+//        Artisan::call('package:make-repository', $options);
+//
+//        Artisan::call('package:make-repository', $options);
     }
 }

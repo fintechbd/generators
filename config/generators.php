@@ -139,6 +139,11 @@ return [
                 'generate' => true,
                 'namespace' => 'Http/Controllers',
             ],
+            'exception' => [
+                'path' => 'src/Exceptions',
+                'generate' => false,
+                'namespace' => 'Exceptions',
+            ],
             'filter' => [
                 'path' => 'src/Http/Middleware',
                 'generate' => false,

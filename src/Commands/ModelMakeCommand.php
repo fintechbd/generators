@@ -170,31 +170,31 @@ class ModelMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     * @throws \Fintech\Generator\Exceptions\GeneratorException
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
-
         return (new Stub('/model.stub', [
             'NAME' => $this->getModelName(),
             'FILLABLE' => $this->getFillable(),
-            'NAMESPACE' => $this->getClassNamespace($module),
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
-            'LOWER_NAME' => $module->getLowerName(),
+            'LOWER_NAME' => Str::lower($this->getModuleName()),
             'MODULE' => $this->getModuleName(),
-            'STUDLY_NAME' => $module->getStudlyName(),
-            'MODULE_NAMESPACE' => $this->laravel['modules']->config('namespace'),
+            'STUDLY_NAME' => $this->getModuleName(),
+            'MODULE_NAMESPACE' => config('generators.namespace'),
         ]))->render();
     }
 
     /**
      * @return mixed
+     * @throws \Fintech\Generator\Exceptions\GeneratorException
      */
     protected function getDestinationFilePath()
     {
         $path = $this->getModulePath($this->getModuleName());
 
-        $modelPath = GenerateConfigReader::read('model');
+        $modelPath = GenerateConfigReader::read($this->type);
 
         return $path.$modelPath->getPath().'/'.$this->getModelName().'.php';
     }

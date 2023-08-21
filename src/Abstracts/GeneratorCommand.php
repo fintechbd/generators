@@ -74,8 +74,9 @@ abstract class GeneratorCommand extends Command
     /**
      * Get default namespace.
      *
-     * @param  null  $type
+     * @param null $type
      *
+     * @return string
      * @throws GeneratorException
      */
     public function getDefaultNamespace($type = null): string

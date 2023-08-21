@@ -1,29 +1,23 @@
 <?php
 
-namespace $CLASS_NAMESPACE$;
+namespace $NAMESPACE$;
 
 
-use App\Exceptions\CountryRepositoryException;
-use App\Interfaces\CountryRepository;
+use $REPO_NAMESPACE$;
 
 /**
  * Class $CLASS$
- * @package $CLASS_NAMESPACE$
+ * @package $NAMESPACE$
  *
- * @property-read CountryRepository $countryRepository
+ * @property-read $REPO$ $$REPO_VARIABLE$
  */
 class $CLASS$
 {
     /**
-     * @var CountryRepository
-     */
-    private CountryRepository $countryRepository;
-
-    /**
      * $CLASS$ constructor.
-     * @param CountryRepository $countryRepository
+     * @param $REPO$ $$REPO_VARIABLE$
      */
-    public function __construct(private CountryRepository $countryRepository) { }
+    public function __construct(private $REPO$ $$REPO_VARIABLE$) { }
 
     /**
      * @param array $filters
@@ -31,65 +25,36 @@ class $CLASS$
      */
     public function list(array $filters = [])
     {
-        try {
+        $countryList = $this->$REPO_VARIABLE$->list($filters);
 
-            $countryList = $this->countryRepository->list($filters);
+        //Do Business Stuff
 
-            //Do Business Stuff
+        return $countryList;
 
-            return $countryList;
-
-        } catch (CountryRepositoryException $exception) {
-
-        }
-
-        return null;
     }
 
     public function create(array $inputs = [])
     {
-        try {
-
-            $country = $this->countryRepository->create($inputs);
-
-            return $country;
-
-        } catch (CountryRepositoryException $exception) {
-
-        }
-
-        return null;
+        return $this->$REPO_VARIABLE$->create($inputs);
     }
 
     public function read($id)
     {
-        try {
-            return $this->countryRepository->read($id);
-        } catch (CountryRepositoryException $exception) {
-        }
+        $this->$REPO_VARIABLE$->read($id);
     }
 
     public function update($id, array $inputs = [])
     {
-        try {
-            return $this->countryRepository->update($id, $inputs);
-        } catch (CountryRepositoryException $exception) {
-        }
+        return $this->$REPO_VARIABLE$->update($id, $inputs);
     }
 
     public function destroy($id)
     {
-        try {
-            return $this->countryRepository->delete($id);
-        } catch (CountryRepositoryException $exception) {
-        }
+        return $this->$REPO_VARIABLE$->delete($id);
     }
 
     public function restore($id)
     {
-        try {
-            return $this->countryRepository->restore($id);
-        } catch (CountryRepositoryException $exception) {
-        }
+        return $this->$REPO_VARIABLE$->restore($id);
     }
 }

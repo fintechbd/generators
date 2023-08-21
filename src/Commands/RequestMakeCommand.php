@@ -89,8 +89,6 @@ class RequestMakeCommand extends GeneratorCommand
      */
     protected function getRules()
     {
-        dump($this->options());
-
         if ($this->option('index')) {
             return <<<'HTML'
 'search' => ['string', 'nullable', 'max:255'],

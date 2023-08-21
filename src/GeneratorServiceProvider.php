@@ -14,7 +14,7 @@ class GeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/generators.php', 'generators'
+            __DIR__ . '/../config/generators.php', 'generators'
         );
     }
 
@@ -24,19 +24,19 @@ class GeneratorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/generators.php' => config_path('generators.php'),
+            __DIR__ . '/../config/generators.php' => config_path('generators.php'),
         ]);
 
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'generators');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'generators');
 
         $this->publishes([
-            __DIR__.'/../lang' => $this->app->langPath('vendor/generators'),
+            __DIR__ . '/../lang' => $this->app->langPath('vendor/generators'),
         ]);
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'generators');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'generators');
 
         $this->publishes([
-            __DIR__.'/../resources/views' => resource_path('views/vendor/generators'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/generators'),
         ]);
 
         if ($this->app->runningInConsole()) {
@@ -47,6 +47,8 @@ class GeneratorServiceProvider extends ServiceProvider
                 \Fintech\Generator\Commands\CrudMakeCommand::class,
                 \Fintech\Generator\Commands\ControllerMakeCommand::class,
                 \Fintech\Generator\Commands\EventMakeCommand::class,
+                \Fintech\Generator\Commands\ExceptionMakeCommand::class,
+                \Fintech\Generator\Commands\InterfaceMakeCommand::class,
                 \Fintech\Generator\Commands\JobMakeCommand::class,
                 \Fintech\Generator\Commands\ListenerMakeCommand::class,
                 \Fintech\Generator\Commands\MailMakeCommand::class,
@@ -63,6 +65,7 @@ class GeneratorServiceProvider extends ServiceProvider
                 \Fintech\Generator\Commands\MigrationMakeCommand::class,
                 \Fintech\Generator\Commands\ModelMakeCommand::class,
                 \Fintech\Generator\Commands\SeedMakeCommand::class,
+                \Fintech\Generator\Commands\ServiceMakeCommand::class,
                 \Fintech\Generator\Commands\UnUseCommand::class,
                 \Fintech\Generator\Commands\UseCommand::class,
                 \Fintech\Generator\Commands\ResourceMakeCommand::class,

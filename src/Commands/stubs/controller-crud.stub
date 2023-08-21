@@ -57,7 +57,7 @@ class $CLASS$ extends Controller
 
             $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->list($inputs);
 
-            return new $RESOURCE$Collection($RESOURCE_VARIABLE$Paginate);
+            return new $RESOURCE$Collection($$RESOURCE_VARIABLE$Paginate);
 
         } catch (\Exception $exception) {
 

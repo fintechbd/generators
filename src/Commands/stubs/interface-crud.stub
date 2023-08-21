@@ -1,0 +1,74 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
+//use Jenssegers\Mongodb\Eloquent\Model as MongodbModel;
+use $EXCEPTION_NAMESPACE$;
+
+/**
+ * Interface $INTERFACE$
+ * @package $NAMESPACE$
+ */
+interface $INTERFACE$
+{
+    /**
+     * return a list or pagination of items from
+     * filtered options
+     *
+     * @param array $filters
+     * @return LengthAwarePaginator|Builder[]|Collection
+     */
+    public function list(array $filters = []);
+
+    /**
+     * Create a new entry resource
+     *
+     * @param array $attributes
+     * @return EloquentModel|MongodbModel|null
+     * @throws $EXCEPTION$
+     */
+    public function create(array $attributes = []);
+
+    /**
+     * find and update a resource attributes
+     *
+     * @param int|string $id
+     * @param array $attributes
+     * @return EloquentModel|MongodbModel|null
+     * @throws $EXCEPTION$
+     */
+    public function update(int|string $id, array $attributes = []);
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param string|int $id
+     * @param bool $onlyTrashed
+     * @return EloquentModel|MongodbModel|null
+     * @throws $EXCEPTION$
+     */
+    public function read(int|string $id, $onlyTrashed = false);
+
+    /**
+     * find and delete a entry from records
+     *
+     * @param string|int $id
+     * @return bool|null
+     * @throws $EXCEPTION$
+     */
+    public function delete(int|string $id):?bool;
+
+    /**
+     * find and restore a entry from records
+     *
+     * @param string|int $id
+     * @return bool|null
+     * @throws \InvalidArgumentException
+     * @throws $EXCEPTION$
+     */
+    public function restore(int|string $id):?bool;
+}

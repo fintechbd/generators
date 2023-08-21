@@ -51,7 +51,7 @@ class InterfaceMakeCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the command.'],
+            ['name', InputArgument::REQUIRED, 'The name of the interface.'],
             ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
         ];
     }
@@ -64,7 +64,8 @@ class InterfaceMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null],
+            ['crud', null, InputOption::VALUE_NONE, 'If this will be a crud repo interface.', null],
+            ['repository', '-r', InputOption::VALUE_OPTIONAL, 'The repository exception that should be assigned.', null],
         ];
     }
 
@@ -75,20 +76,49 @@ class InterfaceMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-        return (new Stub('/command.stub', [
-            'COMMAND_NAME' => $this->getCommandName(),
+        return (new Stub($this->getStub(), [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
-            'CLASS' => $this->getClass(),
-            'PACKAGE' => Str::kebab($this->getModuleName()),
+            'INTERFACE' => $this->getClass(),
+            'EXCEPTION' => $this->getExceptionClassName(),
+            'EXCEPTION_NAMESPACE' => $this->getExceptNamespace($this->getExceptionClassName()),
         ]))->render();
     }
 
-    /**
-     * @return string
-     */
-    private function getCommandName()
+    private function getExceptNamespace($class)
     {
-        return $this->option('command') ?: Str::kebab($this->argument('name'));
+        return config('generators.namespace')
+            . '\\' . $this->getModuleName()
+            . '\\' . config('generators.paths.generator.exception.namespace')
+            . '\\' . $class;
+    }
+
+    private function getExceptionClassName()
+    {
+        if ($this->option('crud')) {
+
+            $repository = $this->option('repository');
+
+            if (!$repository) {
+                $repository = (Str::contains($this->getClass(), 'Repository', true))
+                    ? $this->getClass()
+                    : $this->getClass() . 'Repository';
+            }
+
+            if (!Str::contains($repository, 'Exception')) {
+                $repository .= 'Exception';
+            }
+
+            return $repository;
+        }
+
+        return '';
+    }
+
+    private function getStub()
+    {
+        return ($this->option('crud'))
+            ? '/interface-crud.stub'
+            : '/interface.stub';
     }
 
     /**
@@ -100,9 +130,9 @@ class InterfaceMakeCommand extends GeneratorCommand
     {
         $path = $this->getModulePath($this->getModuleName());
 
-        $commandPath = GenerateConfigReader::read('command');
+        $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

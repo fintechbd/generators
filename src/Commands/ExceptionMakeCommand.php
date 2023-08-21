@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class CommandMakeCommand extends GeneratorCommand
+class ExceptionMakeCommand extends GeneratorCommand
 {
     use ModuleCommandTrait;
 
@@ -20,7 +20,7 @@ class CommandMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'command';
+    protected $type = 'exception';
 
     /**
      * The name of argument name.
@@ -34,14 +34,14 @@ class CommandMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'package:make-command';
+    protected $name = 'package:make-exception';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generate new Artisan command for the specified package.';
+    protected $description = 'Generate new Exception for the specified package.';
 
     /**
      * Get the console command arguments.
@@ -51,20 +51,8 @@ class CommandMakeCommand extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the command.'],
+            ['name', InputArgument::REQUIRED, 'The name of the exception class.'],
             ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null],
         ];
     }
 
@@ -75,20 +63,10 @@ class CommandMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-        return (new Stub('/command.stub', [
-            'COMMAND_NAME' => $this->getCommandName(),
+        return (new Stub('/exception.stub', [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
-            'PACKAGE' => Str::kebab($this->getModuleName()),
         ]))->render();
-    }
-
-    /**
-     * @return string
-     */
-    private function getCommandName()
-    {
-        return $this->option('command') ?: Str::kebab($this->argument('name'));
     }
 
     /**

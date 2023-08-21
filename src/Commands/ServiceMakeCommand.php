@@ -64,7 +64,8 @@ class ServiceMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null],
+            ['crud', null, InputOption::VALUE_NONE, 'if the service class will have crud code.', null],
+            ['repository', null, InputOption::VALUE_REQUIRED, 'the repository interface.', null],
         ];
     }
 
@@ -75,20 +76,38 @@ class ServiceMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-        return (new Stub('/command.stub', [
-            'COMMAND_NAME' => $this->getCommandName(),
+        return (new Stub($this->getStub(), [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
-            'PACKAGE' => Str::kebab($this->getModuleName()),
+            'REPO_VARIABLE' => Str::camel($this->getRepoName()),
+            'REPO' => $this->getRepoName(),
+            'REPO_NAMESPACE' => config('generators.namespace')
+                . '\\' . $this->getModuleName()
+                . '\\' . 'Interfaces'
+                . '\\' . $this->getRepoName(),
         ]))->render();
     }
 
-    /**
-     * @return string
-     */
-    private function getCommandName()
+    protected function getRepoName()
     {
-        return $this->option('command') ?: Str::kebab($this->argument('name'));
+        $repository = $this->option('repository');
+
+        if (!$repository) {
+            $repository = Str::replace('Service', 'Repository', $this->getClass());
+
+            if (!Str::contains($repository, 'Repository')) {
+                $repository .= 'Repository';
+            }
+        }
+
+        return $repository;
+    }
+
+    private function getStub()
+    {
+        return ($this->option('crud'))
+            ? '/service-crud.stub'
+            : '/service.stub';
     }
 
     /**
@@ -100,9 +119,9 @@ class ServiceMakeCommand extends GeneratorCommand
     {
         $path = $this->getModulePath($this->getModuleName());
 
-        $commandPath = GenerateConfigReader::read('command');
+        $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**
