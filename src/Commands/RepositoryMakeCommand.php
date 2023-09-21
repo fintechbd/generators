@@ -41,7 +41,7 @@ class RepositoryMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $description = 'Generate new Service for the specified package.';
+    protected $description = 'Generate new repository for the specified package.';
 
     /**
      * Get the console command arguments.
@@ -64,7 +64,8 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['command', null, InputOption::VALUE_OPTIONAL, 'The terminal command that should be assigned.', null],
+            ['crud', null, InputOption::VALUE_NONE, 'The terminal command that should be assigned.'],
+            ['repository', null, InputOption::VALUE_REQUIRED, 'The terminal command that should be assigned.'],
         ];
     }
 
@@ -75,20 +76,40 @@ class RepositoryMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-        return (new Stub('/command.stub', [
-            'COMMAND_NAME' => $this->getCommandName(),
-            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+        $replacements = [
+            'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
-            'PACKAGE' => Str::kebab($this->getModuleName()),
-        ]))->render();
+            'LOWER_MODULE' => Str::lower($this->getModuleName()),
+            'MODULE' => $this->getModuleName(),
+            'NAMESPACE' => config('generators.namespace'),
+            'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
+            'EXCEPTION' => $this->getClass() . 'Exception',
+        ];
+
+
+        return (new Stub($this->getStub(), $replacements))->render();
     }
 
-    /**
-     * @return string
-     */
-    private function getCommandName()
+
+    private function setExceptionNS()
     {
-        return $this->option('command') ?: Str::kebab($this->argument('name'));
+
+        $ns = 'use ' . config('generators.namespace')
+            . '/' . $this->getModuleName()
+            . '/' . 'Exceptions'
+            . '/' . $this->argument($this->argumentName)
+            . ';';
+
+        return implode('\\', explode('/', $ns));
+
+    }
+
+
+    protected function getStub()
+    {
+        return ($this->option('crud'))
+            ? '/repository-crud.stub'
+            : '/repository.stub';
     }
 
     /**
@@ -100,9 +121,9 @@ class RepositoryMakeCommand extends GeneratorCommand
     {
         $path = $this->getModulePath($this->getModuleName());
 
-        $commandPath = GenerateConfigReader::read('command');
+        $commandPath = GenerateConfigReader::read('repository');
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

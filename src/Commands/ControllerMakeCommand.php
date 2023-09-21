@@ -56,7 +56,7 @@ class ControllerMakeCommand extends GeneratorCommand
 
         $controllerPath = GenerateConfigReader::read($this->type);
 
-        return $path.$controllerPath->getPath().'/'.$this->getControllerName().'.php';
+        return $path . $controllerPath->getPath() . '/' . $this->getControllerName() . '.php';
     }
 
     /**
@@ -66,8 +66,7 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     protected function getTemplateContents()
     {
-
-        return (new Stub($this->getStubName(), [
+        $replacements = [
             'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getControllerNameWithoutNamespace(),
             'MODULE' => $this->getModuleName(),
@@ -76,11 +75,47 @@ class ControllerMakeCommand extends GeneratorCommand
             //CRUD Options
             'RESOURCE' => $this->getResourceName(),
             'RESOURCE_VARIABLE' => $this->getResourceVariableName(),
-            'IMPORT_REQUEST' => $this->getRequestClass('Import'),
-            'STORE_REQUEST' => $this->getRequestClass('Store'),
-            'UPDATE_REQUEST' => $this->getRequestClass('Update'),
-            'INDEX_REQUEST' => $this->getRequestClass('Index'),
-        ]))->render();
+            'RESOURCE_NAMESPACES' => '',
+            'REQUEST_NAMESPACES' => '',
+            'IMPORT_REQUEST' => basename($this->getClassPath('Import')),
+            'STORE_REQUEST' => basename($this->getClassPath('Store')),
+            'UPDATE_REQUEST' => basename($this->getClassPath('Update')),
+            'INDEX_REQUEST' => basename($this->getClassPath('Index')),
+        ];
+
+        $this->setRequestNamespaces($replacements);
+
+        $this->setResourceNamespaces($replacements);
+
+
+        return (new Stub($this->getStubName(), $replacements))->render();
+    }
+
+
+    private function setRequestNamespaces(array &$replacements)
+    {
+        $namespaces = [];
+
+        foreach (['Import', 'Store', 'Update', 'Index'] as $prefix) {
+            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Requests/' . $this->getClassPath($prefix);
+            $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
+
+        }
+
+        $replacements['REQUEST_NAMESPACES'] = implode("\n", $namespaces);
+    }
+
+    private function setResourceNamespaces(array &$replacements)
+    {
+        $namespaces = [];
+
+        foreach (['Resource', 'Collection'] as $suffix) {
+            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Resources/' . $this->getClassPath('', $suffix);
+            $namespaces[]= ('use ' . implode('\\', explode('/', $path)) . ';');
+
+        }
+
+        $replacements['RESOURCE_NAMESPACES'] = implode("\n", $namespaces);
     }
 
     /**
@@ -113,7 +148,7 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     protected function getResourceName()
     {
-        return Str::studly($this->argument('controller'));
+        return Str::studly(basename($this->argument('controller')));
     }
 
     /**
@@ -121,7 +156,7 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     protected function getResourceVariableName()
     {
-        return Str::camel($this->getResourceName());
+        return Str::camel(basename($this->getResourceName()));
     }
 
     /**
@@ -166,8 +201,16 @@ class ControllerMakeCommand extends GeneratorCommand
         return $stub;
     }
 
-    protected function getRequestClass(string $prefix)
+    protected function getClassPath(string $prefix = '', string $suffix = 'Request')
     {
-        return $prefix.$this->getResourceName().'Request';
+        $resourcePath = $this->argument('controller') . $suffix;
+
+        $dir = dirname($resourcePath);
+
+        $dir = ($dir == '.') ? '' : $dir . '/';
+
+        $resource = basename($resourcePath);
+
+        return $dir . $prefix . $resource;
     }
 }

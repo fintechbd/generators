@@ -79,17 +79,20 @@ class InterfaceMakeCommand extends GeneratorCommand
         return (new Stub($this->getStub(), [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'INTERFACE' => $this->getClass(),
-            'EXCEPTION' => $this->getExceptionClassName(),
+            'EXCEPTION' => basename($this->getExceptionClassName()),
             'EXCEPTION_NAMESPACE' => $this->getExceptNamespace($this->getExceptionClassName()),
         ]))->render();
     }
 
     private function getExceptNamespace($class)
     {
-        return config('generators.namespace')
-            .'\\'.$this->getModuleName()
-            .'\\'.config('generators.paths.generator.exception.namespace')
-            .'\\'.$class;
+        $ns = config('generators.namespace')
+            .'/'.$this->getModuleName()
+            .'/'.config('generators.paths.generator.exception.namespace')
+            .'/'.$class;
+
+        return implode('\\', explode('/', $ns));
+
     }
 
     private function getExceptionClassName()

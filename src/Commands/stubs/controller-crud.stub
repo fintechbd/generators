@@ -8,12 +8,8 @@ use Fintech\Core\Exceptions\ResourceNotFoundException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Resources\$RESOURCE$Collection;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Resources\$RESOURCE$Resource;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Requests\$IMPORT_REQUEST$;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Requests\$INDEX_REQUEST$;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Requests\$STORE_REQUEST$;
-use $MODULE_NAMESPACE$\$MODULE$\Http\Requests\$UPDATE_REQUEST$;
+$RESOURCE_NAMESPACES$
+$REQUEST_NAMESPACES$
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
@@ -273,7 +269,7 @@ class $CLASS$ extends Controller
      * @lrd:end
      *
      * @param $IMPORT_REQUEST$ $request
-     * @return JsonResponse
+     * @return $RESOURCE$Collection|JsonResponse
      */
     public function import($IMPORT_REQUEST$ $request): JsonResponse
     {

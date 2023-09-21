@@ -40,7 +40,7 @@ class $CLASS$
 
     public function read($id)
     {
-        $this->$REPO_VARIABLE$->read($id);
+        return $this->$REPO_VARIABLE$->read($id);
     }
 
     public function update($id, array $inputs = [])

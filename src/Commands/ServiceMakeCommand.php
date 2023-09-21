@@ -79,13 +79,21 @@ class ServiceMakeCommand extends GeneratorCommand
         return (new Stub($this->getStub(), [
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
-            'REPO_VARIABLE' => Str::camel($this->getRepoName()),
-            'REPO' => $this->getRepoName(),
-            'REPO_NAMESPACE' => config('generators.namespace')
-                .'\\'.$this->getModuleName()
-                .'\\'.'Interfaces'
-                .'\\'.$this->getRepoName(),
+            'REPO_VARIABLE' => Str::camel(basename($this->getRepoName())),
+            'REPO' => basename($this->getRepoName()),
+            'REPO_NAMESPACE' => $this->getRepoNS(),
         ]))->render();
+    }
+
+    private function getRepoNS()
+    {
+        $ns = config('generators.namespace')
+            .'/'.$this->getModuleName()
+            .'/'.'Interfaces'
+            .'/'.$this->getRepoName();
+
+        return implode('\\', explode('/', $ns));
+
     }
 
     protected function getRepoName()

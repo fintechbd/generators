@@ -36,6 +36,7 @@ abstract class GeneratorCommand extends Command
      */
     public function handle(): int
     {
+
         $path = str_replace('\\', '/', $this->getDestinationFilePath());
 
         if (! $this->laravel['files']->isDirectory($dir = dirname($path))) {
@@ -74,8 +75,9 @@ abstract class GeneratorCommand extends Command
     /**
      * Get default namespace.
      *
-     * @param  null  $type
+     * @param null $type
      *
+     * @return string
      * @throws GeneratorException
      */
     public function getDefaultNamespace($type = null): string

@@ -110,7 +110,7 @@ HTML;
     protected function getPaginateTrait()
     {
         if ($this->option('index')) {
-            return 'use Fintech\Core\Traits\HasPaginateQuery;'.PHP_EOL;
+            return 'use \Fintech\Core\Traits\HasPaginateQuery;'.PHP_EOL;
         } else {
             return '';
         }

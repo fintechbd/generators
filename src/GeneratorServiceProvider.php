@@ -14,7 +14,7 @@ class GeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/generators.php', 'generators'
+            __DIR__.'/../config/generators.php', 'fintech.generators'
         );
     }
 
@@ -24,7 +24,7 @@ class GeneratorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/generators.php' => config_path('generators.php'),
+            __DIR__.'/../config/generators.php' => config_path('fintech/generators.php'),
         ]);
 
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'generators');
@@ -61,6 +61,7 @@ class GeneratorServiceProvider extends ServiceProvider
                 \Fintech\Generator\Commands\FactoryMakeCommand::class,
                 \Fintech\Generator\Commands\PolicyMakeCommand::class,
                 \Fintech\Generator\Commands\RequestMakeCommand::class,
+                \Fintech\Generator\Commands\RepositoryMakeCommand::class,
                 \Fintech\Generator\Commands\RuleMakeCommand::class,
                 \Fintech\Generator\Commands\MigrationMakeCommand::class,
                 \Fintech\Generator\Commands\ModelMakeCommand::class,
