@@ -56,7 +56,7 @@ class ControllerMakeCommand extends GeneratorCommand
 
         $controllerPath = GenerateConfigReader::read($this->type);
 
-        return $path . $controllerPath->getPath() . '/' . $this->getControllerName() . '.php';
+        return $path.$controllerPath->getPath().'/'.$this->getControllerName().'.php';
     }
 
     /**
@@ -87,18 +87,16 @@ class ControllerMakeCommand extends GeneratorCommand
 
         $this->setResourceNamespaces($replacements);
 
-
         return (new Stub($this->getStubName(), $replacements))->render();
     }
-
 
     private function setRequestNamespaces(array &$replacements)
     {
         $namespaces = [];
 
         foreach (['Import', 'Store', 'Update', 'Index'] as $prefix) {
-            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Requests/' . $this->getClassPath($prefix);
-            $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
+            $path = $replacements['MODULE_NAMESPACE'].'/'.$replacements['MODULE'].'/Http/Requests/'.$this->getClassPath($prefix);
+            $namespaces[] = ('use '.implode('\\', explode('/', $path)).';');
 
         }
 
@@ -110,8 +108,8 @@ class ControllerMakeCommand extends GeneratorCommand
         $namespaces = [];
 
         foreach (['Resource', 'Collection'] as $suffix) {
-            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Resources/' . $this->getClassPath('', $suffix);
-            $namespaces[]= ('use ' . implode('\\', explode('/', $path)) . ';');
+            $path = $replacements['MODULE_NAMESPACE'].'/'.$replacements['MODULE'].'/Http/Resources/'.$this->getClassPath('', $suffix);
+            $namespaces[] = ('use '.implode('\\', explode('/', $path)).';');
 
         }
 
@@ -203,14 +201,14 @@ class ControllerMakeCommand extends GeneratorCommand
 
     protected function getClassPath(string $prefix = '', string $suffix = 'Request')
     {
-        $resourcePath = $this->argument('controller') . $suffix;
+        $resourcePath = $this->argument('controller').$suffix;
 
         $dir = dirname($resourcePath);
 
-        $dir = ($dir == '.') ? '' : $dir . '/';
+        $dir = ($dir == '.') ? '' : $dir.'/';
 
         $resource = basename($resourcePath);
 
-        return $dir . $prefix . $resource;
+        return $dir.$prefix.$resource;
     }
 }

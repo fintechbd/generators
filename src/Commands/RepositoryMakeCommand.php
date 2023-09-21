@@ -83,27 +83,24 @@ class RepositoryMakeCommand extends GeneratorCommand
             'MODULE' => $this->getModuleName(),
             'NAMESPACE' => config('generators.namespace'),
             'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
-            'EXCEPTION' => $this->getClass() . 'Exception',
+            'EXCEPTION' => $this->getClass().'Exception',
         ];
-
 
         return (new Stub($this->getStub(), $replacements))->render();
     }
 
-
     private function setExceptionNS()
     {
 
-        $ns = 'use ' . config('generators.namespace')
-            . '/' . $this->getModuleName()
-            . '/' . 'Exceptions'
-            . '/' . $this->argument($this->argumentName)
-            . ';';
+        $ns = 'use '.config('generators.namespace')
+            .'/'.$this->getModuleName()
+            .'/'.'Exceptions'
+            .'/'.$this->argument($this->argumentName)
+            .';';
 
         return implode('\\', explode('/', $ns));
 
     }
-
 
     protected function getStub()
     {
@@ -123,7 +120,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read('repository');
 
-        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
