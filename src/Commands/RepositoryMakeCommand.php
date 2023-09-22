@@ -83,7 +83,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             'MODULE' => $this->getModuleName(),
             'NAMESPACE' => config('fintech.generators.namespace'),
             'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
-            'EXCEPTION' => $this->getClass() . 'Exception',
+            'EXCEPTION' => $this->getClass().'Exception',
         ];
 
         return (new Stub($this->getStub(), $replacements))->render();
@@ -92,11 +92,11 @@ class RepositoryMakeCommand extends GeneratorCommand
     private function setExceptionNS()
     {
 
-        $ns = 'use ' . config('fintech.generators.namespace')
-            . '/' . $this->getModuleName()
-            . '/' . 'Exceptions'
-            . '/' . $this->argument($this->argumentName)
-            . ';';
+        $ns = 'use '.config('fintech.generators.namespace')
+            .'/'.$this->getModuleName()
+            .'/'.'Exceptions'
+            .'/'.$this->argument($this->argumentName)
+            .';';
 
         return implode('\\', explode('/', $ns));
 
