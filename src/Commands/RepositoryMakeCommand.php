@@ -81,7 +81,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             'CLASS' => $this->getClass(),
             'LOWER_MODULE' => Str::lower($this->getModuleName()),
             'MODULE' => $this->getModuleName(),
-            'NAMESPACE' => config('generators.namespace'),
+            'NAMESPACE' => config('fintech.generators.namespace'),
             'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
             'EXCEPTION' => $this->getClass() . 'Exception',
         ];
@@ -94,7 +94,7 @@ class RepositoryMakeCommand extends GeneratorCommand
     private function setExceptionNS()
     {
 
-        $ns = 'use ' . config('generators.namespace')
+        $ns = 'use ' . config('fintech.generators.namespace')
             . '/' . $this->getModuleName()
             . '/' . 'Exceptions'
             . '/' . $this->argument($this->argumentName)

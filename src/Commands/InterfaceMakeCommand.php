@@ -86,9 +86,9 @@ class InterfaceMakeCommand extends GeneratorCommand
 
     private function getExceptNamespace($class)
     {
-        $ns = config('generators.namespace')
+        $ns = config('fintech.generators.namespace')
             .'/'.$this->getModuleName()
-            .'/'.config('generators.paths.generator.exception.namespace')
+            .'/'.config('fintech.generators.paths.generator.exception.namespace')
             .'/'.$class;
 
         return implode('\\', explode('/', $ns));

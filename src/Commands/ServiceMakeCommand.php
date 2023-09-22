@@ -87,7 +87,7 @@ class ServiceMakeCommand extends GeneratorCommand
 
     private function getRepoNS()
     {
-        $ns = config('generators.namespace')
+        $ns = config('fintech.generators.namespace')
             .'/'.$this->getModuleName()
             .'/'.'Interfaces'
             .'/'.$this->getRepoName();

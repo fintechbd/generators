@@ -71,7 +71,7 @@ class ControllerMakeCommand extends GeneratorCommand
             'CLASS' => $this->getControllerNameWithoutNamespace(),
             'MODULE' => $this->getModuleName(),
             'LOWER_NAME' => Str::lower($this->getModuleName()),
-            'MODULE_NAMESPACE' => config('generators.namespace'),
+            'MODULE_NAMESPACE' => config('fintech.generators.namespace'),
             //CRUD Options
             'RESOURCE' => $this->getResourceName(),
             'RESOURCE_VARIABLE' => $this->getResourceVariableName(),

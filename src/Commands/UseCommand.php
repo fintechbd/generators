@@ -29,7 +29,7 @@ class UseCommand extends Command
         try {
             $module = $this->argument('module');
 
-            $modules = scandir(config('generators.paths.modules', 'packages'));
+            $modules = scandir(config('fintech.generators.paths.modules', 'packages'));
 
             if (! in_array($module, $modules)) {
                 throw new \InvalidArgumentException("No Package found named [{$module}].");

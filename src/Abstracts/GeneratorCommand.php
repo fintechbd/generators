@@ -92,11 +92,11 @@ abstract class GeneratorCommand extends Command
             throw new GeneratorException('Stub type argument or property is not configured.');
         }
 
-        if (! config("generators.paths.generator.{$type}")) {
+        if (! config("fintech.generators.paths.generator.{$type}")) {
             throw new InvalidArgumentException("Generator is missing [{$type}] config, check generators.php file.");
         }
 
-        $config = config("generators.paths.generator.{$type}");
+        $config = config("fintech.generators.paths.generator.{$type}");
 
         return $config['namespace'] ?? $config['path'];
 
@@ -116,7 +116,7 @@ abstract class GeneratorCommand extends Command
 
         $extra = str_replace('/', '\\', $extra);
 
-        $namespace = config('generators.namespace');
+        $namespace = config('fintech.generators.namespace');
 
         $namespace .= '\\'.$module;
 

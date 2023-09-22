@@ -183,7 +183,7 @@ class ModelMakeCommand extends GeneratorCommand
             'LOWER_NAME' => Str::lower($this->getModuleName()),
             'MODULE' => $this->getModuleName(),
             'STUDLY_NAME' => $this->getModuleName(),
-            'MODULE_NAMESPACE' => config('generators.namespace'),
+            'MODULE_NAMESPACE' => config('fintech.generators.namespace'),
         ]))->render();
     }
 

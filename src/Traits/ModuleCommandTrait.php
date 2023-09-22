@@ -38,7 +38,7 @@ trait ModuleCommandTrait
 
     public function getModulePath(string $module)
     {
-        $rootPath = config('generators.paths.modules');
+        $rootPath = config('fintech.generators.paths.modules');
 
         return $rootPath.'/'.$module.'/';
     }
