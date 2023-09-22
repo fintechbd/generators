@@ -86,10 +86,8 @@ class RepositoryMakeCommand extends GeneratorCommand
             'EXCEPTION' => $this->getClass() . 'Exception',
         ];
 
-
         return (new Stub($this->getStub(), $replacements))->render();
     }
-
 
     private function setExceptionNS()
     {
@@ -103,7 +101,6 @@ class RepositoryMakeCommand extends GeneratorCommand
         return implode('\\', explode('/', $ns));
 
     }
-
 
     protected function getStub()
     {
@@ -123,7 +120,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read('repository');
 
-        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
     }
 
     /**
