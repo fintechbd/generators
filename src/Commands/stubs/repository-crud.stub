@@ -60,7 +60,9 @@ class $CLASS$ implements InterfacesCountryRepository
     public function create(array $attributes = [])
     {
         try {
-            if ($this->model->saveOrFail($attributes)) {
+            $this->model->fill($attributes);
+
+            if ($this->model->saveOrFail()) {
 
                 $this->model->refresh();
 
@@ -125,15 +127,6 @@ class $CLASS$ implements InterfacesCountryRepository
         } catch (\Throwable $exception) {
 
             throw new ModelNotFoundException($exception->getMessage(), 0, $exception);
-        }
-
-        try {
-
-            return $this->model->deleteOrFail();
-
-        } catch (\Throwable $exception) {
-
-            throw new $EXCEPTION$($exception->getMessage(), 0, $exception);
         }
 
         return null;
