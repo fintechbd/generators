@@ -18,6 +18,7 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
+        "fintech/core": "^0.0.1",
         "illuminate/contracts": "^10.0"
     },
     "require-dev": {
