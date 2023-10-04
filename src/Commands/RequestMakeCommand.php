@@ -92,7 +92,7 @@ class RequestMakeCommand extends GeneratorCommand
         if ($this->option('index')) {
             return <<<'HTML'
 'search' => ['string', 'nullable', 'max:255'],
-            'per_page' => ['integer', 'nullable', 'min:1', 'max:255'],
+            'per_page' => ['integer', 'nullable', 'min:10', 'max:500'],
             'page' => ['integer', 'nullable', 'min:1'],
             'paginate' => ['boolean'],
             'sort' => ['string', 'nullable', 'min:2', 'max:255'],
