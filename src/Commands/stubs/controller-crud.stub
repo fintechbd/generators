@@ -29,14 +29,6 @@ class $CLASS$ extends Controller
     use ApiResponseTrait;
 
     /**
-     * $CLASS$ constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
-    /**
      * @lrd:start
      * Return a listing of the $RESOURCE_VARIABLE$ resource as collection.
      *
@@ -78,7 +70,7 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->create($inputs);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw new StoreOperationException();
+                throw (new StoreOperationException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'));
             }
 
             return $this->created([
