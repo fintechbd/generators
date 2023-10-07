@@ -16,7 +16,7 @@ class $CLASS$ extends EloquentRepository implements InterfacesCountryRepository
 {
     public function __construct()
     {
-       $model = app()->make(config('$LOWER_MODULE$.country_model', \App\Models\Country::class));
+       $model = app(config('$LOWER_MODULE$.country_model', \App\Models\Country::class));
 
        if (!$model instanceof Model) {
            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
