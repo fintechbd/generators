@@ -14,7 +14,8 @@ class GeneratorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/generators.php', 'fintech.generators'
+            __DIR__.'/../config/generators.php',
+            'fintech.generators'
         );
     }
 
