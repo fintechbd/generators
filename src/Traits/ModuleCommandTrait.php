@@ -36,10 +36,38 @@ trait ModuleCommandTrait
         return $module;
     }
 
-    public function getModulePath(string $module)
+    /**
+      * return module path with start and closing slash
+     * @param string|null $module
+     * @return string
+     * @throws GeneratorException
+     */
+    public function getModulePath(string $module = null)
     {
+        if ($module == null) {
+            $module = $this->getModuleName();
+        }
+
         $rootPath = config('fintech.generators.paths.modules');
 
         return $rootPath.'/'.$module.'/';
+    }
+
+    /**
+     * return module namespace with start and closing slash
+     *
+     * @param string|null $module
+     * @return string
+     * @throws GeneratorException
+     */
+    public function getModuleNS(string $module = null)
+    {
+        if ($module == null) {
+            $module = $this->getModuleName();
+        }
+
+        $rootPath = config('fintech.generators.namespace');
+
+        return '\\'.$rootPath.'\\'.$module.'\\';
     }
 }

@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Support\Config\GenerateConfigReader;
+use Fintech\Generator\Support\Config\GeneratorPath;
 use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -48,6 +49,8 @@ class CrudMakeCommand extends Command
             $this->createRepositories();
 
             $this->createRoute();
+
+            $this->createConfigOption();
 
             return self::SUCCESS;
 
@@ -145,38 +148,28 @@ class CrudMakeCommand extends Command
 
     private function createRepositories()
     {
-        //        Artisan::call('package:make-exception', [
-        //            'name' => $this->getResourceName().'RepositoryException',
-        //            'module' => $this->getModuleName(),
-        //        ]);
-
         Artisan::call('package:make-interface', [
             'name' => $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
-//            '--repository' => $this->getResourceName().'RepositoryException',
             '--crud' => true,
         ]);
 
         Artisan::call('package:make-repository', [
             'name' => 'Eloquent/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
-            '--repository' => $this->getResourceName() . 'RepositoryException',
             '--crud' => true,
         ]);
 
         Artisan::call('package:make-repository', [
             'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
-            '--repository' => $this->getResourceName() . 'RepositoryException',
             '--crud' => true,
         ]);
     }
 
     private function createRoute()
     {
-        $modulePath = $this->getModulePath($this->getModuleName());
-
-        $filePath = $modulePath . config('fintech.generators.paths.generator.routes.path') . DIRECTORY_SEPARATOR . 'api.php';
+        $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath() . DIRECTORY_SEPARATOR . 'api.php';
 
         if (!file_exists($filePath)) {
             throw new \InvalidArgumentException("Route file location doesn't exist");
@@ -184,19 +177,18 @@ class CrudMakeCommand extends Command
 
         $fileContent = file_get_contents($filePath);
 
-        $resourceName = Str::plural(Str::lower(basename($this->getResourceName())));
+        $singleName = Str::lower(basename($this->getResourceName()));
 
-        $controller = '\\' . config('fintech.generators.namespace')
-            . '\\' . $this->getModuleName()
-            . '\\' . GenerateConfigReader::read('controller')->getNamespace()
-            . '\\' . $this->getResourceName() . 'Controller::class';
+        $resourceName = Str::plural($singleName);
 
-
-        $controller = implode('\\', explode('/', $controller));
+        $controller = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() . '\\' .
+            GenerateConfigReader::read('controller')->getNamespace()
+            . '\\' . $this->getResourceName() . 'Controller::class');
 
         $template = <<<HTML
 Route::apiResource('{$resourceName}', {$controller});
-    Route::post('{$resourceName}/{id}/restore', [{$controller}, 'restore'])->name('{$resourceName}.restore');
+    Route::post('{$resourceName}/{$singleName}/restore', [{$controller}, 'restore'])->name('{$resourceName}.restore');
 
     //DO NOT REMOVE THIS LINE//
 HTML;
@@ -205,4 +197,67 @@ HTML;
 
         file_put_contents($filePath, $fileContent);
     }
+
+    private function createConfigOption()
+    {
+
+        $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath()
+            . DIRECTORY_SEPARATOR . strtolower($this->getModuleName()) . '.php';
+
+        if (!file_exists($filePath)) {
+            throw new \InvalidArgumentException("Config file location doesn't exist");
+        }
+
+        $fileContent = file_get_contents($filePath);
+
+        $singleName = basename($this->getResourceName());
+
+        $lowerName = Str::lower($singleName);
+
+        $model = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() .
+            GenerateConfigReader::read('model')->getNamespace() .
+            '\\' . $singleName . '::class');
+
+        $interfacePath = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() .
+            GenerateConfigReader::read('interface')->getNamespace() .
+            '\\' . $singleName . 'Repository::class');
+
+        $repositoryPath = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() .
+            GenerateConfigReader::read('repository')->getNamespace() .
+            '\\Eloquent\\' . $this->getResourceName() . 'Repository::class');
+
+        $modelOptionTemplate = <<<HTML
+
+    /*
+    |--------------------------------------------------------------------------
+    | {$singleName} Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    '{$lowerName}_model' => {$model},
+    'otp_length' => 4,
+
+    //** Model Config Point Do not Remove **//
+HTML;
+        $repoOptionTemplate = <<<HTML
+        {$interfacePath} => {$repositoryPath},
+
+        //** Repository Binding Config Point Do not Remove **//
+HTML;
+
+
+        $replacements = [
+            '//** Model Config Point Do not Remove **//' => $modelOptionTemplate,
+            '//** Repository Binding Config Point Do not Remove **//' => $repoOptionTemplate
+        ];
+
+        $fileContent = str_replace(array_keys($replacements), array_values($replacements), $fileContent);
+
+        file_put_contents($filePath, $fileContent);
+    }
+
 }

@@ -15,7 +15,7 @@ class GeneratorPath
         if (is_array($config)) {
             $this->path = $config['path'];
             $this->generate = $config['generate'];
-            $this->namespace = $config['namespace'] ?? $this->convertPathToNamespace($config['path']);
+            $this->namespace = $config['namespace'] ?? self::convertPathToNamespace($config['path']);
 
             return;
         }
@@ -39,7 +39,7 @@ class GeneratorPath
         return $this->namespace;
     }
 
-    private function convertPathToNamespace($path)
+    public static function convertPathToNamespace($path)
     {
         return str_replace(['/', 'src/'], '\\', $path);
     }
