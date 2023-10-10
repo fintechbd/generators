@@ -4,12 +4,13 @@ namespace $CLASS_NAMESPACE$;
 
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Core\Exceptions\ResourceNotFoundException;
+use Fintech\Core\Exceptions\ModelNotFoundException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 $RESOURCE_NAMESPACES$
 $REQUEST_NAMESPACES$
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
@@ -74,7 +75,7 @@ class $CLASS$ extends Controller
             }
 
             return $this->created([
-                'message' => __('$LOWER_NAME$::messages.resource.created', ['model' => '$RESOURCE$']),
+                'message' => __('core::messages.resource.created', ['model' => '$RESOURCE$']),
                 'id' => $$RESOURCE_VARIABLE$->id
              ]);
 
@@ -91,21 +92,21 @@ class $CLASS$ extends Controller
      *
      * @param string|int $id
      * @return $RESOURCE$Resource|JsonResponse
-     * @throws ResourceNotFoundException
+     * @throws ModelNotFoundException
      */
     public function show(string|int $id): $RESOURCE$Resource|JsonResponse
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
+            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw new ResourceNotFoundException(__('$LOWER_NAME$::messages.resource.notfound', ['model' => '$RESOURCE$', 'id' => strval($id)]));
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
             return new $RESOURCE$Resource($$RESOURCE_VARIABLE$);
 
-        } catch (ResourceNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
 
             return $this->notfound($exception->getMessage());
 
@@ -123,7 +124,7 @@ class $CLASS$ extends Controller
      * @param $UPDATE_REQUEST$ $request
      * @param string|int $id
      * @return JsonResponse
-     * @throws ResourceNotFoundException
+     * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
     public function update($UPDATE_REQUEST$ $request, string|int $id): JsonResponse
@@ -133,19 +134,19 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw new ResourceNotFoundException(__('$LOWER_NAME$::messages.resource.notfound', ['model' => '$RESOURCE$', 'id' => strval($id)]));
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->update($id, $inputs)) {
 
-                throw new UpdateOperationException();
+                throw (new UpdateOperationException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
-            return $this->updated(__('$LOWER_NAME$::messages.resource.updated', ['model' => '$RESOURCE$']));
+            return $this->updated(__('core::messages.resource.updated', ['model' => '$RESOURCE$']));
 
-        } catch (ResourceNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
 
             return $this->notfound($exception->getMessage());
 
@@ -162,7 +163,7 @@ class $CLASS$ extends Controller
      *
      * @param string|int $id
      * @return JsonResponse
-     * @throws ResourceNotFoundException
+     * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
     public function destroy(string|int $id)
@@ -172,17 +173,17 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw new ResourceNotFoundException(__('$LOWER_NAME$::messages.resource.notfound', ['model' => '$RESOURCE$', 'id' => strval($id)]));
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->destroy($id)) {
 
-                throw new DeleteOperationException();
+                throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
-            return $this->deleted(__('$LOWER_NAME$::messages.resource.deleted', ['model' => '$RESOURCE$']));
+            return $this->deleted(__('core::messages.resource.deleted', ['model' => '$RESOURCE$']));
 
-        } catch (ResourceNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
 
             return $this->notfound($exception->getMessage());
 
@@ -205,20 +206,20 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id, true);
+            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id, true);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw new ResourceNotFoundException(__('$LOWER_NAME$::messages.resource.notfound', ['model' => '$RESOURCE$', 'id' => strval($id)]));
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->restore($id)) {
 
-                throw new RestoreOperationException();
+                throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
-            return $this->restored(__('$LOWER_NAME$::messages.resource.restored', ['model' => '$RESOURCE$']));
+            return $this->restored(__('core::messages.resource.restored', ['model' => '$RESOURCE$']));
 
-        } catch (ResourceNotFoundException $exception) {
+        } catch (ModelNotFoundException $exception) {
 
             return $this->notfound($exception->getMessage());
 
@@ -245,7 +246,7 @@ class $CLASS$ extends Controller
 
             $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->export($inputs);
 
-            return $this->exported(__('$LOWER_NAME$::messages.resource.exported', ['model' => '$RESOURCE$']));
+            return $this->exported(__('core::messages.resource.exported', ['model' => '$RESOURCE$']));
 
         } catch (\Exception $exception) {
 

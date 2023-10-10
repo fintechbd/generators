@@ -9,7 +9,6 @@ use $REPO_NAMESPACE$;
  * Class $CLASS$
  * @package $NAMESPACE$
  *
- * @property-read $REPO$ $$REPO_VARIABLE$
  */
 class $CLASS$
 {
@@ -17,7 +16,9 @@ class $CLASS$
      * $CLASS$ constructor.
      * @param $REPO$ $$REPO_VARIABLE$
      */
-    public function __construct(private $REPO$ $$REPO_VARIABLE$) { }
+    public function __construct($REPO$ $$REPO_VARIABLE$) {
+        $this->$REPO_VARIABLE$ = $$REPO_VARIABLE$;
+    }
 
     /**
      * @param array $filters
@@ -25,11 +26,7 @@ class $CLASS$
      */
     public function list(array $filters = [])
     {
-        $countryList = $this->$REPO_VARIABLE$->list($filters);
-
-        //Do Business Stuff
-
-        return $countryList;
+        return $this->$REPO_VARIABLE$->list($filters);
 
     }
 
@@ -38,9 +35,9 @@ class $CLASS$
         return $this->$REPO_VARIABLE$->create($inputs);
     }
 
-    public function read($id)
+    public function find($id, $onlyTrashed = false)
     {
-        return $this->$REPO_VARIABLE$->read($id);
+        return $this->$REPO_VARIABLE$->find($id, $onlyTrashed);
     }
 
     public function update($id, array $inputs = [])
