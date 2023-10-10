@@ -2,6 +2,7 @@
 
 namespace Fintech\Generator\Commands;
 
+use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -37,6 +38,7 @@ class CrudMakeCommand extends Command
     public function handle()
     {
         try {
+
             $this->createRequests();
 
             $this->createResources();
@@ -45,10 +47,14 @@ class CrudMakeCommand extends Command
 
             $this->createRepositories();
 
+            $this->createRoute();
+
+            return self::SUCCESS;
+
         } catch (\Throwable $exception) {
             $this->error($exception);
         }
-
+        return self::FAILURE;
     }
 
     protected function getResourceName()
@@ -74,16 +80,16 @@ class CrudMakeCommand extends Command
     {
         foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
 
-            $resourcePath = $this->getResourceName().'Request';
+            $resourcePath = $this->getResourceName() . 'Request';
 
             $dir = dirname($resourcePath);
 
-            $dir = ($dir == '.') ? '' : $dir.'/';
+            $dir = ($dir == '.') ? '' : $dir . '/';
 
             $resource = basename($resourcePath);
 
             $options = [
-                'name' => $dir.$prefix.$resource,
+                'name' => $dir . $prefix . $resource,
                 'module' => $this->getModuleName(),
             ];
 
@@ -103,12 +109,12 @@ class CrudMakeCommand extends Command
     private function createResources()
     {
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName().'Resource',
+            'name' => $this->getResourceName() . 'Resource',
             'module' => $this->getModuleName(),
         ]);
 
         Artisan::call('package:make-resource', [
-            'name' => $this->getResourceName().'Collection',
+            'name' => $this->getResourceName() . 'Collection',
             'module' => $this->getModuleName(),
             '--collection',
         ]);
@@ -129,10 +135,10 @@ class CrudMakeCommand extends Command
         ]);
 
         Artisan::call('package:make-service', [
-            'name' => $this->getResourceName().'Service',
+            'name' => $this->getResourceName() . 'Service',
             'module' => $this->getModuleName(),
             '--crud' => true,
-            '--repository' => $this->getResourceName().'Repository',
+            '--repository' => $this->getResourceName() . 'Repository',
         ]);
 
     }
@@ -145,24 +151,58 @@ class CrudMakeCommand extends Command
 //        ]);
 
         Artisan::call('package:make-interface', [
-            'name' => $this->getResourceName().'Repository',
+            'name' => $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
 //            '--repository' => $this->getResourceName().'RepositoryException',
             '--crud' => true,
         ]);
 
         Artisan::call('package:make-repository', [
-            'name' => 'Eloquent/'.$this->getResourceName().'Repository',
+            'name' => 'Eloquent/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
-            '--repository' => $this->getResourceName().'RepositoryException',
+            '--repository' => $this->getResourceName() . 'RepositoryException',
             '--crud' => true,
         ]);
 
         Artisan::call('package:make-repository', [
-            'name' => 'Mongodb/'.$this->getResourceName().'Repository',
+            'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
-            '--repository' => $this->getResourceName().'RepositoryException',
+            '--repository' => $this->getResourceName() . 'RepositoryException',
             '--crud' => true,
         ]);
+    }
+
+    private function createRoute()
+    {
+        $modulePath = $this->getModulePath($this->getModuleName());
+
+        $filePath = $modulePath . config('fintech.generators.paths.generator.routes.path') . DIRECTORY_SEPARATOR . 'api.php';
+
+        if (!file_exists($filePath)) {
+            throw new \InvalidArgumentException("Route file location doesn't exist");
+        }
+
+        $fileContent = file_get_contents($filePath);
+
+        $resourceName = Str::plural(Str::lower(basename($this->getResourceName())));
+
+        $controller = '\\' . config('fintech.generators.namespace')
+            . '\\' . $this->getModuleName()
+            . '\\' . GenerateConfigReader::read('controller')->getNamespace()
+            . '\\' . $this->getResourceName() . 'Controller::class';
+
+
+        $controller = implode('\\', explode('/', $controller));
+
+        $template = <<<HTML
+Route::apiResource('{$resourceName}', {$controller});
+    Route::post('{$resourceName}/{id}/restore', [{$controller}, 'restore'])->name('{$resourceName}.restore');
+
+    //DO NOT REMOVE THIS LINE//
+HTML;
+
+        $fileContent = str_replace('//DO NOT REMOVE THIS LINE//', $template, $fileContent);
+
+        file_put_contents($filePath, $fileContent);
     }
 }

@@ -122,12 +122,12 @@ return [
             'seeder' => [
                 'path' => 'src/Database/Seeders',
                 'generate' => true,
-                'namespace' => 'Database/Seeders',
+                'namespace' => 'Database\Seeders',
             ],
             'factory' => [
                 'path' => 'src/Database/Factories',
                 'generate' => false,
-                'namespace' => 'Database/Factories',
+                'namespace' => 'Database\Factories',
             ],
             'model' => [
                 'path' => 'src/Models',
@@ -137,7 +137,7 @@ return [
             'controller' => [
                 'path' => 'src/Http/Controllers',
                 'generate' => true,
-                'namespace' => 'Http/Controllers',
+                'namespace' => 'Http\Controllers',
             ],
             'exception' => [
                 'path' => 'src/Exceptions',
@@ -147,17 +147,17 @@ return [
             'filter' => [
                 'path' => 'src/Http/Middleware',
                 'generate' => false,
-                'namespace' => 'Http/Middleware',
+                'namespace' => 'Http\Middleware',
             ],
             'request' => [
                 'path' => 'src/Http/Requests',
                 'generate' => true,
-                'namespace' => 'Http/Requests',
+                'namespace' => 'Http\Requests',
             ],
             'resource' => [
                 'path' => 'src/Http/Resources',
                 'generate' => true,
-                'namespace' => 'Http/Resources',
+                'namespace' => 'Http\Resources',
             ],
             'provider' => [
                 'path' => 'src/Providers',
@@ -217,17 +217,17 @@ return [
             'component-class' => [
                 'path' => 'src/View/Components',
                 'generate' => false,
-                'namespace' => 'View/Components',
+                'namespace' => 'View\Components',
             ],
             'test' => [
                 'path' => 'tests/Unit',
                 'generate' => true,
-                'namespace' => 'Tests/Unit',
+                'namespace' => 'Tests\Unit',
             ],
             'test-feature' => [
                 'path' => 'tests/Feature',
                 'generate' => true,
-                'namespace' => 'Tests/Feature',
+                'namespace' => 'Tests\Feature',
             ],
         ],
     ],

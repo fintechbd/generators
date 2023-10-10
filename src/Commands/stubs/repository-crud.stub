@@ -2,24 +2,25 @@
 
 namespace $CLASS_NAMESPACE$;
 
-use Fintech\Core\Repositories\EloquentRepository;
-use $NAMESPACE$\$MODULE$\Interfaces\CountryRepository as InterfacesCountryRepository;
+use $BASE_REPO_NS$;
+use $NAMESPACE$\$MODULE$\Interfaces\$CLASS$ as Interfaces$CLASS$;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
+use $BASE_MODEL$;
 use InvalidArgumentException;
 
 /**
  * Class $CLASS$
  * @package $CLASS_NAMESPACE$
  */
-class $CLASS$ extends EloquentRepository implements InterfacesCountryRepository
+class $CLASS$ extends $BASE_REPO$ implements Interfaces$CLASS$
 {
     public function __construct()
     {
        $model = app(config('$LOWER_MODULE$.country_model', \App\Models\Country::class));
 
        if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+           throw new InvalidArgumentException("$REPO_TYPE$ repository require model class to be `$BASE_MODEL$` instance.");
        }
 
        $this->model = $model;
