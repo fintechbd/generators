@@ -184,7 +184,8 @@ class CrudMakeCommand extends Command
         $controller = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() . '\\' .
             GenerateConfigReader::read('controller')->getNamespace()
-            . '\\' . $this->getResourceName() . 'Controller::class');
+            . '\\' . $this->getResourceName() . 'Controller::class'
+        );
 
         $template = <<<HTML
 Route::apiResource('{$resourceName}', {$controller});
@@ -217,17 +218,20 @@ HTML;
         $model = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
             GenerateConfigReader::read('model')->getNamespace() .
-            '\\' . $singleName . '::class');
+            '\\' . $singleName . '::class'
+        );
 
         $interfacePath = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
             GenerateConfigReader::read('interface')->getNamespace() .
-            '\\' . $singleName . 'Repository::class');
+            '\\' . $singleName . 'Repository::class'
+        );
 
         $repositoryPath = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
             GenerateConfigReader::read('repository')->getNamespace() .
-            '\\Eloquent\\' . $this->getResourceName() . 'Repository::class');
+            '\\Eloquent\\' . $this->getResourceName() . 'Repository::class'
+        );
 
         $modelOptionTemplate = <<<HTML
 
