@@ -145,10 +145,10 @@ class CrudMakeCommand extends Command
 
     private function createRepositories()
     {
-//        Artisan::call('package:make-exception', [
-//            'name' => $this->getResourceName().'RepositoryException',
-//            'module' => $this->getModuleName(),
-//        ]);
+        //        Artisan::call('package:make-exception', [
+        //            'name' => $this->getResourceName().'RepositoryException',
+        //            'module' => $this->getModuleName(),
+        //        ]);
 
         Artisan::call('package:make-interface', [
             'name' => $this->getResourceName() . 'Repository',
