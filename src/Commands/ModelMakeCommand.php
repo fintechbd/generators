@@ -181,6 +181,7 @@ class ModelMakeCommand extends GeneratorCommand
             'FILLABLE' => $this->getFillable(),
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
+            'LOWER_CLASS' => Str::lower($this->getClass()),
             'LOWER_NAME' => Str::lower($this->getModuleName()),
             'MODULE' => $this->getModuleName(),
             'STUDLY_NAME' => $this->getModuleName(),
