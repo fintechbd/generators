@@ -54,4 +54,14 @@ class $CLASS$
     {
         return $this->$REPO_VARIABLE$->restore($id);
     }
+
+    public function export(array $filters)
+    {
+        return $this->permissionRepository->list($filters);
+    }
+
+    public function import(array $filters)
+    {
+        return $this->permissionRepository->create($filters);
+    }
 }
