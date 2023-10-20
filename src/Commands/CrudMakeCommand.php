@@ -206,7 +206,7 @@ HTML;
             . DIRECTORY_SEPARATOR . strtolower($this->getModuleName()) . '.php';
 
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("Config file location doesn't exist");
+            throw new \InvalidArgumentException("`{$filePath}` is invalid config file path");
         }
 
         $fileContent = file_get_contents($filePath);
