@@ -157,12 +157,14 @@ class CrudMakeCommand extends Command
         Artisan::call('package:make-repository', [
             'name' => 'Eloquent/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
+            '--model' => $this->getResourceName(),
             '--crud' => true,
         ]);
 
         Artisan::call('package:make-repository', [
             'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
             'module' => $this->getModuleName(),
+            '--model' => $this->getResourceName(),
             '--crud' => true,
         ]);
     }

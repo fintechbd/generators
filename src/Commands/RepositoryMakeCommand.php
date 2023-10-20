@@ -66,6 +66,7 @@ class RepositoryMakeCommand extends GeneratorCommand
         return [
             ['crud', null, InputOption::VALUE_NONE, 'The terminal command that should be assigned.'],
             ['repository', null, InputOption::VALUE_REQUIRED, 'The terminal command that should be assigned.'],
+            ['model', null, InputOption::VALUE_REQUIRED, 'The terminal command that should be assigned.'],
         ];
     }
 
@@ -87,7 +88,9 @@ class RepositoryMakeCommand extends GeneratorCommand
             'BASE_REPO_NS' => $this->getBaseRepoNamespace(),
             'BASE_REPO' => class_basename($this->getBaseRepoNamespace()),
             'BASE_MODEL' => $this->getBaseModel(),
-            'REPO_TYPE' => $this->getBaseModel()
+            'REPO_TYPE' => $this->getRepoType(),
+            'MODEL' => $this->option('model'),
+            'LOWER_MODEL' => Str::lower(class_basename($this->option('model'))),
         ];
 
         return (new Stub($this->getStub(), $replacements))->render();
