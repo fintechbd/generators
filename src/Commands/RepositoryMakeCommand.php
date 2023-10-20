@@ -85,7 +85,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
             'EXCEPTION' => $this->getClass().'Exception',
             'BASE_REPO_NS' => $this->getBaseRepoNamespace(),
-            'BASE_REPO' => basename($this->getBaseRepoNamespace()),
+            'BASE_REPO' => class_basename($this->getBaseRepoNamespace()),
             'BASE_MODEL' => $this->getBaseModel(),
             'REPO_TYPE' => $this->getBaseModel()
         ];
@@ -95,14 +95,14 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     private function getBaseRepoNamespace()
     {
-        if (strpos($this->getFileName(), 'Eloquent')) {
+        if (strpos($this->getClassNamespace($this->getModuleName()), 'Eloquent')) {
             return 'Fintech\Core\Repositories\EloquentRepository';
         }
         return 'Fintech\Core\Repositories\MongodbRepository';
     }
     private function getBaseModel()
     {
-        if (strpos($this->getFileName(), 'Eloquent')) {
+        if (strpos($this->getClassNamespace($this->getModuleName()), 'Eloquent')) {
             return 'Illuminate\Database\Eloquent\Model';
         }
         return 'MongoDB\Laravel\Eloquent\Model';
@@ -110,7 +110,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
     private function getRepoType()
     {
-        if (strpos($this->getFileName(), 'Eloquent')) {
+        if (strpos($this->getClassNamespace($this->getModuleName()), 'Eloquent')) {
             return 'Eloquent';
         }
         return 'Mongodb';
