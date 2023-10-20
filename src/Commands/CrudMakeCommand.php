@@ -184,7 +184,7 @@ class CrudMakeCommand extends Command
         $resourceName = Str::plural($singleName);
 
         $controller = GeneratorPath::convertPathToNamespace(
-            $this->getModuleNS() . '\\' .
+            $this->getModuleNS() .
             GenerateConfigReader::read('controller')->getNamespace()
             . '\\' . $this->getResourceName() . 'Controller::class'
         );
