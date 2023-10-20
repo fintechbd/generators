@@ -23,7 +23,7 @@ class $CLASS$ extends Model
 
     protected $appends = ['links'];
 
-    protected $casts = ['$LOWER_CLASS$_data' => 'json', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+    protected $casts = ['$LOWER_CLASS$_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
