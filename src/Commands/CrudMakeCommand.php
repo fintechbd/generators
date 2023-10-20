@@ -202,7 +202,7 @@ HTML;
     private function createConfigOption()
     {
 
-        $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath()
+        $filePath = $this->getModulePath() . GenerateConfigReader::read('config')->getPath()
             . DIRECTORY_SEPARATOR . strtolower($this->getModuleName()) . '.php';
 
         if (!file_exists($filePath)) {
@@ -243,7 +243,6 @@ HTML;
     | This value will be used to across system where model is needed
     */
     '{$lowerName}_model' => {$model},
-    'otp_length' => 4,
 
     //** Model Config Point Do not Remove **//
 HTML;
