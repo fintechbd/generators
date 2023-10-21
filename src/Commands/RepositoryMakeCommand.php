@@ -90,7 +90,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             'BASE_MODEL' => $this->getBaseModel(),
             'REPO_TYPE' => $this->getRepoType(),
             'MODEL' => $this->option('model'),
-            'LOWER_MODEL' => Str::lower(class_basename($this->option('model'))),
+            'CONFIG_MODEL' => Str::snake(class_basename($this->option('model'))),
         ];
 
         return (new Stub($this->getStub(), $replacements))->render();

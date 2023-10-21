@@ -17,7 +17,7 @@ class $CLASS$ extends $BASE_REPO$ implements Interfaces$CLASS$
 {
     public function __construct()
     {
-       $model = app(config('fintech.$LOWER_MODULE$.$LOWER_MODEL$_model', \$NAMESPACE$\$MODULE$\Models\$MODEL$::class));
+       $model = app(config('fintech.$LOWER_MODULE$.$CONFIG_MODEL$_model', \$NAMESPACE$\$MODULE$\Models\$MODEL$::class));
 
        if (!$model instanceof Model) {
            throw new InvalidArgumentException("$REPO_TYPE$ repository require model class to be `$BASE_MODEL$` instance.");
