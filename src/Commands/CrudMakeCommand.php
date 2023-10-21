@@ -181,7 +181,7 @@ class CrudMakeCommand extends Command
 
         $singleName = Str::lower(Str::snake(basename($this->getResourceName())));
 
-        $resourceName = Str::plural($singleName);
+        $resourceName = Str::kebab(Str::plural($singleName));
 
         $controller = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
@@ -191,7 +191,7 @@ class CrudMakeCommand extends Command
 
         $template = <<<HTML
 Route::apiResource('$resourceName', $controller);
-    Route::post('$resourceName/$singleName/restore', [$controller, 'restore'])->name('$resourceName.restore');
+    Route::post('$resourceName/{$singleName}/restore', [$controller, 'restore'])->name('$resourceName.restore');
 
     //DO NOT REMOVE THIS LINE//
 HTML;
