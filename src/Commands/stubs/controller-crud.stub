@@ -177,7 +177,7 @@ class $CLASS$ extends Controller
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->destroy($id)) {
 
-                throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             return $this->deleted(__('core::messages.resource.deleted', ['model' => '$MESSAGE_VARIABLE$']));
@@ -208,12 +208,12 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id, true);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->restore($id)) {
 
-                throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             return $this->restored(__('core::messages.resource.restored', ['model' => '$MESSAGE_VARIABLE$']));
