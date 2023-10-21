@@ -189,9 +189,10 @@ class CrudMakeCommand extends Command
             . '\\' . $this->getResourceName() . 'Controller::class'
         );
 
+        $pathParam = '{' . $singleName . '}';
         $template = <<<HTML
 Route::apiResource('$resourceName', $controller);
-    Route::post('$resourceName/{$singleName}/restore', [$controller, 'restore'])->name('$resourceName.restore');
+    Route::post('$resourceName/$pathParam/restore', [$controller, 'restore'])->name('$resourceName.restore');
 
     //DO NOT REMOVE THIS LINE//
 HTML;
