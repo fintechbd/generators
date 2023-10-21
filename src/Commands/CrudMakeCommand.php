@@ -179,9 +179,9 @@ class CrudMakeCommand extends Command
 
         $fileContent = file_get_contents($filePath);
 
-        $singleName = Str::lower(Str::snake(basename($this->getResourceName())));
+        $singleName = Str::kebab(basename($this->getResourceName()));
 
-        $resourceName = Str::kebab(Str::plural($singleName));
+        $resourceName = Str::plural($singleName);
 
         $controller = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
@@ -189,7 +189,7 @@ class CrudMakeCommand extends Command
             . '\\' . $this->getResourceName() . 'Controller::class'
         );
 
-        $pathParam = '{' . $singleName . '}';
+        $pathParam = '{' . Str::snake(basename($this->getResourceName())) . '}';
         $template = <<<HTML
 Route::apiResource('$resourceName', $controller);
     Route::post('$resourceName/$pathParam/restore', [$controller, 'restore'])->name('$resourceName.restore');
