@@ -19,7 +19,7 @@ use Illuminate\Routing\Controller;
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
- * operation related to $RESOURCE_VARIABLE$
+ * operation related to $RESOURCE$
  * @lrd:end
  *
  */
@@ -30,7 +30,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Return a listing of the $RESOURCE_VARIABLE$ resource as collection.
+     * Return a listing of the *$RESOURCE$* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
      * @lrd:end
@@ -55,7 +55,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Create a new $RESOURCE_VARIABLE$ resource in storage.
+     * Create a new *$RESOURCE$* resource in storage.
      * @lrd:end
      *
      * @param $STORE_REQUEST$ $request
@@ -70,11 +70,11 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->create($inputs);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw (new StoreOperationException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'));
+                throw (new StoreOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'));
             }
 
             return $this->created([
-                'message' => __('core::messages.resource.created', ['model' => '$RESOURCE$']),
+                'message' => __('core::messages.resource.created', ['model' => '$MESSAGE_VARIABLE$']),
                 'id' => $$RESOURCE_VARIABLE$->id
              ]);
 
@@ -86,7 +86,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Return a specified $RESOURCE_VARIABLE$ resource found by id.
+     * Return a specified *$RESOURCE$* resource found by id.
      * @lrd:end
      *
      * @param string|int $id
@@ -100,7 +100,7 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             return new $RESOURCE$Resource($$RESOURCE_VARIABLE$);
@@ -117,7 +117,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Update a specified $RESOURCE_VARIABLE$ resource using id.
+     * Update a specified *$RESOURCE$* resource using id.
      * @lrd:end
      *
      * @param $UPDATE_REQUEST$ $request
@@ -133,17 +133,17 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             $inputs = $request->validated();
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->update($id, $inputs)) {
 
-                throw (new UpdateOperationException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new UpdateOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            return $this->updated(__('core::messages.resource.updated', ['model' => '$RESOURCE$']));
+            return $this->updated(__('core::messages.resource.updated', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -157,7 +157,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Soft delete a specified $RESOURCE_VARIABLE$ resource using id.
+     * Soft delete a specified *$RESOURCE$* resource using id.
      * @lrd:end
      *
      * @param string|int $id
@@ -172,7 +172,7 @@ class $CLASS$ extends Controller
             $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
+                throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
             if (!\$MODULE$::$RESOURCE_VARIABLE$()->destroy($id)) {
@@ -180,7 +180,7 @@ class $CLASS$ extends Controller
                 throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
-            return $this->deleted(__('core::messages.resource.deleted', ['model' => '$RESOURCE$']));
+            return $this->deleted(__('core::messages.resource.deleted', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -194,7 +194,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Restore the specified $RESOURCE_VARIABLE$ resource from trash.
+     * Restore the specified *$RESOURCE$* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
      * @lrd:end
      *
@@ -216,7 +216,7 @@ class $CLASS$ extends Controller
                 throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$RESOURCE_VARIABLE$_model'), $id);
             }
 
-            return $this->restored(__('core::messages.resource.restored', ['model' => '$RESOURCE$']));
+            return $this->restored(__('core::messages.resource.restored', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -230,7 +230,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Create a exportable list of the $RESOURCE_VARIABLE$ resource as document.
+     * Create a exportable list of the *$RESOURCE$* resource as document.
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
@@ -245,7 +245,7 @@ class $CLASS$ extends Controller
 
             $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->export($inputs);
 
-            return $this->exported(__('core::messages.resource.exported', ['model' => '$RESOURCE$']));
+            return $this->exported(__('core::messages.resource.exported', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (\Exception $exception) {
 
@@ -255,7 +255,7 @@ class $CLASS$ extends Controller
 
     /**
      * @lrd:start
-     * Create a exportable list of the $RESOURCE_VARIABLE$ resource as document.
+     * Create a exportable list of the *$RESOURCE$* resource as document.
      * After export job is done system will fire  export completed event
      *
      * @lrd:end

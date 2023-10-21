@@ -75,6 +75,8 @@ class ControllerMakeCommand extends GeneratorCommand
             //CRUD Options
             'RESOURCE' => $this->getResourceName(),
             'RESOURCE_VARIABLE' => $this->getResourceVariableName(),
+            'CONFIG_VARIABLE' => Str::snake($this->getResourceVariableName()),
+            'MESSAGE_VARIABLE' => Str::title(Str::replace('-', ' ', Str::kebab($this->getResourceVariableName()))),
             'RESOURCE_NAMESPACES' => '',
             'REQUEST_NAMESPACES' => '',
             'IMPORT_REQUEST' => basename($this->getClassPath('Import')),
