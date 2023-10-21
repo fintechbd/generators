@@ -249,7 +249,7 @@ HTML;
     //** Model Config Point Do not Remove **//
 HTML;
         $repoOptionTemplate = <<<HTML
-        {$interfacePath} => {$repositoryPath},
+{$interfacePath} => {$repositoryPath},
 
         //** Repository Binding Config Point Do not Remove **//
 HTML;
