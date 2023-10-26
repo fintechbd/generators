@@ -1,12 +1,13 @@
 <?php
 
 namespace $CLASS_NAMESPACE$;
-
+use Exception;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
+use Fintech\$MODULE$\Facades\$MODULE$;
 $RESOURCE_NAMESPACES$
 $REQUEST_NAMESPACES$
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -43,11 +44,11 @@ class $CLASS$ extends Controller
         try {
             $inputs = $request->validated();
 
-            $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->list($inputs);
+            $$RESOURCE_VARIABLE$Paginate = $MODULE$::$RESOURCE_VARIABLE$()->list($inputs);
 
             return new $RESOURCE$Collection($$RESOURCE_VARIABLE$Paginate);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -67,7 +68,7 @@ class $CLASS$ extends Controller
         try {
             $inputs = $request->validated();
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->create($inputs);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->create($inputs);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new StoreOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'));
@@ -78,7 +79,7 @@ class $CLASS$ extends Controller
                 'id' => $$RESOURCE_VARIABLE$->id
              ]);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -97,7 +98,7 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->find($id);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
@@ -109,7 +110,7 @@ class $CLASS$ extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -130,7 +131,7 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
@@ -138,7 +139,7 @@ class $CLASS$ extends Controller
 
             $inputs = $request->validated();
 
-            if (!\$MODULE$::$RESOURCE_VARIABLE$()->update($id, $inputs)) {
+            if (!$MODULE$::$RESOURCE_VARIABLE$()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
@@ -149,7 +150,7 @@ class $CLASS$ extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -169,13 +170,13 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->read($id);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->read($id);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            if (!\$MODULE$::$RESOURCE_VARIABLE$()->destroy($id)) {
+            if (!$MODULE$::$RESOURCE_VARIABLE$()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
@@ -186,7 +187,7 @@ class $CLASS$ extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -205,13 +206,13 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = \$MODULE$::$RESOURCE_VARIABLE$()->find($id, true);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->find($id, true);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            if (!\$MODULE$::$RESOURCE_VARIABLE$()->restore($id)) {
+            if (!$MODULE$::$RESOURCE_VARIABLE$()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
@@ -222,7 +223,7 @@ class $CLASS$ extends Controller
 
             return $this->notfound($exception->getMessage());
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -243,11 +244,11 @@ class $CLASS$ extends Controller
         try {
             $inputs = $request->validated();
 
-            $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->export($inputs);
+            $$RESOURCE_VARIABLE$Paginate = $MODULE$::$RESOURCE_VARIABLE$()->export($inputs);
 
             return $this->exported(__('core::messages.resource.exported', ['model' => '$MESSAGE_VARIABLE$']));
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
@@ -268,11 +269,11 @@ class $CLASS$ extends Controller
         try {
             $inputs = $request->validated();
 
-            $$RESOURCE_VARIABLE$Paginate = \$MODULE$::$RESOURCE_VARIABLE$()->list($inputs);
+            $$RESOURCE_VARIABLE$Paginate = $MODULE$::$RESOURCE_VARIABLE$()->list($inputs);
 
             return new $RESOURCE$Collection($$RESOURCE_VARIABLE$Paginate);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             return $this->failed($exception->getMessage());
         }
