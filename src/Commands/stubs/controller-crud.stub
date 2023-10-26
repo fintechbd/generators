@@ -131,7 +131,7 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->read($id);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->find($id);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
@@ -170,7 +170,7 @@ class $CLASS$ extends Controller
     {
         try {
 
-            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->read($id);
+            $$RESOURCE_VARIABLE$ = $MODULE$::$RESOURCE_VARIABLE$()->find($id);
 
             if (!$$RESOURCE_VARIABLE$) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
