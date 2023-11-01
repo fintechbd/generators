@@ -57,11 +57,11 @@ class $CLASS$
 
     public function export(array $filters)
     {
-        return $this->permissionRepository->list($filters);
+        return $this->$REPO_VARIABLE$->list($filters);
     }
 
     public function import(array $filters)
     {
-        return $this->permissionRepository->create($filters);
+        return $this->$REPO_VARIABLE$->create($filters);
     }
 }
