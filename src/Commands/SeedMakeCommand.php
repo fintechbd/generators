@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -19,7 +20,7 @@ class SeedMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $type = 'seed';
+    protected $type = 'seeder';
 
     /**
      * The console command name.
@@ -74,16 +75,16 @@ class SeedMakeCommand extends GeneratorCommand
 
     /**
      * @return mixed
+     * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
-        $module = $this->laravel['modules']->findOrFail($this->getModuleName());
-
         return (new Stub('/seeder.stub', [
-            'NAME' => $this->getSeederName(),
+            'NAME' => $this->getSeederName().'Seeder',
+            'SERVICE_NAME' => Str::camel($this->getSeederName()),
             'MODULE' => $this->getModuleName(),
-            'NAMESPACE' => $this->getClassNamespace($module),
-
+            'ROOT_NAMESPACE' => config('fintech.generators.namespace'),
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
         ]))->render();
     }
 
@@ -97,7 +98,7 @@ class SeedMakeCommand extends GeneratorCommand
 
         $path = $this->getModulePath($this->getModuleName());
 
-        $seederPath = GenerateConfigReader::read('seeder');
+        $seederPath = GenerateConfigReader::read($this->type);
 
         return $path.$seederPath->getPath().'/'.$this->getSeederName().'.php';
     }
@@ -109,8 +110,6 @@ class SeedMakeCommand extends GeneratorCommand
      */
     private function getSeederName()
     {
-        $end = $this->option('master') ? 'DatabaseSeeder' : 'TableSeeder';
-
-        return Str::studly($this->argument('name')).$end;
+        return Str::studly($this->argument('name'));
     }
 }

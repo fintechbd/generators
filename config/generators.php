@@ -121,14 +121,14 @@ return [
                 'namespace' => 'Commands',
             ],
             'seeder' => [
-                'path' => 'src/Database/Seeders',
+                'path' => 'src/Seeders',
                 'generate' => true,
-                'namespace' => 'Database\Seeders',
+                'namespace' => 'Seeders',
             ],
             'factory' => [
-                'path' => 'src/Database/Factories',
+                'path' => 'src/Factories',
                 'generate' => false,
-                'namespace' => 'Database\Factories',
+                'namespace' => 'Factories',
             ],
             'model' => [
                 'path' => 'src/Models',

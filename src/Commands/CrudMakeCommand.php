@@ -2,6 +2,7 @@
 
 namespace Fintech\Generator\Commands;
 
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Config\GeneratorPath;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -48,7 +49,7 @@ class CrudMakeCommand extends Command
 
             $this->createRepositories();
 
-            $this->createRoute();
+            $this->updateRouteFile();
 
             $this->createConfigOption();
 
@@ -124,6 +125,10 @@ class CrudMakeCommand extends Command
     }
 
     //Create Controller,Model,Service and Interface etc.
+
+    /**
+     * @throws GeneratorException
+     */
     private function createStubFiles()
     {
         Artisan::call('package:make-controller', [
@@ -142,6 +147,10 @@ class CrudMakeCommand extends Command
             'module' => $this->getModuleName(),
             '--crud' => true,
             '--repository' => $this->getResourceName() . 'Repository',
+        ]);
+        Artisan::call('package:make-seed', [
+            'name' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
         ]);
 
     }
@@ -169,7 +178,7 @@ class CrudMakeCommand extends Command
         ]);
     }
 
-    private function createRoute()
+    private function updateRouteFile()
     {
         $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath() . DIRECTORY_SEPARATOR . 'api.php';
 
