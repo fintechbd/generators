@@ -41,17 +41,17 @@ class CrudMakeCommand extends Command
     {
         try {
 
-//            $this->createRequests();
-//
-//            $this->createResources();
+            $this->createRequests();
+
+            $this->createResources();
 
             $this->createStubFiles();
 
-//            $this->createRepositories();
-//
-//            $this->updateRouteFile();
-//
-//            $this->createConfigOption();
+            $this->createRepositories();
+
+            $this->updateRouteFile();
+
+            $this->createConfigOption();
 
             return self::SUCCESS;
 
@@ -131,23 +131,23 @@ class CrudMakeCommand extends Command
      */
     private function createStubFiles()
     {
-//        Artisan::call('package:make-controller', [
-//            'controller' => $this->getResourceName(),
-//            'module' => $this->getModuleName(),
-//            '--crud' => true,
-//        ]);
-//
-//        Artisan::call('package:make-model', [
-//            'model' => $this->getResourceName(),
-//            'module' => $this->getModuleName(),
-//        ]);
-//
-//        Artisan::call('package:make-service', [
-//            'name' => $this->getResourceName() . 'Service',
-//            'module' => $this->getModuleName(),
-//            '--crud' => true,
-//            '--repository' => $this->getResourceName() . 'Repository',
-//        ]);
+        Artisan::call('package:make-controller', [
+            'controller' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+        ]);
+
+        Artisan::call('package:make-model', [
+            'model' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+        ]);
+
+        Artisan::call('package:make-service', [
+            'name' => $this->getResourceName() . 'Service',
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+            '--repository' => $this->getResourceName() . 'Repository',
+        ]);
 
         Artisan::call('package:make-seed', [
             'name' => $this->getResourceName(),
