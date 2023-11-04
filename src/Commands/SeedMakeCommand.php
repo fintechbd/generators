@@ -100,7 +100,7 @@ class SeedMakeCommand extends GeneratorCommand
 
         $seederPath = GenerateConfigReader::read($this->type);
 
-        return $path.$seederPath->getPath().'/'.$this->getSeederName().'.php';
+        return $path.$seederPath->getPath().'/'.$this->getSeederName().'Seeder.php';
     }
 
     /**
