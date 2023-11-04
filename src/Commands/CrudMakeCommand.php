@@ -292,12 +292,12 @@ HTML;
 
         $service = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
-            GenerateConfigReader::read('services')->getNamespace()
+            GenerateConfigReader::read('service')->getNamespace()
             . '\\' . $this->getResourceName() . 'Service'
         );
 
         $template = <<<HTML
-    /**
+/**
      * @return {$service}
      */
     public function {$methodName}()
@@ -330,15 +330,13 @@ HTML;
 
         $service = GeneratorPath::convertPathToNamespace(
             $this->getModuleNS() .
-            GenerateConfigReader::read('services')->getNamespace()
+            GenerateConfigReader::read('service')->getNamespace()
             . '\\' . $this->getResourceName() . 'Service'
         );
 
         $template = <<<HTML
-    /**
-     * @method static {$service} {$methodName}()
+@method static {$service} {$methodName}()
     * // Crud Service Method Point Do not Remove //
-
 HTML;
 
         $fileContent = str_replace('// Crud Service Method Point Do not Remove //', $template, $fileContent);
