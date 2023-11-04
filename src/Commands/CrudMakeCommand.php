@@ -336,7 +336,7 @@ HTML;
 
         $template = <<<HTML
 @method static {$service} {$methodName}()
-    * // Crud Service Method Point Do not Remove //
+ * // Crud Service Method Point Do not Remove //
 HTML;
 
         $fileContent = str_replace('// Crud Service Method Point Do not Remove //', $template, $fileContent);
