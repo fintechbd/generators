@@ -53,6 +53,8 @@ class CrudMakeCommand extends Command
 
             $this->createConfigOption();
 
+            $this->updateModelEntryClasses();
+
             return self::SUCCESS;
 
         } catch (\Throwable $exception) {
@@ -272,6 +274,74 @@ HTML;
         ];
 
         $fileContent = str_replace(array_keys($replacements), array_values($replacements), $fileContent);
+
+        file_put_contents($filePath, $fileContent);
+    }
+
+    private function updateModelEntryClasses()
+    {
+        $filePath = $this->getModulePath() . 'src/' . $this->getModuleName() . '.php';
+
+        if (!file_exists($filePath)) {
+            throw new \InvalidArgumentException("Module Entry Class(" . $this->getModuleName() . ") file doesn't exist");
+        }
+
+        $fileContent = file_get_contents($filePath);
+
+        $methodName = Str::camel(basename($this->getResourceName()));
+
+        $service = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() .
+            GenerateConfigReader::read('services')->getNamespace()
+            . '\\' . $this->getResourceName() . 'Service'
+        );
+
+        $template = <<<HTML
+    /**
+     * @return {$service}
+     */
+    public function {$methodName}()
+    {
+        return app({$service}::class);
+    }
+
+    //** Crud Service Method Point Do not Remove **//
+
+HTML;
+
+        $fileContent = str_replace('//** Crud Service Method Point Do not Remove **//', $template, $fileContent);
+
+        file_put_contents($filePath, $fileContent);
+
+        $this->updateModelEntryFacades();
+    }
+
+    private function updateModelEntryFacades()
+    {
+        $filePath = $this->getModulePath() . 'src/Facades/' . $this->getModuleName() . '.php';
+
+        if (!file_exists($filePath)) {
+            throw new \InvalidArgumentException("Module Entry Facades Class(" . $this->getModuleName() . ") file doesn't exist");
+        }
+
+        $fileContent = file_get_contents($filePath);
+
+        $methodName = Str::camel(basename($this->getResourceName()));
+
+        $service = GeneratorPath::convertPathToNamespace(
+            $this->getModuleNS() .
+            GenerateConfigReader::read('services')->getNamespace()
+            . '\\' . $this->getResourceName() . 'Service'
+        );
+
+        $template = <<<HTML
+    /**
+     * @method static {$service} {$methodName}()
+    * // Crud Service Method Point Do not Remove //
+
+HTML;
+
+        $fileContent = str_replace('// Crud Service Method Point Do not Remove //', $template, $fileContent);
 
         file_put_contents($filePath, $fileContent);
     }
