@@ -59,10 +59,10 @@ class $CLASS$ extends Model
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('$ROUTE_NAME$.$TABLE$.show', $primaryKey), __('core::messages.action.show'), 'get'),
-            'update' => action_link(route('$ROUTE_NAME$.$TABLE$.update', $primaryKey), __('core::messages.action.update'), 'put'),
-            'destroy' => action_link(route('$ROUTE_NAME$.$TABLE$.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('$ROUTE_NAME$.$TABLE$.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
+            'show' => action_link(route('$LOWER_NAME$.$ROUTE_NAME$.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('$LOWER_NAME$.$ROUTE_NAME$.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('$LOWER_NAME$.$ROUTE_NAME$.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('$LOWER_NAME$.$ROUTE_NAME$.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {
