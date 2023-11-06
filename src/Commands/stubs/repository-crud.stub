@@ -42,6 +42,7 @@ class $CLASS$ extends $BASE_REPO$ implements Interfaces$CLASS$
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
                 $query->where('name', 'like', "%{$filters['search']}%");
+                $query->orWhere('$JSON_FIELD$', 'like', "%{$filters['search']}%");
             }
         }
 

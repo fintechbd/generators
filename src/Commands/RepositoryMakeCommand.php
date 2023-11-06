@@ -80,6 +80,7 @@ class RepositoryMakeCommand extends GeneratorCommand
         $replacements = [
             'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
+            'JSON_FIELD' => Str::snake(Str::replace('Repository', '', $this->getClass()) . '_data'),
             'LOWER_MODULE' => Str::lower($this->getModuleName()),
             'MODULE' => $this->getModuleName(),
             'NAMESPACE' => config('fintech.generators.namespace'),
