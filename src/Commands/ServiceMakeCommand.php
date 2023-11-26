@@ -100,10 +100,10 @@ class ServiceMakeCommand extends GeneratorCommand
     {
         $repository = $this->option('repository');
 
-        if (! $repository) {
+        if (!$repository) {
             $repository = Str::replace('Service', 'Repository', $this->getClass());
 
-            if (! Str::contains($repository, 'Repository')) {
+            if (!Str::contains($repository, 'Repository')) {
                 $repository .= 'Repository';
             }
         }

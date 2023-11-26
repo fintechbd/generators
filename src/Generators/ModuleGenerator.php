@@ -369,7 +369,7 @@ class ModuleGenerator extends Generator
             $path = $this->module->getModulePath($this->getName()).$file;
 
             $this->component->task("Generating file {$path}", function () use ($stub, $path) {
-                if (! $this->filesystem->isDirectory($dir = dirname($path))) {
+                if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                     $this->filesystem->makeDirectory($dir, 0775, true);
                 }
 
@@ -444,7 +444,7 @@ class ModuleGenerator extends Generator
     {
         $replacements = $this->module->config('stubs.replacements');
 
-        if (! isset($replacements[$stub])) {
+        if (!isset($replacements[$stub])) {
             return [];
         }
 
@@ -476,7 +476,7 @@ class ModuleGenerator extends Generator
         $path = $this->module->getModulePath($this->getName()).'module.json';
 
         $this->component->task("Generating file $path", function () use ($path) {
-            if (! $this->filesystem->isDirectory($dir = dirname($path))) {
+            if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                 $this->filesystem->makeDirectory($dir, 0775, true);
             }
 

@@ -101,13 +101,13 @@ class InterfaceMakeCommand extends GeneratorCommand
 
             $repository = $this->option('repository');
 
-            if (! $repository) {
+            if (!$repository) {
                 $repository = (Str::contains($this->getClass(), 'Repository', true))
                     ? $this->getClass()
                     : $this->getClass().'Repository';
             }
 
-            if (! Str::contains($repository, 'Exception')) {
+            if (!Str::contains($repository, 'Exception')) {
                 $repository .= 'Exception';
             }
 

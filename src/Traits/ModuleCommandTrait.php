@@ -19,7 +19,7 @@ trait ModuleCommandTrait
 
         $module = $this->argument('module');
 
-        if (! $module && file_exists($fallbackPath)) {
+        if (!$module && file_exists($fallbackPath)) {
 
             $fallback = json_decode(file_get_contents($fallbackPath), true);
 
@@ -29,7 +29,7 @@ trait ModuleCommandTrait
             }
         }
 
-        if (! $module) {
+        if (!$module) {
             throw new GeneratorException('Invalid or Missing module name on argument.');
         }
 
