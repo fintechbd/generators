@@ -5,19 +5,17 @@ namespace Fintech\Generator\Support;
 class Stub
 {
     /**
-     * The stub path.
-     *
-     * @var string
-     */
-    protected $path;
-
-    /**
      * The base path of stub file.
      *
      * @var null|string
      */
     protected static $basePath = null;
-
+    /**
+     * The stub path.
+     *
+     * @var string
+     */
+    protected $path;
     /**
      * The replacements array.
      *
@@ -28,7 +26,7 @@ class Stub
     /**
      * The constructor.
      *
-     * @param  string  $path
+     * @param string $path
      */
     public function __construct($path, array $replaces = [])
     {
@@ -39,7 +37,7 @@ class Stub
     /**
      * Create new self instance.
      *
-     * @param  string  $path
+     * @param string $path
      * @return self
      */
     public static function create($path, array $replaces = [])
@@ -48,16 +46,31 @@ class Stub
     }
 
     /**
-     * Set stub path.
+     * Save stub to specific path.
      *
-     * @param  string  $path
-     * @return self
+     * @param string $path
+     * @param string $filename
+     * @return bool
      */
-    public function setPath($path)
+    public function saveTo($path, $filename)
     {
-        $this->path = $path;
+        return file_put_contents($path . '/' . $filename, $this->getContents());
+    }
 
-        return $this;
+    /**
+     * Get stub contents.
+     *
+     * @return mixed|string
+     */
+    public function getContents()
+    {
+        $contents = file_get_contents($this->getPath());
+
+        foreach ($this->replaces as $search => $replace) {
+            $contents = str_replace('$' . strtoupper($search) . '$', $replace, $contents);
+        }
+
+        return $contents;
     }
 
     /**
@@ -67,19 +80,22 @@ class Stub
      */
     public function getPath()
     {
-        $path = static::getBasePath().$this->path;
+        $path = static::getBasePath() . $this->path;
 
-        return file_exists($path) ? $path : __DIR__.'/../Commands/stubs'.$this->path;
+        return file_exists($path) ? $path : __DIR__ . '/../Commands/stubs' . $this->path;
     }
 
     /**
-     * Set base path.
+     * Set stub path.
      *
-     * @param  string  $path
+     * @param string $path
+     * @return self
      */
-    public static function setBasePath($path)
+    public function setPath($path)
     {
-        static::$basePath = $path;
+        $this->path = $path;
+
+        return $this;
     }
 
     /**
@@ -93,41 +109,13 @@ class Stub
     }
 
     /**
-     * Get stub contents.
+     * Set base path.
      *
-     * @return mixed|string
+     * @param string $path
      */
-    public function getContents()
+    public static function setBasePath($path)
     {
-        $contents = file_get_contents($this->getPath());
-
-        foreach ($this->replaces as $search => $replace) {
-            $contents = str_replace('$'.strtoupper($search).'$', $replace, $contents);
-        }
-
-        return $contents;
-    }
-
-    /**
-     * Get stub contents.
-     *
-     * @return string
-     */
-    public function render()
-    {
-        return $this->getContents();
-    }
-
-    /**
-     * Save stub to specific path.
-     *
-     * @param  string  $path
-     * @param  string  $filename
-     * @return bool
-     */
-    public function saveTo($path, $filename)
-    {
-        return file_put_contents($path.'/'.$filename, $this->getContents());
+        static::$basePath = $path;
     }
 
     /**
@@ -161,5 +149,15 @@ class Stub
     public function __toString()
     {
         return $this->render();
+    }
+
+    /**
+     * Get stub contents.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        return $this->getContents();
     }
 }

@@ -85,7 +85,7 @@ class RepositoryMakeCommand extends GeneratorCommand
             'MODULE' => $this->getModuleName(),
             'NAMESPACE' => config('fintech.generators.namespace'),
             'EXCEPTION_NAMESPACE' => $this->setExceptionNS(),
-            'EXCEPTION' => $this->getClass().'Exception',
+            'EXCEPTION' => $this->getClass() . 'Exception',
             'BASE_REPO_NS' => $this->getBaseRepoNamespace(),
             'BASE_REPO' => class_basename($this->getBaseRepoNamespace()),
             'BASE_MODEL' => $this->getBaseModel(),
@@ -97,6 +97,19 @@ class RepositoryMakeCommand extends GeneratorCommand
         return (new Stub($this->getStub(), $replacements))->render();
     }
 
+    private function setExceptionNS()
+    {
+
+        $ns = 'use ' . config('fintech.generators.namespace')
+            . '/' . $this->getModuleName()
+            . '/' . 'Exceptions'
+            . '/' . $this->argument($this->argumentName)
+            . ';';
+
+        return implode('\\', explode('/', $ns));
+
+    }
+
     private function getBaseRepoNamespace()
     {
         if (strpos($this->getClassNamespace($this->getModuleName()), 'Eloquent')) {
@@ -104,6 +117,7 @@ class RepositoryMakeCommand extends GeneratorCommand
         }
         return 'Fintech\Core\Repositories\MongodbRepository';
     }
+
     private function getBaseModel()
     {
         if (strpos($this->getClassNamespace($this->getModuleName()), 'Eloquent')) {
@@ -118,19 +132,6 @@ class RepositoryMakeCommand extends GeneratorCommand
             return 'Eloquent';
         }
         return 'Mongodb';
-    }
-
-    private function setExceptionNS()
-    {
-
-        $ns = 'use '.config('fintech.generators.namespace')
-            .'/'.$this->getModuleName()
-            .'/'.'Exceptions'
-            .'/'.$this->argument($this->argumentName)
-            .';';
-
-        return implode('\\', explode('/', $ns));
-
     }
 
     protected function getStub()
@@ -151,7 +152,7 @@ class RepositoryMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read('repository');
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

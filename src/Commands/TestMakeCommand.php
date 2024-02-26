@@ -83,7 +83,7 @@ class TestMakeCommand extends GeneratorCommand
             $testPath = GenerateConfigReader::read('test');
         }
 
-        return $path.$testPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $testPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

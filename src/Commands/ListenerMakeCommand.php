@@ -81,38 +81,6 @@ class ListenerMakeCommand extends GeneratorCommand
         ]))->render();
     }
 
-    protected function getEventName(Module $module)
-    {
-        $namespace = $this->laravel['modules']->config('namespace').'\\'.$module->getStudlyName();
-        $eventPath = GenerateConfigReader::read('event');
-
-        $eventName = $namespace.'\\'.$eventPath->getPath().'\\'.$this->option('event');
-
-        return str_replace('/', '\\', $eventName);
-    }
-
-    protected function getShortEventName()
-    {
-        return class_basename($this->option('event'));
-    }
-
-    protected function getDestinationFilePath()
-    {
-        $path = $this->getModulePath($this->getModuleName());
-
-        $listenerPath = GenerateConfigReader::read('listener');
-
-        return $path.$listenerPath->getPath().'/'.$this->getFileName().'.php';
-    }
-
-    /**
-     * @return string
-     */
-    protected function getFileName()
-    {
-        return Str::studly($this->argument('name'));
-    }
-
     protected function getStubName(): string
     {
         if ($this->option('queued')) {
@@ -128,5 +96,37 @@ class ListenerMakeCommand extends GeneratorCommand
         }
 
         return '/listener-duck.stub';
+    }
+
+    protected function getEventName(Module $module)
+    {
+        $namespace = $this->laravel['modules']->config('namespace') . '\\' . $module->getStudlyName();
+        $eventPath = GenerateConfigReader::read('event');
+
+        $eventName = $namespace . '\\' . $eventPath->getPath() . '\\' . $this->option('event');
+
+        return str_replace('/', '\\', $eventName);
+    }
+
+    protected function getShortEventName()
+    {
+        return class_basename($this->option('event'));
+    }
+
+    protected function getDestinationFilePath()
+    {
+        $path = $this->getModulePath($this->getModuleName());
+
+        $listenerPath = GenerateConfigReader::read('listener');
+
+        return $path . $listenerPath->getPath() . '/' . $this->getFileName() . '.php';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFileName()
+    {
+        return Str::studly($this->argument('name'));
     }
 }

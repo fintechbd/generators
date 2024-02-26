@@ -61,6 +61,28 @@ class ModuleMakeCommand extends Command
     }
 
     /**
+     * Get module type .
+     *
+     * @return string
+     */
+    private function getModuleType()
+    {
+        $isPlain = $this->option('plain');
+        $isApi = $this->option('api');
+
+        if ($isPlain && $isApi) {
+            return 'web';
+        }
+        if ($isPlain) {
+            return 'plain';
+        } elseif ($isApi) {
+            return 'api';
+        } else {
+            return 'web';
+        }
+    }
+
+    /**
      * Get the console command arguments.
      *
      * @return array
@@ -81,27 +103,5 @@ class ModuleMakeCommand extends Command
             ['disabled', 'd', InputOption::VALUE_NONE, 'Do not enable the module at creation.'],
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when the module already exists.'],
         ];
-    }
-
-    /**
-     * Get module type .
-     *
-     * @return string
-     */
-    private function getModuleType()
-    {
-        $isPlain = $this->option('plain');
-        $isApi = $this->option('api');
-
-        if ($isPlain && $isApi) {
-            return 'web';
-        }
-        if ($isPlain) {
-            return 'plain';
-        } elseif ($isApi) {
-            return 'api';
-        } else {
-            return 'web';
-        }
     }
 }

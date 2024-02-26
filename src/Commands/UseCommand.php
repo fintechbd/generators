@@ -2,7 +2,9 @@
 
 namespace Fintech\Generator\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
+use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 
 class UseCommand extends Command
@@ -32,7 +34,7 @@ class UseCommand extends Command
             $modules = scandir(config('fintech.generators.paths.modules', 'packages'));
 
             if (!in_array($module, $modules)) {
-                throw new \InvalidArgumentException("No Package found named [{$module}].");
+                throw new InvalidArgumentException("No Package found named [{$module}].");
             }
 
             file_put_contents(storage_path('cli-package.json'), json_encode(['use' => $module], JSON_PRETTY_PRINT));
@@ -41,7 +43,7 @@ class UseCommand extends Command
 
             return self::SUCCESS;
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
 
             $this->components->error($exception->getMessage());
 

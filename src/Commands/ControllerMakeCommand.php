@@ -56,7 +56,21 @@ class ControllerMakeCommand extends GeneratorCommand
 
         $controllerPath = GenerateConfigReader::read($this->type);
 
-        return $path.$controllerPath->getPath().'/'.$this->getControllerName().'.php';
+        return $path . $controllerPath->getPath() . '/' . $this->getControllerName() . '.php';
+    }
+
+    /**
+     * @return array|string
+     */
+    protected function getControllerName()
+    {
+        $controller = Str::studly($this->argument('controller'));
+
+        if (Str::contains(strtolower($controller), 'controller') === false) {
+            $controller .= 'Controller';
+        }
+
+        return $controller;
     }
 
     /**
@@ -92,13 +106,50 @@ class ControllerMakeCommand extends GeneratorCommand
         return (new Stub($this->getStubName(), $replacements))->render();
     }
 
+    /**
+     * @return array|string
+     */
+    private function getControllerNameWithoutNamespace()
+    {
+        return class_basename($this->getControllerName());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourceName()
+    {
+        return Str::studly(basename($this->argument('controller')));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getResourceVariableName()
+    {
+        return Str::camel(basename($this->getResourceName()));
+    }
+
+    protected function getClassPath(string $prefix = '', string $suffix = 'Request')
+    {
+        $resourcePath = $this->argument('controller') . $suffix;
+
+        $dir = dirname($resourcePath);
+
+        $dir = ($dir == '.') ? '' : $dir . '/';
+
+        $resource = basename($resourcePath);
+
+        return $dir . $prefix . $resource;
+    }
+
     private function setRequestNamespaces(array &$replacements)
     {
         $namespaces = [];
 
         foreach (['Import', 'Store', 'Update', 'Index'] as $prefix) {
-            $path = $replacements['MODULE_NAMESPACE'].'/'.$replacements['MODULE'].'/Http/Requests/'.$this->getClassPath($prefix);
-            $namespaces[] = ('use '.implode('\\', explode('/', $path)).';');
+            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Requests/' . $this->getClassPath($prefix);
+            $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
 
         }
 
@@ -110,12 +161,32 @@ class ControllerMakeCommand extends GeneratorCommand
         $namespaces = [];
 
         foreach (['Resource', 'Collection'] as $suffix) {
-            $path = $replacements['MODULE_NAMESPACE'].'/'.$replacements['MODULE'].'/Http/Resources/'.$this->getClassPath('', $suffix);
-            $namespaces[] = ('use '.implode('\\', explode('/', $path)).';');
+            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Resources/' . $this->getClassPath('', $suffix);
+            $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
 
         }
 
         $replacements['RESOURCE_NAMESPACES'] = implode("\n", $namespaces);
+    }
+
+    /**
+     * Get the stub file name based on the options
+     *
+     * @return string
+     */
+    protected function getStubName()
+    {
+        if ($this->option('plain') === true) {
+            $stub = '/controller-plain.stub';
+        } elseif ($this->option('api') === true) {
+            $stub = '/controller-api.stub';
+        } elseif ($this->option('crud') === true) {
+            $stub = '/controller-crud.stub';
+        } else {
+            $stub = '/controller.stub';
+        }
+
+        return $stub;
     }
 
     /**
@@ -141,76 +212,5 @@ class ControllerMakeCommand extends GeneratorCommand
             ['api', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods from the controller.'],
             ['crud', null, InputOption::VALUE_NONE, 'Exclude the create and edit methods and add crud code to controller.'],
         ];
-    }
-
-    /**
-     * @return string
-     */
-    protected function getResourceName()
-    {
-        return Str::studly(basename($this->argument('controller')));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getResourceVariableName()
-    {
-        return Str::camel(basename($this->getResourceName()));
-    }
-
-    /**
-     * @return array|string
-     */
-    protected function getControllerName()
-    {
-        $controller = Str::studly($this->argument('controller'));
-
-        if (Str::contains(strtolower($controller), 'controller') === false) {
-            $controller .= 'Controller';
-        }
-
-        return $controller;
-    }
-
-    /**
-     * @return array|string
-     */
-    private function getControllerNameWithoutNamespace()
-    {
-        return class_basename($this->getControllerName());
-    }
-
-    /**
-     * Get the stub file name based on the options
-     *
-     * @return string
-     */
-    protected function getStubName()
-    {
-        if ($this->option('plain') === true) {
-            $stub = '/controller-plain.stub';
-        } elseif ($this->option('api') === true) {
-            $stub = '/controller-api.stub';
-        } elseif ($this->option('crud') === true) {
-            $stub = '/controller-crud.stub';
-        } else {
-            $stub = '/controller.stub';
-        }
-
-        return $stub;
-    }
-
-    protected function getClassPath(string $prefix = '', string $suffix = 'Request')
-    {
-        $resourcePath = $this->argument('controller').$suffix;
-
-        $dir = dirname($resourcePath);
-
-        $dir = ($dir == '.') ? '' : $dir.'/';
-
-        $resource = basename($resourcePath);
-
-        return $dir.$prefix.$resource;
     }
 }

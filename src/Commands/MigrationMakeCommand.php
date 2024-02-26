@@ -9,6 +9,7 @@ use Fintech\Generator\Support\Migrations\SchemaParser;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -45,6 +46,25 @@ class MigrationMakeCommand extends GeneratorCommand
     protected $description = 'Create a new migration for the specified package.';
 
     /**
+     * Run the command.
+     */
+    public function handle(): int
+    {
+
+        $this->components->info('Creating migration...');
+
+        if (parent::handle() === E_ERROR) {
+            return E_ERROR;
+        }
+
+        if (app()->environment() === 'testing') {
+            return 0;
+        }
+
+        return 0;
+    }
+
+    /**
      * Get the console command arguments.
      *
      * @return array
@@ -71,19 +91,9 @@ class MigrationMakeCommand extends GeneratorCommand
     }
 
     /**
-     * Get schema parser.
-     *
-     * @return SchemaParser
-     */
-    public function getSchemaParser()
-    {
-        return new SchemaParser($this->option('fields'));
-    }
-
-    /**
      * @return mixed
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function getTemplateContents()
     {
@@ -122,32 +132,9 @@ class MigrationMakeCommand extends GeneratorCommand
         ]);
     }
 
-    /**
-     * @return mixed
-     */
-    protected function getDestinationFilePath()
+    public function getClass()
     {
-        $path = $this->getModulePath($this->getModuleName());
-
-        $generatorPath = GenerateConfigReader::read('migration');
-
-        return $path.$generatorPath->getPath().'/'.$this->getFileName().'.php';
-    }
-
-    /**
-     * @return string
-     */
-    private function getFileName()
-    {
-        return date('Y_m_d_His_').$this->getSchemaName();
-    }
-
-    /**
-     * @return array|string
-     */
-    private function getSchemaName()
-    {
-        return $this->argument('name');
+        return $this->getClassName();
     }
 
     /**
@@ -158,27 +145,41 @@ class MigrationMakeCommand extends GeneratorCommand
         return Str::studly($this->argument('name'));
     }
 
-    public function getClass()
+    /**
+     * Get schema parser.
+     *
+     * @return SchemaParser
+     */
+    public function getSchemaParser()
     {
-        return $this->getClassName();
+        return new SchemaParser($this->option('fields'));
     }
 
     /**
-     * Run the command.
+     * @return mixed
      */
-    public function handle(): int
+    protected function getDestinationFilePath()
     {
+        $path = $this->getModulePath($this->getModuleName());
 
-        $this->components->info('Creating migration...');
+        $generatorPath = GenerateConfigReader::read('migration');
 
-        if (parent::handle() === E_ERROR) {
-            return E_ERROR;
-        }
+        return $path . $generatorPath->getPath() . '/' . $this->getFileName() . '.php';
+    }
 
-        if (app()->environment() === 'testing') {
-            return 0;
-        }
+    /**
+     * @return string
+     */
+    private function getFileName()
+    {
+        return date('Y_m_d_His_') . $this->getSchemaName();
+    }
 
-        return 0;
+    /**
+     * @return array|string
+     */
+    private function getSchemaName()
+    {
+        return $this->argument('name');
     }
 }

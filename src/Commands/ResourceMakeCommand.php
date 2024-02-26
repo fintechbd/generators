@@ -76,26 +76,13 @@ class ResourceMakeCommand extends GeneratorCommand
         ]))->render();
     }
 
-    /**
-     * @return mixed
-     *
-     * @throws GeneratorException
-     */
-    protected function getDestinationFilePath()
+    protected function getStubName(): string
     {
-        $path = $this->getModulePath($this->getModuleName());
+        if ($this->collection()) {
+            return '/resource-collection.stub';
+        }
 
-        $resourcePath = GenerateConfigReader::read('resource');
-
-        return $path.$resourcePath->getPath().'/'.$this->getFileName().'.php';
-    }
-
-    /**
-     * @return string
-     */
-    private function getFileName()
-    {
-        return Str::studly($this->argument('name'));
+        return '/resource.stub';
     }
 
     /**
@@ -107,12 +94,25 @@ class ResourceMakeCommand extends GeneratorCommand
             Str::endsWith($this->argument('name'), 'Collection');
     }
 
-    protected function getStubName(): string
+    /**
+     * @return mixed
+     *
+     * @throws GeneratorException
+     */
+    protected function getDestinationFilePath()
     {
-        if ($this->collection()) {
-            return '/resource-collection.stub';
-        }
+        $path = $this->getModulePath($this->getModuleName());
 
-        return '/resource.stub';
+        $resourcePath = GenerateConfigReader::read('resource');
+
+        return $path . $resourcePath->getPath() . '/' . $this->getFileName() . '.php';
+    }
+
+    /**
+     * @return string
+     */
+    private function getFileName()
+    {
+        return Str::studly($this->argument('name'));
     }
 }

@@ -9,7 +9,9 @@ use Fintech\Generator\Traits\ModuleCommandTrait;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
+use Throwable;
 
 /**
  * Class CrudMakeCommand
@@ -57,31 +59,12 @@ class CrudMakeCommand extends Command
 
             return self::SUCCESS;
 
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->error($exception);
         }
         return self::FAILURE;
     }
 
-    protected function getResourceName()
-    {
-        return Str::studly($this->argument('name'));
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['name', InputArgument::REQUIRED, 'The name of the resource.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
-        ];
-    }
-
-    //Create Request
     private function createRequests()
     {
         foreach (['Index', 'Store', 'Update', 'Import'] as $prefix) {
@@ -111,7 +94,13 @@ class CrudMakeCommand extends Command
         }
     }
 
-    //Create Resource
+    protected function getResourceName()
+    {
+        return Str::studly($this->argument('name'));
+    }
+
+    //Create Request
+
     private function createResources()
     {
         Artisan::call('package:make-resource', [
@@ -126,7 +115,7 @@ class CrudMakeCommand extends Command
         ]);
     }
 
-    //Create Controller,Model,Service and Interface etc.
+    //Create Resource
 
     /**
      * @throws GeneratorException
@@ -158,6 +147,8 @@ class CrudMakeCommand extends Command
 
     }
 
+    //Create Controller,Model,Service and Interface etc.
+
     private function createRepositories()
     {
         Artisan::call('package:make-interface', [
@@ -186,7 +177,7 @@ class CrudMakeCommand extends Command
         $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath() . DIRECTORY_SEPARATOR . 'api.php';
 
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("Route file location doesn't exist");
+            throw new InvalidArgumentException("Route file location doesn't exist");
         }
 
         $fileContent = file_get_contents($filePath);
@@ -221,7 +212,7 @@ HTML;
             . DIRECTORY_SEPARATOR . strtolower($this->getModuleName()) . '.php';
 
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("`{$filePath}` is invalid config file path");
+            throw new InvalidArgumentException("`{$filePath}` is invalid config file path");
         }
 
         $fileContent = file_get_contents($filePath);
@@ -283,7 +274,7 @@ HTML;
         $filePath = $this->getModulePath() . 'src/' . $this->getModuleName() . '.php';
 
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("Module Entry Class(" . $this->getModuleName() . ") file doesn't exist");
+            throw new InvalidArgumentException("Module Entry Class(" . $this->getModuleName() . ") file doesn't exist");
         }
 
         $fileContent = file_get_contents($filePath);
@@ -321,7 +312,7 @@ HTML;
         $filePath = $this->getModulePath() . 'src/Facades/' . $this->getModuleName() . '.php';
 
         if (!file_exists($filePath)) {
-            throw new \InvalidArgumentException("Module Entry Facades Class(" . $this->getModuleName() . ") file doesn't exist");
+            throw new InvalidArgumentException("Module Entry Facades Class(" . $this->getModuleName() . ") file doesn't exist");
         }
 
         $fileContent = file_get_contents($filePath);
@@ -342,6 +333,19 @@ HTML;
         $fileContent = str_replace('// Crud Service Method Point Do not Remove //', $template, $fileContent);
 
         file_put_contents($filePath, $fileContent);
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['name', InputArgument::REQUIRED, 'The name of the resource.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
     }
 
 }

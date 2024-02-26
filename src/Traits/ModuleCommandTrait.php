@@ -7,6 +7,23 @@ use Fintech\Generator\Exceptions\GeneratorException;
 trait ModuleCommandTrait
 {
     /**
+     * return module path with start and closing slash
+     * @param string|null $module
+     * @return string
+     * @throws GeneratorException
+     */
+    public function getModulePath(string $module = null)
+    {
+        if ($module == null) {
+            $module = $this->getModuleName();
+        }
+
+        $rootPath = config('fintech.generators.paths.modules');
+
+        return $rootPath . '/' . $module . '/';
+    }
+
+    /**
      * Get the module name.
      *
      * @return string
@@ -37,23 +54,6 @@ trait ModuleCommandTrait
     }
 
     /**
-      * return module path with start and closing slash
-     * @param string|null $module
-     * @return string
-     * @throws GeneratorException
-     */
-    public function getModulePath(string $module = null)
-    {
-        if ($module == null) {
-            $module = $this->getModuleName();
-        }
-
-        $rootPath = config('fintech.generators.paths.modules');
-
-        return $rootPath.'/'.$module.'/';
-    }
-
-    /**
      * return module namespace with start and closing slash
      *
      * @param string|null $module
@@ -68,6 +68,6 @@ trait ModuleCommandTrait
 
         $rootPath = config('fintech.generators.namespace');
 
-        return '\\'.$rootPath.'\\'.$module.'\\';
+        return '\\' . $rootPath . '\\' . $module . '\\';
     }
 }

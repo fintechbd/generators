@@ -85,15 +85,11 @@ class ServiceMakeCommand extends GeneratorCommand
         ]))->render();
     }
 
-    private function getRepoNS()
+    private function getStub()
     {
-        $ns = config('fintech.generators.namespace')
-            .'/'.$this->getModuleName()
-            .'/'.'Interfaces'
-            .'/'.$this->getRepoName();
-
-        return implode('\\', explode('/', $ns));
-
+        return ($this->option('crud'))
+            ? '/service-crud.stub'
+            : '/service.stub';
     }
 
     protected function getRepoName()
@@ -111,11 +107,15 @@ class ServiceMakeCommand extends GeneratorCommand
         return $repository;
     }
 
-    private function getStub()
+    private function getRepoNS()
     {
-        return ($this->option('crud'))
-            ? '/service-crud.stub'
-            : '/service.stub';
+        $ns = config('fintech.generators.namespace')
+            . '/' . $this->getModuleName()
+            . '/' . 'Interfaces'
+            . '/' . $this->getRepoName();
+
+        return implode('\\', explode('/', $ns));
+
     }
 
     /**
@@ -129,7 +129,7 @@ class ServiceMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

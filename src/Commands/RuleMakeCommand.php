@@ -68,6 +68,14 @@ class RuleMakeCommand extends GeneratorCommand
     }
 
     /**
+     * @return string
+     */
+    private function getFileName()
+    {
+        return Str::studly($this->argument('name'));
+    }
+
+    /**
      * @return mixed
      */
     protected function getDestinationFilePath()
@@ -76,14 +84,6 @@ class RuleMakeCommand extends GeneratorCommand
 
         $rulePath = GenerateConfigReader::read('rules');
 
-        return $path.$rulePath->getPath().'/'.$this->getFileName().'.php';
-    }
-
-    /**
-     * @return string
-     */
-    private function getFileName()
-    {
-        return Str::studly($this->argument('name'));
+        return $path . $rulePath->getPath() . '/' . $this->getFileName() . '.php';
     }
 }

@@ -42,6 +42,19 @@ class MiddlewareMakeCommand extends GeneratorCommand
     protected $description = 'Create a new middleware class for the specified package.';
 
     /**
+     * Run the command.
+     */
+    public function handle(): int
+    {
+
+        $this->components->info('Creating middleware...');
+
+        parent::handle();
+
+        return 0;
+    }
+
+    /**
      * Get the console command arguments.
      *
      * @return array
@@ -76,7 +89,7 @@ class MiddlewareMakeCommand extends GeneratorCommand
 
         $middlewarePath = GenerateConfigReader::read('filter');
 
-        return $path.$middlewarePath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $middlewarePath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**
@@ -85,18 +98,5 @@ class MiddlewareMakeCommand extends GeneratorCommand
     private function getFileName()
     {
         return Str::studly($this->argument('name'));
-    }
-
-    /**
-     * Run the command.
-     */
-    public function handle(): int
-    {
-
-        $this->components->info('Creating middleware...');
-
-        parent::handle();
-
-        return 0;
     }
 }

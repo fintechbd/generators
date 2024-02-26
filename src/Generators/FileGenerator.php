@@ -25,7 +25,7 @@ class FileGenerator extends Generator
     /**
      * The laravel filesystem or null.
      *
-     * @var \Illuminate\Filesystem\Filesystem|null
+     * @var Filesystem|null
      */
     protected $filesystem;
 
@@ -37,36 +37,13 @@ class FileGenerator extends Generator
     /**
      * The constructor.
      *
-     * @param  null  $filesystem
+     * @param null $filesystem
      */
     public function __construct($path, $contents, $filesystem = null)
     {
         $this->path = $path;
         $this->contents = $contents;
         $this->filesystem = $filesystem ?: new Filesystem();
-    }
-
-    /**
-     * Get contents.
-     *
-     * @return mixed
-     */
-    public function getContents()
-    {
-        return $this->contents;
-    }
-
-    /**
-     * Set contents.
-     *
-     * @param  mixed  $contents
-     * @return $this
-     */
-    public function setContents($contents)
-    {
-        $this->contents = $contents;
-
-        return $this;
     }
 
     /**
@@ -92,29 +69,6 @@ class FileGenerator extends Generator
         return $this;
     }
 
-    /**
-     * Get path.
-     *
-     * @return mixed
-     */
-    public function getPath()
-    {
-        return $this->path;
-    }
-
-    /**
-     * Set path.
-     *
-     * @param  mixed  $path
-     * @return $this
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
     public function withFileOverwrite(bool $overwrite): FileGenerator
     {
         $this->overwriteFile = $overwrite;
@@ -136,5 +90,51 @@ class FileGenerator extends Generator
         }
 
         throw new FileAlreadyExistException('File already exists!');
+    }
+
+    /**
+     * Get path.
+     *
+     * @return mixed
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set path.
+     *
+     * @param mixed $path
+     * @return $this
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get contents.
+     *
+     * @return mixed
+     */
+    public function getContents()
+    {
+        return $this->contents;
+    }
+
+    /**
+     * Set contents.
+     *
+     * @param mixed $contents
+     * @return $this
+     */
+    public function setContents($contents)
+    {
+        $this->contents = $contents;
+
+        return $this;
     }
 }

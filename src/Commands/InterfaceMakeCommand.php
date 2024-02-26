@@ -84,15 +84,11 @@ class InterfaceMakeCommand extends GeneratorCommand
         ]))->render();
     }
 
-    private function getExceptNamespace($class)
+    private function getStub()
     {
-        $ns = config('fintech.generators.namespace')
-            .'/'.$this->getModuleName()
-            .'/'.config('fintech.generators.paths.generator.exception.namespace')
-            .'/'.$class;
-
-        return implode('\\', explode('/', $ns));
-
+        return ($this->option('crud'))
+            ? '/interface-crud.stub'
+            : '/interface.stub';
     }
 
     private function getExceptionClassName()
@@ -104,7 +100,7 @@ class InterfaceMakeCommand extends GeneratorCommand
             if (!$repository) {
                 $repository = (Str::contains($this->getClass(), 'Repository', true))
                     ? $this->getClass()
-                    : $this->getClass().'Repository';
+                    : $this->getClass() . 'Repository';
             }
 
             if (!Str::contains($repository, 'Exception')) {
@@ -117,11 +113,15 @@ class InterfaceMakeCommand extends GeneratorCommand
         return '';
     }
 
-    private function getStub()
+    private function getExceptNamespace($class)
     {
-        return ($this->option('crud'))
-            ? '/interface-crud.stub'
-            : '/interface.stub';
+        $ns = config('fintech.generators.namespace')
+            . '/' . $this->getModuleName()
+            . '/' . config('fintech.generators.paths.generator.exception.namespace')
+            . '/' . $class;
+
+        return implode('\\', explode('/', $ns));
+
     }
 
     /**
@@ -135,7 +135,7 @@ class InterfaceMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

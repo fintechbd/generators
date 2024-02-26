@@ -47,12 +47,22 @@ class NameParser
     /**
      * The constructor.
      *
-     * @param  string  $name
+     * @param string $name
      */
     public function __construct($name)
     {
         $this->name = $name;
         $this->data = $this->fetchData();
+    }
+
+    /**
+     * Fetch the migration name to an array data.
+     *
+     * @return array
+     */
+    protected function fetchData()
+    {
+        return explode('_', $this->name);
     }
 
     /**
@@ -63,16 +73,6 @@ class NameParser
     public function getOriginalName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get schema type or action.
-     *
-     * @return string
-     */
-    public function getAction()
-    {
-        return head($this->data);
     }
 
     /**
@@ -130,13 +130,13 @@ class NameParser
     }
 
     /**
-     * Fetch the migration name to an array data.
+     * Get schema type or action.
      *
-     * @return array
+     * @return string
      */
-    protected function fetchData()
+    public function getAction()
     {
-        return explode('_', $this->name);
+        return head($this->data);
     }
 
     /**

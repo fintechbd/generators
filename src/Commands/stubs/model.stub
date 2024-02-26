@@ -3,10 +3,10 @@
 namespace $NAMESPACE$;
 
 use Fintech\Core\Traits\AuditableTrait;
-use Illuminate\Database\Eloquent\Model;
+use Fintech\Core\Abstracts\BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class $CLASS$ extends Model
+class $CLASS$ extends BaseModel
 {
    use AuditableTrait;
    use SoftDeletes;

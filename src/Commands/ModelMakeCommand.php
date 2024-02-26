@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -57,6 +58,17 @@ class ModelMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Create the migration file with the given model if migration flag was used
+     */
+    private function handleOptionalMigrationOption()
+    {
+        if ($this->option('migration') === true) {
+            $migrationName = 'create_' . $this->createMigrationName() . '_table';
+            $this->call('module:make-migration', ['name' => $migrationName, 'module' => $this->argument('module')]);
+        }
+    }
+
+    /**
      * Create a proper migration name:
      * ProductDetail: product_details
      * Product: products
@@ -70,53 +82,13 @@ class ModelMakeCommand extends GeneratorCommand
         $string = '';
         foreach ($pieces as $i => $piece) {
             if ($i + 1 < count($pieces)) {
-                $string .= strtolower($piece).'_';
+                $string .= strtolower($piece) . '_';
             } else {
                 $string .= Str::plural(strtolower($piece));
             }
         }
 
         return $string;
-    }
-
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['model', InputArgument::REQUIRED, 'The name of model will be created.'],
-            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
-        ];
-    }
-
-    /**
-     * Get the console command options.
-     *
-     * @return array
-     */
-    protected function getOptions()
-    {
-        return [
-            ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
-            ['migration', 'm', InputOption::VALUE_NONE, 'Flag to create associated migrations', null],
-            ['controller', 'c', InputOption::VALUE_NONE, 'Flag to create associated controllers', null],
-            ['seed', 's', InputOption::VALUE_NONE, 'Create a new seeder for the model', null],
-            ['request', 'r', InputOption::VALUE_NONE, 'Create a new request for the model', null],
-        ];
-    }
-
-    /**
-     * Create the migration file with the given model if migration flag was used
-     */
-    private function handleOptionalMigrationOption()
-    {
-        if ($this->option('migration') === true) {
-            $migrationName = 'create_'.$this->createMigrationName().'_table';
-            $this->call('module:make-migration', ['name' => $migrationName, 'module' => $this->argument('module')]);
-        }
     }
 
     /**
@@ -132,6 +104,14 @@ class ModelMakeCommand extends GeneratorCommand
                 'module' => $this->argument('module'),
             ]));
         }
+    }
+
+    /**
+     * @return mixed|string
+     */
+    private function getModelName()
+    {
+        return Str::studly($this->argument('model'));
     }
 
     /**
@@ -169,9 +149,38 @@ class ModelMakeCommand extends GeneratorCommand
     }
 
     /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['model', InputArgument::REQUIRED, 'The name of model will be created.'],
+            ['module', InputArgument::OPTIONAL, 'The name of module will be used.'],
+        ];
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
+            ['migration', 'm', InputOption::VALUE_NONE, 'Flag to create associated migrations', null],
+            ['controller', 'c', InputOption::VALUE_NONE, 'Flag to create associated controllers', null],
+            ['seed', 's', InputOption::VALUE_NONE, 'Create a new seeder for the model', null],
+            ['request', 'r', InputOption::VALUE_NONE, 'Create a new request for the model', null],
+        ];
+    }
+
+    /**
      * @return mixed
      *
-     * @throws \Fintech\Generator\Exceptions\GeneratorException
+     * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
@@ -192,28 +201,6 @@ class ModelMakeCommand extends GeneratorCommand
     }
 
     /**
-     * @return mixed
-     *
-     * @throws \Fintech\Generator\Exceptions\GeneratorException
-     */
-    protected function getDestinationFilePath()
-    {
-        $path = $this->getModulePath($this->getModuleName());
-
-        $modelPath = GenerateConfigReader::read($this->type);
-
-        return $path.$modelPath->getPath().'/'.$this->getModelName().'.php';
-    }
-
-    /**
-     * @return mixed|string
-     */
-    private function getModelName()
-    {
-        return Str::studly($this->argument('model'));
-    }
-
-    /**
      * @return string
      */
     private function getFillable()
@@ -227,5 +214,19 @@ class ModelMakeCommand extends GeneratorCommand
         }
 
         return '[]';
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws GeneratorException
+     */
+    protected function getDestinationFilePath()
+    {
+        $path = $this->getModulePath($this->getModuleName());
+
+        $modelPath = GenerateConfigReader::read($this->type);
+
+        return $path . $modelPath->getPath() . '/' . $this->getModelName() . '.php';
     }
 }

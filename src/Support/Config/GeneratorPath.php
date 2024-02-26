@@ -20,8 +20,13 @@ class GeneratorPath
             return;
         }
         $this->path = $config;
-        $this->generate = (bool) $config;
+        $this->generate = (bool)$config;
         $this->namespace = $config;
+    }
+
+    public static function convertPathToNamespace($path)
+    {
+        return str_replace(['/', 'src/'], '\\', $path);
     }
 
     public function getPath()
@@ -37,10 +42,5 @@ class GeneratorPath
     public function getNamespace()
     {
         return $this->namespace;
-    }
-
-    public static function convertPathToNamespace($path)
-    {
-        return str_replace(['/', 'src/'], '\\', $path);
     }
 }

@@ -2,27 +2,27 @@
 
 namespace Fintech\Generator\Commands;
 
+use Arr;
+use File;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
 
 class CheckLangCommand extends Command
 {
-    private $langPath;
-
     /**
      * The console command name.
      *
      * @var string
      */
     protected $name = 'package:lang';
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Check missing language keys in the specified package.';
+    private $langPath;
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class CheckLangCommand extends Command
     public function handle(): int
     {
 
-        $this->langPath = DIRECTORY_SEPARATOR.config('modules.paths.generator.lang.path', 'Resources/lang');
+        $this->langPath = DIRECTORY_SEPARATOR . config('modules.paths.generator.lang.path', 'Resources/lang');
 
         $this->components->alert('Checking languages ...');
 
@@ -49,23 +49,9 @@ class CheckLangCommand extends Command
     }
 
     /**
-     * enableAll
-     *
-     * @return void
-     */
-    public function checkAll()
-    {
-        $modules = $this->laravel['modules']->all();
-
-        foreach ($modules as $module) {
-            $this->check($module);
-        }
-    }
-
-    /**
      * enable
      *
-     * @param  string  $name
+     * @param string $name
      * @return void
      */
     public function check($name)
@@ -88,33 +74,10 @@ class CheckLangCommand extends Command
 
     }
 
-    /**
-     * Get the console command arguments.
-     *
-     * @return array
-     */
-    protected function getArguments()
-    {
-        return [
-            ['module', InputArgument::OPTIONAL, 'Module name.'],
-        ];
-    }
-
-    private function getLangFiles($module)
-    {
-        $files = [];
-        $path = $module->getPath().$this->langPath;
-        if (is_dir($path)) {
-            $files = array_merge($files, $this->laravel['files']->all($path));
-        }
-
-        return $files;
-    }
-
     private function getDirectories($module)
     {
         $moduleName = $module->getStudlyName();
-        $path = $module->getPath().'/Resources/lang';
+        $path = $module->getPath() . '/Resources/lang';
         if (is_dir($path)) {
             $directories = $this->laravel['files']->directories($path);
             $directories = array_map(function ($directory) use ($moduleName) {
@@ -124,7 +87,7 @@ class CheckLangCommand extends Command
                     'path' => $directory,
                     'files' => array_map(function ($file) {
                         return basename($file);
-                    }, \File::glob($directory.DIRECTORY_SEPARATOR.'*')),
+                    }, File::glob($directory . DIRECTORY_SEPARATOR . '*')),
                 ];
             }, $directories);
         }
@@ -191,7 +154,7 @@ class CheckLangCommand extends Command
         $directories->each(function ($directory) use ($uniqeLangFiles, $langDirectories, &$missingKeysMessage) {
 
             $uniqeLangFiles->each(function ($file) use ($directory, $langDirectories, &$missingKeysMessage) {
-                $langKeys = $this->getLangKeys($directory['path'].DIRECTORY_SEPARATOR.$file);
+                $langKeys = $this->getLangKeys($directory['path'] . DIRECTORY_SEPARATOR . $file);
 
                 if ($langKeys == false) {
                     return;
@@ -203,7 +166,7 @@ class CheckLangCommand extends Command
 
                         $basePath = str_replace($directory['name'], $langDirectory, $directory['path']);
 
-                        $otherLangKeys = $this->getLangKeys($basePath.DIRECTORY_SEPARATOR.$file);
+                        $otherLangKeys = $this->getLangKeys($basePath . DIRECTORY_SEPARATOR . $file);
 
                         if ($otherLangKeys == false) {
                             return;
@@ -239,12 +202,49 @@ class CheckLangCommand extends Command
 
     private function getLangKeys($file)
     {
-        if (\File::exists($file)) {
-            $lang = \File::getRequire($file);
+        if (File::exists($file)) {
+            $lang = File::getRequire($file);
 
-            return collect(\Arr::dot($lang))->keys();
+            return collect(Arr::dot($lang))->keys();
         } else {
             return false;
         }
+    }
+
+    /**
+     * enableAll
+     *
+     * @return void
+     */
+    public function checkAll()
+    {
+        $modules = $this->laravel['modules']->all();
+
+        foreach ($modules as $module) {
+            $this->check($module);
+        }
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['module', InputArgument::OPTIONAL, 'Module name.'],
+        ];
+    }
+
+    private function getLangFiles($module)
+    {
+        $files = [];
+        $path = $module->getPath() . $this->langPath;
+        if (is_dir($path)) {
+            $files = array_merge($files, $this->laravel['files']->all($path));
+        }
+
+        return $files;
     }
 }

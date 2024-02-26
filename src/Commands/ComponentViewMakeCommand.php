@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -66,14 +67,14 @@ class ComponentViewMakeCommand extends GeneratorCommand
     /**
      * @return mixed
      *
-     * @throws \Fintech\Generator\Exceptions\GeneratorException
+     * @throws GeneratorException
      */
     protected function getDestinationFilePath()
     {
         $path = $this->getModulePath($this->getModuleName());
         $factoryPath = GenerateConfigReader::read('component-view');
 
-        return $path.$factoryPath->getPath().'/'.$this->getFileName();
+        return $path . $factoryPath->getPath() . '/' . $this->getFileName();
     }
 
     /**
@@ -81,6 +82,6 @@ class ComponentViewMakeCommand extends GeneratorCommand
      */
     private function getFileName()
     {
-        return Str::lower($this->argument('name')).'.blade.php';
+        return Str::lower($this->argument('name')) . '.blade.php';
     }
 }

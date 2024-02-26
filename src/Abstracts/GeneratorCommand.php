@@ -18,20 +18,6 @@ abstract class GeneratorCommand extends Command
     protected $argumentName = '';
 
     /**
-     * Get template contents.
-     *
-     * @return string
-     */
-    abstract protected function getTemplateContents();
-
-    /**
-     * Get the destination file path.
-     *
-     * @return string
-     */
-    abstract protected function getDestinationFilePath();
-
-    /**
      * Execute the console command.
      */
     public function handle(): int
@@ -63,6 +49,47 @@ abstract class GeneratorCommand extends Command
     }
 
     /**
+     * Get the destination file path.
+     *
+     * @return string
+     */
+    abstract protected function getDestinationFilePath();
+
+    /**
+     * Get template contents.
+     *
+     * @return string
+     */
+    abstract protected function getTemplateContents();
+
+    /**
+     * Get class namespace.
+     *
+     * @param string $module
+     * @return string
+     *
+     * @throws GeneratorException
+     */
+    public function getClassNamespace($module)
+    {
+        $extra = str_replace($this->getClass(), '', $this->argument($this->argumentName));
+
+        $extra = str_replace('/', '\\', $extra);
+
+        $namespace = config('fintech.generators.namespace');
+
+        $namespace .= '\\' . $module;
+
+        $namespace .= '\\' . $this->getDefaultNamespace();
+
+        $namespace .= '\\' . $extra;
+
+        $namespace = str_replace('/', '\\', $namespace);
+
+        return trim($namespace, '\\');
+    }
+
+    /**
      * Get class name.
      *
      * @return string
@@ -75,7 +102,7 @@ abstract class GeneratorCommand extends Command
     /**
      * Get default namespace.
      *
-     * @param  null  $type
+     * @param null $type
      *
      * @throws GeneratorException
      */
@@ -99,32 +126,5 @@ abstract class GeneratorCommand extends Command
 
         return $config['namespace'] ?? $config['path'];
 
-    }
-
-    /**
-     * Get class namespace.
-     *
-     * @param  string  $module
-     * @return string
-     *
-     * @throws GeneratorException
-     */
-    public function getClassNamespace($module)
-    {
-        $extra = str_replace($this->getClass(), '', $this->argument($this->argumentName));
-
-        $extra = str_replace('/', '\\', $extra);
-
-        $namespace = config('fintech.generators.namespace');
-
-        $namespace .= '\\'.$module;
-
-        $namespace .= '\\'.$this->getDefaultNamespace();
-
-        $namespace .= '\\'.$extra;
-
-        $namespace = str_replace('/', '\\', $namespace);
-
-        return trim($namespace, '\\');
     }
 }

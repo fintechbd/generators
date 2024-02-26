@@ -3,6 +3,7 @@
 namespace Fintech\Generator\Commands;
 
 use Fintech\Generator\Abstracts\GeneratorCommand;
+use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Stub;
 use Fintech\Generator\Traits\ModuleCommandTrait;
@@ -65,7 +66,7 @@ class RouteProviderMakeCommand extends GeneratorCommand
      *
      * @return string
      *
-     * @throws \Fintech\Generator\Exceptions\GeneratorException
+     * @throws GeneratorException
      */
     protected function getTemplateContents()
     {
@@ -91,6 +92,29 @@ class RouteProviderMakeCommand extends GeneratorCommand
         return 'RouteServiceProvider';
     }
 
+    private function getControllerNameSpace(): string
+    {
+        $module = $this->laravel['modules'];
+
+        return str_replace('/', '\\', $module->config('paths.generator.controller.namespace') ?: $module->config('paths.generator.controller.path', 'Controller'));
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getWebRoutesPath()
+    {
+        return '/' . $this->laravel['modules']->config('stubs.files.routes/web', 'Routes/web.php');
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getApiRoutesPath()
+    {
+        return '/' . $this->laravel['modules']->config('stubs.files.routes/api', 'Routes/api.php');
+    }
+
     /**
      * Get the destination file path.
      *
@@ -102,29 +126,6 @@ class RouteProviderMakeCommand extends GeneratorCommand
 
         $generatorPath = GenerateConfigReader::read('provider');
 
-        return $path.$generatorPath->getPath().'/'.$this->getFileName().'.php';
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getWebRoutesPath()
-    {
-        return '/'.$this->laravel['modules']->config('stubs.files.routes/web', 'Routes/web.php');
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getApiRoutesPath()
-    {
-        return '/'.$this->laravel['modules']->config('stubs.files.routes/api', 'Routes/api.php');
-    }
-
-    private function getControllerNameSpace(): string
-    {
-        $module = $this->laravel['modules'];
-
-        return str_replace('/', '\\', $module->config('paths.generator.controller.namespace') ?: $module->config('paths.generator.controller.path', 'Controller'));
+        return $path . $generatorPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 }

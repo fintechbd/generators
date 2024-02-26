@@ -80,27 +80,12 @@ class SeedMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         return (new Stub('/seeder.stub', [
-            'NAME' => $this->getSeederName().'Seeder',
+            'NAME' => $this->getSeederName() . 'Seeder',
             'SERVICE_NAME' => Str::camel($this->getSeederName()),
             'MODULE' => $this->getModuleName(),
             'ROOT_NAMESPACE' => config('fintech.generators.namespace'),
             'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
         ]))->render();
-    }
-
-    /**
-     * @return mixed
-     *
-     * @throws \Fintech\Generator\Exceptions\GeneratorException
-     */
-    protected function getDestinationFilePath()
-    {
-
-        $path = $this->getModulePath($this->getModuleName());
-
-        $seederPath = GenerateConfigReader::read($this->type);
-
-        return $path.$seederPath->getPath().'/'.$this->getSeederName().'Seeder.php';
     }
 
     /**
@@ -111,5 +96,20 @@ class SeedMakeCommand extends GeneratorCommand
     private function getSeederName()
     {
         return Str::studly($this->argument('name'));
+    }
+
+    /**
+     * @return mixed
+     *
+     * @throws GeneratorException
+     */
+    protected function getDestinationFilePath()
+    {
+
+        $path = $this->getModulePath($this->getModuleName());
+
+        $seederPath = GenerateConfigReader::read($this->type);
+
+        return $path . $seederPath->getPath() . '/' . $this->getSeederName() . 'Seeder.php';
     }
 }

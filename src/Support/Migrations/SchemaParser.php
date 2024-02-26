@@ -37,7 +37,7 @@ class SchemaParser implements Arrayable
     /**
      * Create new instance.
      *
-     * @param  string|null  $schema
+     * @param string|null $schema
      */
     public function __construct($schema = null)
     {
@@ -45,9 +45,45 @@ class SchemaParser implements Arrayable
     }
 
     /**
+     * Render up migration fields.
+     *
+     * @return string
+     */
+    public function up()
+    {
+        return $this->render();
+    }
+
+    /**
+     * Render the migration to formatted script.
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $results = '';
+
+        foreach ($this->toArray() as $column => $attributes) {
+            $results .= $this->createField($column, $attributes);
+        }
+
+        return $results;
+    }
+
+    /**
+     * Convert string migration to array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->parse($this->schema);
+    }
+
+    /**
      * Parse a string to array of formatted schema.
      *
-     * @param  string  $schema
+     * @param string $schema
      * @return array
      */
     public function parse($schema)
@@ -82,39 +118,101 @@ class SchemaParser implements Arrayable
     }
 
     /**
-     * Convert string migration to array.
+     * Get column name from schema.
      *
+     * @param string $schema
+     * @return string
+     */
+    public function getColumn($schema)
+    {
+        return Arr::get(explode(':', $schema), 0);
+    }
+
+    /**
+     * Get column attributes.
+     *
+     * @param string $column
+     * @param string $schema
      * @return array
      */
-    public function toArray()
+    public function getAttributes($column, $schema)
     {
-        return $this->parse($this->schema);
+        $fields = str_replace($column . ':', '', $schema);
+
+        return $this->hasCustomAttribute($column) ? $this->getCustomAttribute($column) : explode(':', $fields);
     }
 
     /**
-     * Render the migration to formatted script.
+     * Determine whether the given column is exist in customAttributes array.
      *
+     * @param string $column
+     * @return bool
+     */
+    public function hasCustomAttribute($column)
+    {
+        return array_key_exists($column, $this->customAttributes);
+    }
+
+    /**
+     * Get custom attributes value.
+     *
+     * @param string $column
+     * @return array
+     */
+    public function getCustomAttribute($column)
+    {
+        return (array)$this->customAttributes[$column];
+    }
+
+    /**
+     * Create field.
+     *
+     * @param string $column
+     * @param array $attributes
+     * @param string $type
      * @return string
      */
-    public function render()
+    public function createField($column, $attributes, $type = 'add')
     {
-        $results = '';
+        $results = "\t\t\t" . '$table';
 
-        foreach ($this->toArray() as $column => $attributes) {
-            $results .= $this->createField($column, $attributes);
+        foreach ($attributes as $key => $field) {
+            if (in_array($column, $this->relationshipKeys)) {
+                $results .= $this->addRelationColumn($key, $field, $column);
+            } else {
+                $results .= $this->{"{$type}Column"}($key, $field, $column);
+            }
         }
 
-        return $results;
+        return $results . ';' . PHP_EOL;
     }
 
     /**
-     * Render up migration fields.
+     * Add relation column.
      *
+     * @param int $key
+     * @param string $field
+     * @param string $column
      * @return string
      */
-    public function up()
+    protected function addRelationColumn($key, $field, $column)
     {
-        return $this->render();
+        if ($key === 0) {
+            $relatedColumn = Str::snake(class_basename($field)) . '_id';
+
+            return "->integer('{$relatedColumn}')->unsigned();" . PHP_EOL . "\t\t\t" . "\$table->foreign('{$relatedColumn}')";
+        }
+        if ($key === 1) {
+            return "->references('{$field}')";
+        }
+        if ($key === 2) {
+            return "->on('{$field}')";
+        }
+        if (Str::contains($field, '(')) {
+            return '->' . $field;
+        }
+
+        return '->' . $field . '()';
     }
 
     /**
@@ -135,142 +233,44 @@ class SchemaParser implements Arrayable
     }
 
     /**
-     * Create field.
-     *
-     * @param  string  $column
-     * @param  array  $attributes
-     * @param  string  $type
-     * @return string
-     */
-    public function createField($column, $attributes, $type = 'add')
-    {
-        $results = "\t\t\t".'$table';
-
-        foreach ($attributes as $key => $field) {
-            if (in_array($column, $this->relationshipKeys)) {
-                $results .= $this->addRelationColumn($key, $field, $column);
-            } else {
-                $results .= $this->{"{$type}Column"}($key, $field, $column);
-            }
-        }
-
-        return $results.';'.PHP_EOL;
-    }
-
-    /**
-     * Add relation column.
-     *
-     * @param  int  $key
-     * @param  string  $field
-     * @param  string  $column
-     * @return string
-     */
-    protected function addRelationColumn($key, $field, $column)
-    {
-        if ($key === 0) {
-            $relatedColumn = Str::snake(class_basename($field)).'_id';
-
-            return "->integer('{$relatedColumn}')->unsigned();".PHP_EOL."\t\t\t"."\$table->foreign('{$relatedColumn}')";
-        }
-        if ($key === 1) {
-            return "->references('{$field}')";
-        }
-        if ($key === 2) {
-            return "->on('{$field}')";
-        }
-        if (Str::contains($field, '(')) {
-            return '->'.$field;
-        }
-
-        return '->'.$field.'()';
-    }
-
-    /**
      * Format field to script.
      *
-     * @param  int  $key
-     * @param  string  $field
-     * @param  string  $column
+     * @param int $key
+     * @param string $field
+     * @param string $column
      * @return string
      */
     protected function addColumn($key, $field, $column)
     {
         if ($this->hasCustomAttribute($column)) {
-            return '->'.$field;
+            return '->' . $field;
         }
 
         if ($key == 0) {
-            return '->'.$field."('".$column."')";
+            return '->' . $field . "('" . $column . "')";
         }
 
         if (Str::contains($field, '(')) {
-            return '->'.$field;
+            return '->' . $field;
         }
 
-        return '->'.$field.'()';
+        return '->' . $field . '()';
     }
 
     /**
      * Format field to script.
      *
-     * @param  int  $key
-     * @param  string  $field
-     * @param  string  $column
+     * @param int $key
+     * @param string $field
+     * @param string $column
      * @return string
      */
     protected function removeColumn($key, $field, $column)
     {
         if ($this->hasCustomAttribute($column)) {
-            return '->'.$field;
+            return '->' . $field;
         }
 
-        return '->dropColumn('."'".$column."')";
-    }
-
-    /**
-     * Get column name from schema.
-     *
-     * @param  string  $schema
-     * @return string
-     */
-    public function getColumn($schema)
-    {
-        return Arr::get(explode(':', $schema), 0);
-    }
-
-    /**
-     * Get column attributes.
-     *
-     * @param  string  $column
-     * @param  string  $schema
-     * @return array
-     */
-    public function getAttributes($column, $schema)
-    {
-        $fields = str_replace($column.':', '', $schema);
-
-        return $this->hasCustomAttribute($column) ? $this->getCustomAttribute($column) : explode(':', $fields);
-    }
-
-    /**
-     * Determine whether the given column is exist in customAttributes array.
-     *
-     * @param  string  $column
-     * @return bool
-     */
-    public function hasCustomAttribute($column)
-    {
-        return array_key_exists($column, $this->customAttributes);
-    }
-
-    /**
-     * Get custom attributes value.
-     *
-     * @param  string  $column
-     * @return array
-     */
-    public function getCustomAttribute($column)
-    {
-        return (array) $this->customAttributes[$column];
+        return '->dropColumn(' . "'" . $column . "')";
     }
 }

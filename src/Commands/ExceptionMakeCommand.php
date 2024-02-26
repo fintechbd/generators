@@ -79,7 +79,7 @@ class ExceptionMakeCommand extends GeneratorCommand
 
         $commandPath = GenerateConfigReader::read($this->type);
 
-        return $path.$commandPath->getPath().'/'.$this->getFileName().'.php';
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**
