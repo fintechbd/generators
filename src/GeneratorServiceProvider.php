@@ -2,6 +2,7 @@
 
 namespace Fintech\Generator;
 
+use Fintech\Core\Traits\RegisterPackageTrait;
 use Fintech\Generator\Commands\CommandMakeCommand;
 use Fintech\Generator\Commands\ComponentClassMakeCommand;
 use Fintech\Generator\Commands\ComponentViewMakeCommand;
@@ -36,6 +37,8 @@ use Illuminate\Support\ServiceProvider;
 
 class GeneratorServiceProvider extends ServiceProvider
 {
+    use RegisterPackageTrait;
+
     /**
      * Register any application services.
      *
@@ -43,6 +46,8 @@ class GeneratorServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->packageCode = 'generators';
+
         $this->mergeConfigFrom(
             __DIR__ . '/../config/generators.php',
             'fintech.generators'
@@ -54,6 +59,8 @@ class GeneratorServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->injectOnConfig();
+
         $this->publishes([
             __DIR__ . '/../config/generators.php' => config_path('fintech/generators.php'),
         ]);
