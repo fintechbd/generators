@@ -96,8 +96,7 @@ class ModuleGenerator extends Generator
         Filesystem $filesystem = null,
         Console $console = null,
         ActivatorInterface $activator = null
-    )
-    {
+    ) {
         $this->name = $name;
         $this->config = $config;
         $this->filesystem = $filesystem;
