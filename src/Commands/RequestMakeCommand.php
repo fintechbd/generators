@@ -129,7 +129,7 @@ HTML;
 
         $requestPath = GenerateConfigReader::read('request');
 
-        return $path . $requestPath->getPath() . '/' . $this->getFileName() . '.php';
+        dd($path . $requestPath->getPath() . '/' . $this->getFileName() . '.php');
     }
 
     /**
