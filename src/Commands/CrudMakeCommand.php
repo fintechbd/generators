@@ -2,6 +2,7 @@
 
 namespace Fintech\Generator\Commands;
 
+use Fintech\Core\Facades\Core;
 use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Config\GeneratorPath;
@@ -43,15 +44,21 @@ class CrudMakeCommand extends Command
     {
         try {
 
-            $this->createRequests();
+            if (Core::packageExists('RestApi')) {
 
-            $this->createResources();
+                $this->createRequests();
+
+                $this->createResources();
+
+                $this->createController();
+
+                $this->updateRouteFile();
+
+            }
 
             $this->createStubFiles();
 
             $this->createRepositories();
-
-            $this->updateRouteFile();
 
             $this->createConfigOption();
 
@@ -115,6 +122,15 @@ class CrudMakeCommand extends Command
         ]);
     }
 
+    private function createController()
+    {
+        Artisan::call('package:make-controller', [
+            'controller' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+        ]);
+    }
+
     //Create Resource
 
     /**
@@ -122,11 +138,6 @@ class CrudMakeCommand extends Command
      */
     private function createStubFiles()
     {
-        Artisan::call('package:make-controller', [
-            'controller' => $this->getResourceName(),
-            'module' => $this->getModuleName(),
-            '--crud' => true,
-        ]);
 
         Artisan::call('package:make-model', [
             'model' => $this->getResourceName(),
