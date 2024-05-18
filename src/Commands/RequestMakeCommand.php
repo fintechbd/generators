@@ -77,7 +77,7 @@ class RequestMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         return (new Stub('/request.stub', [
-            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'NAMESPACE' => $this->getClassNamespace('RestApi'). '\\' . $this->getModuleName(),
             'CLASS' => $this->getClass(),
             'RULES' => $this->getRules(),
             'PAGINATE_TRAIT' => $this->getPaginateTrait(),
@@ -112,7 +112,7 @@ HTML;
     protected function getPaginateTrait()
     {
         if ($this->option('index')) {
-            return 'use \Fintech\Core\Traits\HasPaginateQuery;' . PHP_EOL;
+            return 'use \Fintech\RestApi\Traits\HasPaginateQuery;' . PHP_EOL;
         } else {
             return '';
         }
@@ -125,11 +125,12 @@ HTML;
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->getModulePath($this->getModuleName());
-
         $requestPath = GenerateConfigReader::read('request');
 
-        dd($path . $requestPath->getPath() . '/' . $this->getFileName() . '.php');
+        return $this->getModulePath('RestApi')
+            . $requestPath->getPath() . '/'
+            . $this->getModuleName() . '/'
+            . $this->getFileName() . '.php';
     }
 
     /**
