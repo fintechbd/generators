@@ -48,21 +48,21 @@ class CrudMakeCommand extends Command
 
                 $this->createRequests();
 
-//                $this->createResources();
-//
-//                $this->createController();
-//
-//                $this->updateRouteFile();
+                //                $this->createResources();
+                //
+                //                $this->createController();
+                //
+                //                $this->updateRouteFile();
 
             }
 
-//            $this->createStubFiles();
-//
-//            $this->createRepositories();
-//
-//            $this->createConfigOption();
-//
-//            $this->updateModelEntryClasses();
+            //            $this->createStubFiles();
+            //
+            //            $this->createRepositories();
+            //
+            //            $this->createConfigOption();
+            //
+            //            $this->updateModelEntryClasses();
 
             return self::SUCCESS;
 
