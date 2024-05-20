@@ -60,7 +60,7 @@ trait ModuleCommandTrait
      * @return string
      * @throws GeneratorException
      */
-    public function getModuleNS(string $module = null)
+    public function getModuleNS(string $module = null): string
     {
         if ($module == null) {
             $module = $this->getModuleName();

@@ -46,23 +46,23 @@ class CrudMakeCommand extends Command
 
             if (Core::packageExists('RestApi')) {
 
-                //                $this->createRequests();
+                $this->createRequests();
 
-                //                $this->createResources();
+                $this->createResources();
 
                 $this->createController();
-                //
-                //                $this->updateRouteFile();
+
+                $this->updateRouteFile();
 
             }
 
-            //            $this->createStubFiles();
-            //
-            //            $this->createRepositories();
-            //
-            //            $this->createConfigOption();
-            //
-            //            $this->updateModelEntryClasses();
+            $this->createStubFiles();
+
+            $this->createRepositories();
+
+            $this->createConfigOption();
+
+            $this->updateModelEntryClasses();
 
             return self::SUCCESS;
 
@@ -183,9 +183,14 @@ class CrudMakeCommand extends Command
         ]);
     }
 
+    /**
+     * @throws GeneratorException
+     */
     private function updateRouteFile()
     {
-        $filePath = $this->getModulePath() . GenerateConfigReader::read('routes')->getPath() . DIRECTORY_SEPARATOR . 'api.php';
+        $filePath = $this->getModulePath('RestApi')
+            . GenerateConfigReader::read('routes')->getPath()
+            . '/' . Str::lower($this->getModuleName()) . '.php';
 
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("Route file location doesn't exist");
@@ -198,9 +203,11 @@ class CrudMakeCommand extends Command
         $resourceName = Str::plural($singleName);
 
         $controller = GeneratorPath::convertPathToNamespace(
-            $this->getModuleNS() .
-            GenerateConfigReader::read('controller')->getNamespace()
-            . '\\' . $this->getResourceName() . 'Controller::class'
+            $this->getModuleNS('RestApi')
+            . GenerateConfigReader::read('controller')->getNamespace()
+            . '\\' . $this->getModuleName()
+            . '\\' . $this->getResourceName()
+            . 'Controller::class'
         );
 
         $pathParam = '{' . Str::snake(basename($this->getResourceName())) . '}';
