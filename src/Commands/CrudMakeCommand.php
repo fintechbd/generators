@@ -46,9 +46,9 @@ class CrudMakeCommand extends Command
 
             if (Core::packageExists('RestApi')) {
 
-                $this->createRequests();
+//                $this->createRequests();
 
-//                $this->createResources();
+                $this->createResources();
 //
 //                $this->createController();
 //

@@ -71,24 +71,22 @@ class ResourceMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         return (new Stub($this->getStubName(), [
-            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'NAMESPACE' => $this->getClassNamespace('RestApi') . '\\' . $this->getModuleName(),
             'CLASS' => $this->getClass(),
         ]))->render();
     }
 
     protected function getStubName(): string
     {
-        if ($this->collection()) {
-            return '/resource-collection.stub';
-        }
-
-        return '/resource.stub';
+        return ($this->isCollection())
+            ? '/resource-collection.stub'
+            : '/resource.stub';
     }
 
     /**
      * Determine if the command is generating a resource collection.
      */
-    protected function collection(): bool
+    protected function isCollection(): bool
     {
         return $this->option('collection') ||
             Str::endsWith($this->argument('name'), 'Collection');
@@ -101,11 +99,14 @@ class ResourceMakeCommand extends GeneratorCommand
      */
     protected function getDestinationFilePath()
     {
-        $path = $this->getModulePath($this->getModuleName());
-
         $resourcePath = GenerateConfigReader::read('resource');
 
-        return $path . $resourcePath->getPath() . '/' . $this->getFileName() . '.php';
+        $path = $this->getModulePath($this->getModuleName());
+
+        return $this->getModulePath('RestApi')
+            . $resourcePath->getPath() . '/'
+            . $this->getModuleName() . '/'
+            . $this->getFileName() . '.php';
     }
 
     /**
