@@ -16,9 +16,7 @@ class $CLASS$
      * $CLASS$ constructor.
      * @param $REPO$ $$REPO_VARIABLE$
      */
-    public function __construct($REPO$ $$REPO_VARIABLE$) {
-        $this->$REPO_VARIABLE$ = $$REPO_VARIABLE$;
-    }
+    public function __construct(private readonly $REPO$ $$REPO_VARIABLE$) { }
 
     /**
      * @param array $filters
