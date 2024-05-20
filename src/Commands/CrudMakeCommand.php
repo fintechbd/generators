@@ -56,13 +56,13 @@ class CrudMakeCommand extends Command
 
             }
 
-//            $this->createStubFiles();
-//
-//            $this->createRepositories();
-//
-//            $this->createConfigOption();
-//
-//            $this->updateModelEntryClasses();
+            //            $this->createStubFiles();
+            //
+            //            $this->createRepositories();
+            //
+            //            $this->createConfigOption();
+            //
+            //            $this->updateModelEntryClasses();
 
             return self::SUCCESS;
 
