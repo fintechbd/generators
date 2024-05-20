@@ -48,9 +48,9 @@ class CrudMakeCommand extends Command
 
 //                $this->createRequests();
 
-                $this->createResources();
-//
-//                $this->createController();
+//                $this->createResources();
+
+                $this->createController();
 //
 //                $this->updateRouteFile();
 

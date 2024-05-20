@@ -6,7 +6,6 @@ use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
-use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\$MODULE$\Facades\$MODULE$;
 $RESOURCE_NAMESPACES$
 $REQUEST_NAMESPACES$
@@ -27,8 +26,6 @@ use Illuminate\Routing\Controller;
 
 class $CLASS$ extends Controller
 {
-    use ApiResponseTrait;
-
     /**
      * @lrd:start
      * Return a listing of the *$RESOURCE$* resource as collection.
@@ -50,7 +47,7 @@ class $CLASS$ extends Controller
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -74,14 +71,14 @@ class $CLASS$ extends Controller
                 throw (new StoreOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'));
             }
 
-            return $this->created([
-                'message' => __('core::messages.resource.created', ['model' => '$MESSAGE_VARIABLE$']),
+            return response()->created([
+                'message' => __('restapi::messages.resource.created', ['model' => '$MESSAGE_VARIABLE$']),
                 'id' => $$RESOURCE_VARIABLE$->id
              ]);
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -108,11 +105,11 @@ class $CLASS$ extends Controller
 
         } catch (ModelNotFoundException $exception) {
 
-            return $this->notfound($exception->getMessage());
+            return response()->notfound($exception->getMessage());
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -144,15 +141,15 @@ class $CLASS$ extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            return $this->updated(__('core::messages.resource.updated', ['model' => '$MESSAGE_VARIABLE$']));
+            return response()->updated(__('restapi::messages.resource.updated', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
-            return $this->notfound($exception->getMessage());
+            return response()->notfound($exception->getMessage());
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -181,15 +178,15 @@ class $CLASS$ extends Controller
                 throw (new DeleteOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            return $this->deleted(__('core::messages.resource.deleted', ['model' => '$MESSAGE_VARIABLE$']));
+            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
-            return $this->notfound($exception->getMessage());
+            return response()->notfound($exception->getMessage());
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -217,15 +214,15 @@ class $CLASS$ extends Controller
                 throw (new RestoreOperationException())->setModel(config('fintech.$LOWER_NAME$.$CONFIG_VARIABLE$_model'), $id);
             }
 
-            return $this->restored(__('core::messages.resource.restored', ['model' => '$MESSAGE_VARIABLE$']));
+            return response()->restored(__('restapi::messages.resource.restored', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (ModelNotFoundException $exception) {
 
-            return $this->notfound($exception->getMessage());
+            return response()->notfound($exception->getMessage());
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -246,11 +243,11 @@ class $CLASS$ extends Controller
 
             $$RESOURCE_VARIABLE$Paginate = $MODULE$::$RESOURCE_VARIABLE$()->export($inputs);
 
-            return $this->exported(__('core::messages.resource.exported', ['model' => '$MESSAGE_VARIABLE$']));
+            return response()->exported(__('restapi::messages.resource.exported', ['model' => '$MESSAGE_VARIABLE$']));
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 
@@ -275,7 +272,7 @@ class $CLASS$ extends Controller
 
         } catch (Exception $exception) {
 
-            return $this->failed($exception->getMessage());
+            return response()->failed($exception->getMessage());
         }
     }
 }

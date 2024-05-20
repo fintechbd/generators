@@ -52,11 +52,12 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     public function getDestinationFilePath()
     {
-        $path = $this->getModulePath($this->getModuleName());
-
         $controllerPath = GenerateConfigReader::read($this->type);
 
-        return $path . $controllerPath->getPath() . '/' . $this->getControllerName() . '.php';
+        return $this->getModulePath('RestApi')
+            . $controllerPath->getPath() . '/'
+            . $this->getModuleName() . '/'
+            . $this->getControllerName() . '.php';
     }
 
     /**
@@ -81,7 +82,7 @@ class ControllerMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         $replacements = [
-            'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
+            'CLASS_NAMESPACE' => $this->getClassNamespace('RestApi'). '\\' . $this->getModuleName(),
             'CLASS' => $this->getControllerNameWithoutNamespace(),
             'MODULE' => $this->getModuleName(),
             'LOWER_NAME' => Str::lower($this->getModuleName()),
@@ -148,7 +149,7 @@ class ControllerMakeCommand extends GeneratorCommand
         $namespaces = [];
 
         foreach (['Import', 'Store', 'Update', 'Index'] as $prefix) {
-            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Requests/' . $this->getClassPath($prefix);
+            $path = $replacements['MODULE_NAMESPACE'] . '/RestApi/Http/Requests/' . $replacements['MODULE'] .'/'. $this->getClassPath($prefix);
             $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
 
         }
@@ -161,7 +162,7 @@ class ControllerMakeCommand extends GeneratorCommand
         $namespaces = [];
 
         foreach (['Resource', 'Collection'] as $suffix) {
-            $path = $replacements['MODULE_NAMESPACE'] . '/' . $replacements['MODULE'] . '/Http/Resources/' . $this->getClassPath('', $suffix);
+            $path = $replacements['MODULE_NAMESPACE'] . '/RestApi/Http/Resources/' . $replacements['MODULE'] .'/'. $this->getClassPath('', $suffix);
             $namespaces[] = ('use ' . implode('\\', explode('/', $path)) . ';');
 
         }
