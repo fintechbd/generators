@@ -136,56 +136,6 @@ class CrudMakeCommand extends Command
     /**
      * @throws GeneratorException
      */
-    private function createStubFiles()
-    {
-
-        Artisan::call('package:make-model', [
-            'model' => $this->getResourceName(),
-            'module' => $this->getModuleName(),
-        ]);
-
-        Artisan::call('package:make-service', [
-            'name' => $this->getResourceName() . 'Service',
-            'module' => $this->getModuleName(),
-            '--crud' => true,
-            '--repository' => $this->getResourceName() . 'Repository',
-        ]);
-
-        Artisan::call('package:make-seed', [
-            'name' => $this->getResourceName(),
-            'module' => $this->getModuleName(),
-        ]);
-
-    }
-
-    //Create Controller,Model,Service and Interface etc.
-
-    private function createRepositories()
-    {
-        Artisan::call('package:make-interface', [
-            'name' => $this->getResourceName() . 'Repository',
-            'module' => $this->getModuleName(),
-            '--crud' => true,
-        ]);
-
-        Artisan::call('package:make-repository', [
-            'name' => 'Eloquent/' . $this->getResourceName() . 'Repository',
-            'module' => $this->getModuleName(),
-            '--model' => $this->getResourceName(),
-            '--crud' => true,
-        ]);
-
-        Artisan::call('package:make-repository', [
-            'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
-            'module' => $this->getModuleName(),
-            '--model' => $this->getResourceName(),
-            '--crud' => true,
-        ]);
-    }
-
-    /**
-     * @throws GeneratorException
-     */
     private function updateRouteFile()
     {
         $filePath = $this->getModulePath('RestApi')
@@ -221,6 +171,56 @@ HTML;
         $fileContent = str_replace('//DO NOT REMOVE THIS LINE//', $template, $fileContent);
 
         file_put_contents($filePath, $fileContent);
+    }
+
+    //Create Controller,Model,Service and Interface etc.
+
+    /**
+     * @throws GeneratorException
+     */
+    private function createStubFiles()
+    {
+
+        Artisan::call('package:make-model', [
+            'model' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+        ]);
+
+        Artisan::call('package:make-service', [
+            'name' => $this->getResourceName() . 'Service',
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+            '--repository' => $this->getResourceName() . 'Repository',
+        ]);
+
+        Artisan::call('package:make-seed', [
+            'name' => $this->getResourceName(),
+            'module' => $this->getModuleName(),
+        ]);
+
+    }
+
+    private function createRepositories()
+    {
+        Artisan::call('package:make-interface', [
+            'name' => $this->getResourceName() . 'Repository',
+            'module' => $this->getModuleName(),
+            '--crud' => true,
+        ]);
+
+        Artisan::call('package:make-repository', [
+            'name' => 'Eloquent/' . $this->getResourceName() . 'Repository',
+            'module' => $this->getModuleName(),
+            '--model' => $this->getResourceName(),
+            '--crud' => true,
+        ]);
+
+        Artisan::call('package:make-repository', [
+            'name' => 'Mongodb/' . $this->getResourceName() . 'Repository',
+            'module' => $this->getModuleName(),
+            '--model' => $this->getResourceName(),
+            '--crud' => true,
+        ]);
     }
 
     private function createConfigOption()
