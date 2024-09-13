@@ -138,9 +138,9 @@ class CrudMakeCommand extends Command
      */
     private function updateRouteFile()
     {
-        $filePath = $this->getModulePath('RestApi')
+        $filePath = $this->getModulePath($this->getModuleName())
             . GenerateConfigReader::read('routes')->getPath()
-            . '/' . Str::lower($this->getModuleName()) . '.php';
+            . '/api.php';
 
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException("Route file location doesn't exist");
