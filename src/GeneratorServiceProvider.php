@@ -2,7 +2,7 @@
 
 namespace Fintech\Generator;
 
-use Fintech\Core\Traits\RegisterPackageTrait;
+use Fintech\Core\Traits\Packages\RegisterPackageTrait;
 use Fintech\Generator\Commands\CommandMakeCommand;
 use Fintech\Generator\Commands\ComponentClassMakeCommand;
 use Fintech\Generator\Commands\ComponentViewMakeCommand;
