@@ -77,7 +77,7 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     private function getFileName()
     {
-        return Str::studly($this->argument('name'));
+        return Str::studly($this->argument('controller'));
     }
 
     /**

@@ -121,7 +121,7 @@ class CrudMakeCommand extends Command
     private function createController()
     {
         Artisan::call('package:make-controller', [
-            'controller' => $this->getResourceName(),
+            'controller' => $this->getResourceName().'Controller',
             'module' => $this->getModuleName(),
             '--crud' => true,
         ]);
