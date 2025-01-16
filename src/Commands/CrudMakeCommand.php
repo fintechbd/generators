@@ -118,6 +118,9 @@ class CrudMakeCommand extends Command
         ]);
     }
 
+    /**
+     * @throws GeneratorException
+     */
     private function createController()
     {
         Artisan::call('package:make-controller', [
@@ -132,7 +135,7 @@ class CrudMakeCommand extends Command
     /**
      * @throws GeneratorException
      */
-    private function updateRouteFile()
+    private function updateRouteFile(): void
     {
         $filePath = $this->getModulePath($this->getModuleName())
             . GenerateConfigReader::read('routes')->getPath()
