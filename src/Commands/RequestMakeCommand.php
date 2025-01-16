@@ -77,7 +77,7 @@ class RequestMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         return (new Stub('/request.stub', [
-            'NAMESPACE' => $this->getClassNamespace('RestApi') . '\\' . $this->getModuleName(),
+            'NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getClass(),
             'RULES' => $this->getRules(),
             'PAGINATE_TRAIT' => $this->getPaginateTrait(),

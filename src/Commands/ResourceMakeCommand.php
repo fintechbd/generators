@@ -99,14 +99,11 @@ class ResourceMakeCommand extends GeneratorCommand
      */
     protected function getDestinationFilePath()
     {
-        $resourcePath = GenerateConfigReader::read('resource');
-
         $path = $this->getModulePath($this->getModuleName());
 
-        return $this->getModulePath('RestApi')
-            . $resourcePath->getPath() . '/'
-            . $this->getModuleName() . '/'
-            . $this->getFileName() . '.php';
+        $commandPath = GenerateConfigReader::read($this->type);
+
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
     }
 
     /**

@@ -43,22 +43,6 @@ class ControllerMakeCommand extends GeneratorCommand
      */
     protected $description = 'Generate new restful controller for the specified package.';
 
-    /**
-     * Get controller name.
-     *
-     * @return string
-     *
-     * @throws GeneratorException
-     */
-    public function getDestinationFilePath()
-    {
-        $controllerPath = GenerateConfigReader::read($this->type);
-
-        return $this->getModulePath('RestApi')
-            . $controllerPath->getPath() . '/'
-            . $this->getModuleName() . '/'
-            . $this->getControllerName() . '.php';
-    }
 
     /**
      * @return array|string
@@ -75,6 +59,20 @@ class ControllerMakeCommand extends GeneratorCommand
     }
 
     /**
+     * @return mixed
+     *
+     * @throws GeneratorException
+     */
+    protected function getDestinationFilePath()
+    {
+        $path = $this->getModulePath($this->getModuleName());
+
+        $commandPath = GenerateConfigReader::read($this->type);
+
+        return $path . $commandPath->getPath() . '/' . $this->getFileName() . '.php';
+    }
+
+    /**
      * @return string
      *
      * @throws GeneratorException
@@ -82,7 +80,7 @@ class ControllerMakeCommand extends GeneratorCommand
     protected function getTemplateContents()
     {
         $replacements = [
-            'CLASS_NAMESPACE' => $this->getClassNamespace('RestApi') . '\\' . $this->getModuleName(),
+            'CLASS_NAMESPACE' => $this->getClassNamespace($this->getModuleName()),
             'CLASS' => $this->getControllerNameWithoutNamespace(),
             'MODULE' => $this->getModuleName(),
             'LOWER_NAME' => Str::lower($this->getModuleName()),

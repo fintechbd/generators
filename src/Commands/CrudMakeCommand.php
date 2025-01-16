@@ -44,17 +44,13 @@ class CrudMakeCommand extends Command
     {
         try {
 
-            if (Core::packageExists('RestApi')) {
+            $this->createRequests();
 
-                $this->createRequests();
+            $this->createResources();
 
-                $this->createResources();
+            $this->createController();
 
-                $this->createController();
-
-                $this->updateRouteFile();
-
-            }
+            $this->updateRouteFile();
 
             $this->createStubFiles();
 
