@@ -2,7 +2,6 @@
 
 namespace Fintech\Generator\Commands;
 
-use Fintech\Core\Facades\Core;
 use Fintech\Generator\Exceptions\GeneratorException;
 use Fintech\Generator\Support\Config\GenerateConfigReader;
 use Fintech\Generator\Support\Config\GeneratorPath;
