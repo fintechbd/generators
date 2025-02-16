@@ -112,7 +112,7 @@ HTML;
     protected function getPaginateTrait()
     {
         if ($this->option('index')) {
-            return 'use \Fintech\RestApi\Traits\HasPaginateQuery;' . PHP_EOL;
+            return 'use \Fintech\Core\Traits\RestApi\HasPaginateQuery;' . PHP_EOL;
         } else {
             return '';
         }
@@ -127,9 +127,8 @@ HTML;
     {
         $requestPath = GenerateConfigReader::read('request');
 
-        return $this->getModulePath('RestApi')
+        return $this->getModuleName()
             . $requestPath->getPath() . '/'
-            . $this->getModuleName() . '/'
             . $this->getFileName() . '.php';
     }
 
